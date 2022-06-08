@@ -209,7 +209,9 @@
         <module>bom</module>
         <module>dto</module>
         <module>api</module>
-<!--        <module>common</module>
+    	<module>model</module>
+        <module>common</module>
+<!--
         <module>sample</module>
         <module>testsuite</module>
 -->
@@ -240,7 +242,7 @@
                         <configuration>
                             <failOnError>true</failOnError>
                             <failOnWarnings>true</failOnWarnings>
-                            <excludePackageNames>hu.icellmobilsoft.coffee.dto.*,hu.icellmobilsoft.sampler.dto.*</excludePackageNames>
+                            <excludePackageNames>hu.icellmobilsoft.sampler.dto.*,hu.icellmobilsoft.sampler.model.*</excludePackageNames>
                             <sourceFileExcludes>**/*_.java</sourceFileExcludes>
                         </configuration>
                     </plugin>
