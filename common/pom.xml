@@ -14,9 +14,9 @@
         <module>common-core-jee</module>
         <module>common-util</module>
         <module>common-rest-jee</module>
+        <module>common-jpa</module>
 <!--
         <module>sr-common-system-rest</module>
-        <module>sr-common-jpa</module>
         <module>sr-common-system-jpa</module>
 -->
     </modules>
