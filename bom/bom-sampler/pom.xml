@@ -41,25 +41,19 @@
                 <artifactId>common-rest-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.common</groupId>
-                <artifactId>sr-common-system-rest</artifactId>
+                <artifactId>common-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.common</groupId>
-                <artifactId>sr-common-jpa</artifactId>
+                <artifactId>common-system-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.common</groupId>
-                <artifactId>sr-common-system-jpa</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.sampler</groupId>
-                <artifactId>sr-sample-service</artifactId>
+                <artifactId>common-system-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

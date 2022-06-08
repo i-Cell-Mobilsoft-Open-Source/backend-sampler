@@ -102,30 +102,14 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-jpa</artifactId>
-                <version>${version.hu.icellmobilsoft.coffee}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.glassfish.jaxb</groupId>
-                        <artifactId>jaxb-runtime</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-tool</artifactId>
-                <version>${version.hu.icellmobilsoft.coffee}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.glassfish.jaxb</groupId>
-                        <artifactId>jaxb-runtime</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.coffee</groupId>
                 <artifactId>coffee-dto-base</artifactId>
                 <version>${version.hu.icellmobilsoft.coffee}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.glassfish.jaxb</groupId>
+                        <artifactId>jaxb-runtime</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!--Test dependecies -->
