@@ -75,12 +75,12 @@ public interface ISampleRest {
      * @throws BaseException
      *             if error
      */
-    @Operation(summary = "Sample POST QUERY", //
-            description = "* Sample Http POST query.\n" //
+    @Operation(summary = "Sample POST", //
+            description = "* Sample Http POST.\n" //
                     + "* element 1")
     @Tag(ref = ISampleRest.TAG_SAMPLE)
     @POST
     @Produces(value = { MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes(value = { MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    public SampleResponse postSampleQuery(@ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) SampleRequest sampleRequest) throws BaseException;
+    public SampleResponse postSample(@ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) SampleRequest sampleRequest) throws BaseException;
 }
