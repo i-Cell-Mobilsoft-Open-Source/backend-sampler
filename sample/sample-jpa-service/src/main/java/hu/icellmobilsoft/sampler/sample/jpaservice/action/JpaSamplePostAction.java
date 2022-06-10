@@ -52,7 +52,7 @@ public class JpaSamplePostAction extends BaseAction {
     private SampleTypeConverter sampleTypeConverter;
 
     /**
-     * Dummy sample post reponse
+     * Dummy sample write and read data from DB
      * 
      * @param sampleRequest
      *            validated http entity body
@@ -60,7 +60,7 @@ public class JpaSamplePostAction extends BaseAction {
      * @throws BaseException
      *             if error
      */
-    public SampleResponse sampleQuery(SampleRequest sampleRequest) throws BaseException {
+    public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
 
         // create entity
         SampleEntity created = CDI.current().select(JpaSamplePostAction.class).get().createOne();

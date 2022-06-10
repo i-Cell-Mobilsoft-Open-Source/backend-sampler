@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.jpaservice.action;
+package hu.icellmobilsoft.sampler.sample.mongoservice.action;
 
 import javax.enterprise.inject.Model;
 
@@ -30,13 +30,13 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 
 /**
- * Service for JPA querying. Represents only DB operations.
+ * Service for MongoDb querying. Represents only DB operations.
  * 
  * @author imre.scheffer
  * @since 0.1.0
  */
 @Model
-public class JpaSampleGetAction extends BaseAction {
+public class MongoSampleGetAction extends BaseAction {
 
     /**
      * Dummy sample reponse

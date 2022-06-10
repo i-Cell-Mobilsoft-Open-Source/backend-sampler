@@ -17,9 +17,8 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.jpaservice.rest;
+package hu.icellmobilsoft.sampler.sample.mongoservice.rest;
 
-import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
@@ -27,31 +26,31 @@ import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
 import hu.icellmobilsoft.sampler.common.system.rest.rest.BaseRestService;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
-import hu.icellmobilsoft.sampler.sample.jpaservice.action.JpaSampleGetAction;
-import hu.icellmobilsoft.sampler.sample.jpaservice.action.JpaSamplePostAction;
+import hu.icellmobilsoft.sampler.sample.mongoservice.action.MongoSampleGetAction;
+import hu.icellmobilsoft.sampler.sample.mongoservice.action.MongoSamplePostAction;
 
 /**
- * sample service jpa implementation
- * 
+ * sample mongo service rest implementation
+ *
+ * @author jozsef.kelemen
  * @author imre.scheffer
  * @since 0.1.0
  */
-@Model
-public class JpaSampleRest extends BaseRestService implements ISampleRest {
+public class MongoSampleRest extends BaseRestService implements ISampleRest {
 
     @Inject
-    private JpaSampleGetAction jpaSampleGetAction;
+    private MongoSampleGetAction mongoSampleGetAction;
 
     @Inject
-    private JpaSamplePostAction jpaSamplePostAction;
+    private MongoSamplePostAction mongoSamplePostAction;
 
     @Override
     public SampleResponse getSample() throws BaseException {
-        return wrapNoParam(jpaSampleGetAction::sample, "getSample");
+        return wrapNoParam(mongoSampleGetAction::sample, "getSample");
     }
 
     @Override
     public SampleResponse postSample(SampleRequest sampleRequest) throws BaseException {
-        return wrapPathParam1(jpaSamplePostAction::sampleWriteRead, sampleRequest, "postSample", "sampleRequest");
+        return wrapPathParam1(mongoSamplePostAction::sampleWriteRead, sampleRequest, "postSample", "sampleRequest");
     }
 }
