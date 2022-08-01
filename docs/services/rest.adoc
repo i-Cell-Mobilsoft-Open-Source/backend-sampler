@@ -1,0 +1,6 @@
+= REST service
+`sample/sample-rest-service`
+
+Ez egy egyszerű alap REST implementáció.
+Csak feltétlen technológiákat használ.
+Minden további minta service tulajdonképpen ennek a bővítése.

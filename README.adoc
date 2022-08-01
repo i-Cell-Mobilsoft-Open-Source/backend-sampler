@@ -1,0 +1,93 @@
+:sectnums:
+
+= Sampler
+
+A projekt célja hogy működő használati mintát adjon általános projekt felépítésére.
+
+include::docs/requirements.adoc[leveloffset=+1]
+
+== Minta servicek
+Minden service azonos API-t használ,
+azonos porton és környezeten fut.
+
+=== JPA service
+`sample/sample-jpa-service`
+
+A service célja a JPA használata.
+Mivel univerzálisra van tervezve ezért H2 adatbázist használ,
+de minden entitás kezelés olyan mintha rendes DB lenne alatta.
+
+=== Mongo service
+`sample/sample-mongo-service`
+
+A service célja a mongo adatbáziskezelés használatának bemutatása egyszerű írás/olvasással. A service a coff:ee mongo moduljára épül, erről bővebb információ itt található: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-mongodb
+
+A service használatához először futtatni kell a dockeres mongo adatbázist.
+
+== Futtatás
+A futtatásra a docker-compose van használva,
+mert ezzel lehet komolyabb beallításokat is csinálni mint önmagával a dockerrel.
+
+.Service server - környezet elindítása
+[source,bash]
+----
+docker-compose -f local_path/sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --force-recreate
+----
+A `--force-recreate` kapcsoló arra jó hogy indításnál törli az előző docker konténert,
+így tiszta lappal indul minden környezet indítás
+
+.War deploy - Telepítés
+Ez a Wildfly deploy autoscan tulajdonságát használja fel,
+tehát a scannelt könyvtárába bele másoljuk a war fájlt.
+Ez megtörténhet konzolból (nem kényelmes) vagy ANT fájl segítségével (`sample/sample-*-service/build.xml`).
+A Wilfly server és konfigurációja egyszerre 1 service futásra van beállítva.
+Tehát a következő telepítési "másoló" scriptet lehet használni:
+
+.war fájl telepítése
+[source,bash]
+----
+# sample-rest-service esetében
+docker cp local_path/sample/sample-rest-service/target/sample-rest-service-0.1.0-SNAPSHOT.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+# sample-jpa-service esetében
+docker cp local_path/sample/sample-jpa-service/target/sample-jpa-service-0.1.0-SNAPSHOT.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+# sample-mongo-service esetében
+docker cp local_path/sample/sample-mongo-service/target/sample-mongo-service-0.1.0-SNAPSHOT.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+----
+De kényelmesebben az Ant segítségével 1 kattintással az IDEből,
+például a `sample/sample-rest-service/build.xml` ant fájl
+- "deploy-war-docker" targetjével (default).
+Ez lekezeli az útvonalakat, verziószámokat,
+nem kell semmit megjegyezni, konzolt nyitni stb...
+
+Egyes servicek, mint pl a `sample-mongo-service` igényel MongoDB szolgáltatást is,
+erre van előkészítve a `etc/docker-compose/docker-compose.local.mongodb.yml` docker-compose fájl.
+Nem kell mást tenni, minthogy ezt indítani:
+
+.MongoDB indítása
+[source,bash]
+----
+docker-compose -f local_path/sampler/etc/docker-compose/docker-compose.local.mongodb.yml up --force-recreate
+----
+Minden egyéb be van állítva.
+
+== Tesztelés
+A végpontok nem authentikáltak,
+lehet használni a SwaggerUI oldalát.
+Sajnos az API "összetettsége" miatt ez az XML formátumban nem fog jól működni a XML namespace miatt,
+ezért ezt inkább a JSON formátumra használható.
+
+.Fejlesztői tesztek - sr-testsuite
+`sampler/sr-testsuite`
+
+A fejlesztői tesztek a https://github.com/i-Cell-Mobilsoft-Open-Source/roaster[Roaster] projektet használják fel.
+Ez egy teljesen önnáló REST külső hívásokat végez el a deployolt alkalmazáson.
+Futtatható egyből a fejlesztői UI (junit pligun) vagy a maven segítségével (aktiválni kell a "profile" kapcsolót),
+például:
+
+[source,bash]
+----
+mvn verify -Dprofile <1>
+mvn verify -Dprofile=sandbox,local <2>
+----
+<1> default paraméterek
+<2> kiválasztott profilok a konfigurációs fájlokból

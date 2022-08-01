@@ -1,0 +1,26 @@
+version: "3.8"
+
+# futtatas
+# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.mongodb.yml up --build --force-recreate
+#
+# belemaszas
+# docker exec -it bs-sample-mongodb /bin/bash
+#
+# uresbe inditas
+# docker run --rm -it docker-compose_sample-mongodb /bin/bash
+services:
+  sample-mongodb:
+    container_name: bs-sample-mongodb
+    image: mongo:5.0
+    environment:
+      - MONGO_INITDB_DATABASE=sample_db
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - "27017:27017"
+networks: 
+  default: 
+    external: 
+      name: bs-local-network

@@ -1,0 +1,18 @@
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:imagesdir: pic
+
+= Sampler
+A projekt célja hogy működő használati mintát adjon általános projekt felépítésére.
+
+include::requirements.adoc[leveloffset=+1]
+
+== Minta servicek
+Minden service azonos API-t használ,
+azonos porton és környezeten fut.
+
+include::services/rest.adoc[leveloffset=+2]
+include::services/jpa.adoc[leveloffset=+2]
+include::services/mongo.adoc[leveloffset=+2]
