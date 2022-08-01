@@ -1,0 +1,36 @@
+version: "3.8"
+
+# futtatas
+# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --build --force-recreate
+#
+# belemaszas
+# docker exec -it bs-sample-service /bin/bash
+#
+# uresbe inditas
+# docker run --rm -it docker-compose_sample-service /bin/bash
+services:
+  sample-service:
+    container_name: bs-sample-service
+    build:
+      context: .
+      dockerfile: develop.dockerfile
+      args:
+        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:26.1.1.Final'
+    volumes:
+      - './wildfly/sample.properties:/sampler/wildfly.properties'
+    ports:
+      - '8081:8080'
+      - '9991:9990'
+      - '8788:8787'
+#    environment:
+#      MP_CONFIG_PROFILE: local
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+networks: 
+  default: 
+    external: 
+      name: bs-local-network
