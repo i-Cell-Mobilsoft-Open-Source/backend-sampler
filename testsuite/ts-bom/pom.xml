@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <version.hu.icellmobilsoft.roaster>0.8.0-SNAPSHOT</version.hu.icellmobilsoft.roaster>
+        <version.hu.icellmobilsoft.roaster>0.8.0</version.hu.icellmobilsoft.roaster>
 
         <version.commons-logging>1.2</version.commons-logging>
         <version.com.fasterxml.jackson.core.jackson-databind>2.13.3</version.com.fasterxml.jackson.core.jackson-databind>
