@@ -24,8 +24,9 @@ import javax.enterprise.context.Dependent;
 import hu.icellmobilsoft.coffee.module.mongodb.service.MongoService;
 
 /**
- * Sample MongoService implementation by {@link https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-mongodb}
+ * Sample MongoService implementation by Mongo module
  * 
+ * @see <a href="https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-mongodb">Mongo module</a>
  * @author imre.scheffer
  * @since 0.1.0
  */
