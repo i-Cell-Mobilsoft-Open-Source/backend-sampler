@@ -10,6 +10,13 @@ include::docs/requirements.adoc[leveloffset=+1]
 Minden service azonos API-t használ,
 azonos porton és környezeten fut.
 
+=== REST service
+`sample/sample-rest-service`
+
+Ez egy egyszerű alap REST implementáció.
+Csak feltétlen technológiákat használ.
+Minden további minta service tulajdonképpen ennek a bővítése.
+
 === JPA service
 `sample/sample-jpa-service`
 
