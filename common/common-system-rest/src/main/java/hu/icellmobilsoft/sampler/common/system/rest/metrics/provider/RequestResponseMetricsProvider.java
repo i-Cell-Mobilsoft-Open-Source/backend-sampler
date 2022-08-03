@@ -43,8 +43,6 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.Tag;
 import org.eclipse.microprofile.metrics.Timer;
 
-import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
-import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.sampler.dto.path.SamplePath;
 
 /**
@@ -55,10 +53,6 @@ import hu.icellmobilsoft.sampler.dto.path.SamplePath;
  */
 @Provider
 public class RequestResponseMetricsProvider implements ContainerRequestFilter, WriterInterceptor {
-
-    @Inject
-    @ThisLogger
-    private AppLogger log;
 
     @Inject
     private MetricsContainer metricsContainer;
