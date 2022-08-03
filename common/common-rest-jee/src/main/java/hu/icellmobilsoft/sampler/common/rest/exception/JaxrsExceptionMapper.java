@@ -71,7 +71,6 @@ public class JaxrsExceptionMapper implements ExceptionMapper<WebApplicationExcep
         log.error("JAX-RS error: ", e);
         log.writeLogToError();
         TechnicalFault dto = new TechnicalFault();
-        // status code vagy exception-re figyeljunk? (e.getResponse().getStatus())
         if (e instanceof NotAllowedException) {
             // Nem létező végpont + HTTP metódus párnál adjuk vissza a natív RESTEASY hibát
             // HTTP response code: 405

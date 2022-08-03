@@ -43,14 +43,6 @@
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
         </dependency>
 
-        <!-- ez nelkul nem fordul be a ProjectEntityListener (org.apache.deltaspike.data.impl.property.Property vegett) -->
-<!--
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-impl</artifactId>
-            <scope>compile</scope>
-        </dependency>
--->
         <!--FOR GENERATING JPA METAMODELs -->
         <dependency>
             <groupId>org.hibernate</groupId>

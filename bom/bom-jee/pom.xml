@@ -11,8 +11,6 @@
 
     <properties>
         <version.jakartaee>8.0.0</version.jakartaee>
-        <jakarta.ws.rs-api>2.1.6</jakarta.ws.rs-api>
-        <jakarta.servlet-api>4.0.4</jakarta.servlet-api>
 
         <version.jakarta.xml.bind.jaxb-api>2.3.3</version.jakarta.xml.bind.jaxb-api>
 
