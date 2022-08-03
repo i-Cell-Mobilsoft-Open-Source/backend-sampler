@@ -38,7 +38,6 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
-import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.mongoservice.constant.MongoConstants;
 
 /**
@@ -66,7 +65,7 @@ public class MongoSamplePostAction extends BaseAction {
      */
     public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
         mongoDbClient.initRepositoryCollection(MongoConstants.TABLE_SAMPLE);
-        SampleType sampleData = createSampleData();
+        SampleType sampleData = createSampleData(sampleRequest);
         String dtoJson = MongoJsonUtil.toJson(sampleData);
         BasicDBObject dtoDocument = MongoUtil.jsonToBasicDbObject(dtoJson);
         mongoDbClient.insertOne(dtoDocument);
@@ -87,11 +86,11 @@ public class MongoSamplePostAction extends BaseAction {
         return new Gson().fromJson(json, type);
     }
 
-    private SampleType createSampleData() {
+    private SampleType createSampleData(SampleRequest sampleRequest) {
         SampleType sampleType = new SampleType();
         sampleType.setSampleStatus(SampleStatusEnumType.DONE);
-        sampleType.setColumnA("column A");
-        sampleType.setColumnB(SampleValueEnumType.VALUE_C);
+        sampleType.setColumnA(sampleRequest.getSample().getColumnA());
+        sampleType.setColumnB(sampleRequest.getSample().getColumnB());
         return sampleType;
     }
 
