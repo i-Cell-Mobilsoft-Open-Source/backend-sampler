@@ -1,0 +1,6 @@
+= JPA service
+`sample/sample-jpa-service`
+
+A service célja a JPA használata.
+Mivel univerzálisra van tervezve ezért H2 adatbázist használ,
+de minden entitás kezelés olyan mintha rendes DB lenne alatta.
