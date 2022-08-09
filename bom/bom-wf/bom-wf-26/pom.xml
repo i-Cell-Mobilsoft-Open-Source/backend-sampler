@@ -28,7 +28,7 @@
         <version.org.eclipse.microprofile.rest.client>2.0</version.org.eclipse.microprofile.rest.client>
 
         <!-- from org.wildfly.bom:wildfly-jakartaee8-with-tools -->
-        <version.com.h2database>1.4.197</version.com.h2database>
+        <version.com.h2database>2.1.210</version.com.h2database>
 
         <!-- benne van, de nem a bom-ban -->
         <version.commons-lang3>3.11</version.commons-lang3>
