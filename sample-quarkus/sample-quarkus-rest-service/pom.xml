@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hu.icellmobilsoft.sampler.quarkus.sample</groupId>
+		<artifactId>quarkus-sample</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>sample-quarkus-rest-service</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<service.name>quarkusrestsample</service.name>
+		<version.hu.icellmobilsoft.coffee>1.10.2</version.hu.icellmobilsoft.coffee>
+		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+		<quarkus.platform.version>2.11.1.Final</quarkus.platform.version>
+		<quarkus.microprofile>2.7.2.Final</quarkus.microprofile>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.quarkiverse.microprofile</groupId>
+			<artifactId>quarkus-microprofile</artifactId>
+			<version>${quarkus.microprofile}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hu.icellmobilsoft.sampler.dto</groupId>
+			<artifactId>dto</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>hu.icellmobilsoft.coffee</groupId>
+			<artifactId>coffee-module-configdoc</artifactId>
+			<version>${version.hu.icellmobilsoft.coffee}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--DELTASPIKE bekavar-->
+		<!--		<dependency>-->
+		<!--			<groupId>hu.icellmobilsoft.coffee</groupId>-->
+		<!--			<artifactId>coffee-cdi</artifactId>-->
+		<!--			<version>1.10.2</version>-->
+		<!--			<exclusions>-->
+		<!--				<exclusion>-->
+		<!--					<groupId>org.apache.deltaspike.core</groupId>-->
+		<!--					<artifactId>deltaspike-core-api</artifactId>-->
+		<!--				</exclusion>-->
+		<!--				<exclusion>-->
+		<!--					<groupId>org.apache.deltaspike.core</groupId>-->
+		<!--					<artifactId>deltaspike-core-impl</artifactId>-->
+		<!--				</exclusion>-->
+		<!--			</exclusions>-->
+		<!--		</dependency>-->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>${quarkus.platform.group-id}</groupId>
+				<artifactId>quarkus-maven-plugin</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build</goal>
+							<goal>generate-code</goal>
+							<goal>generate-code-tests</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>../../etc/config</directory>
+				<includes>
+					<include>META-INF/microprofile-config*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+</project>
