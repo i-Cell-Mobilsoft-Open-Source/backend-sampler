@@ -52,7 +52,7 @@ import redis.clients.jedis.Jedis;
 @Model
 public class RedisSamplePostAction extends BaseAction {
 
-    public static final long EXPIRE_MINUTES = Duration.ofMinutes(5).toSeconds();
+    private static final long EXPIRE_MINUTES = Duration.ofMinutes(5).toSeconds();
     @Inject
     @RedisConnection(configKey = RedisConfig.REDIS_KEY)
     private RedisManager redisManager;
