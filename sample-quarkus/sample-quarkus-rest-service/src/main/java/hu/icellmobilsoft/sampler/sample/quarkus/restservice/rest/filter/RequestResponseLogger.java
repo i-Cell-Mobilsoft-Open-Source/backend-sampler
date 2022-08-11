@@ -53,7 +53,7 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.utils.marshalli
  * Request - Response logger class
  *
  * @author imre.scheffer
- * @since 1.0.0
+ * @since 0.1.0
  */
 @Dependent
 public class RequestResponseLogger {

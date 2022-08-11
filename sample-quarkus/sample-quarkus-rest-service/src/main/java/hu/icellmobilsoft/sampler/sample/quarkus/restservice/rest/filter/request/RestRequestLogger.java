@@ -42,7 +42,7 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.utils.RandomUti
  * Base class for REST logging
  *
  * @author ischeffer
- * @since 1.0.0
+ * @since 0.1.0
  */
 @Provider
 public class RestRequestLogger implements ContainerRequestFilter {
