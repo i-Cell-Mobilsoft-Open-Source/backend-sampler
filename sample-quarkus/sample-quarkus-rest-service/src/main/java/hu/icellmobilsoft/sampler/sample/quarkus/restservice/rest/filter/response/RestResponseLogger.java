@@ -127,7 +127,6 @@ public class RestResponseLogger implements WriterInterceptor {
      */
     protected void printResponseLine(StringBuffer b, WriterInterceptorContext context) {
         String fullPath = uriInfo.getAbsolutePath().toASCIIString();
-        // int status = res.getStatusCode();
         int status = res.getStatus();
 
         Status statusEnum = Status.fromStatusCode(status);
