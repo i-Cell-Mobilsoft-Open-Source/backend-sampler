@@ -15,4 +15,5 @@ azonos porton és környezeten fut.
 
 include::services/rest.adoc[leveloffset=+2]
 include::services/jpa.adoc[leveloffset=+2]
+include::services/redis.adoc[leveloffset=+2]
 include::services/mongo.adoc[leveloffset=+2]
