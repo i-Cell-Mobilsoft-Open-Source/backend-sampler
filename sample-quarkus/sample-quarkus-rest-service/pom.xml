@@ -7,7 +7,6 @@
 	</parent>
 
 	<artifactId>sample-quarkus-rest-service</artifactId>
-	<packaging>jar</packaging>
 
 	<properties>
 		<service.name>quarkusrestsample</service.name>

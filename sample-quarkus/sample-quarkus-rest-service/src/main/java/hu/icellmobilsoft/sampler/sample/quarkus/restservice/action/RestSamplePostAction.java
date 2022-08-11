@@ -27,7 +27,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
-import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.utils.RandomUtil;
+import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
 
 /**
  * Sample query action
