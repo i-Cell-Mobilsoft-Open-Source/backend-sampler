@@ -11,9 +11,6 @@
 	<properties>
 		<service.name>quarkusrestsample</service.name>
 		<version.hu.icellmobilsoft.coffee>1.10.2</version.hu.icellmobilsoft.coffee>
-		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-		<quarkus.platform.version>2.11.1.Final</quarkus.platform.version>
 		<quarkus.microprofile>2.7.2.Final</quarkus.microprofile>
 	</properties>
 
@@ -84,9 +81,9 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>${quarkus.platform.group-id}</groupId>
+				<groupId>io.quarkus.platform</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
-				<version>${quarkus.platform.version}</version>
+				<version>2.11.1.Final</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
