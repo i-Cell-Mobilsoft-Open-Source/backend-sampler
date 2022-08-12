@@ -1,0 +1,30 @@
+= Quarkus REST service
+`sample/sample-quarkus-rest-service`
+
+Ez egy egyszerű alap REST implementáció.
+Quarkus technológián alapszik.
+Rest kezelő osztályok egy része a coffee-ból van átemelve, külön csomagban találhatóak: hu.icellmobilsoft.sampler.sample.quarkus.coffee
+Néhény módosítást tartalmaznak ami logolással kapcsolatos. A coffee logger függéségi probléma miatt egyenlőre nem használható.
+Ehhez le kell tisztítani a coffee-cdi modult, hogy teljesen deltaspike független legyen.
+A modul a classic resteasy-re épül, nem a quarkus reactive megoldására, a classic esetében használhatóak a coffee-s rest filterek, és interceptorok.
+
+
+Hiányosságok:
+
+- json/xml validáció (LSResourceResolver implementacióját kell megoldani, vagy más utat kell keresni az xsd feloldáshoz)
+- coffee logger alkalmazása (ez se módban használható, de CDI szinten kellenek a producerek)
+- localizació kezelése (deltaspike függőség)
+- log méret kezelés (LogSpecifier megnézni hogyan lehet beépíteni)
+- rest exception mapping (coffee DefaultGeneralExceptionMapper bekötés)
+- default dashboardok, grafana, jaeger
+
+Tartalmaz:
+
+- microprofile implementációt
+- coffee alapú rest logolást (másolva vannak, dependencyk összeakadnak a deltaspike-al)
+- openapi
+- metrics
+- Arc CDI
+- classic resteasy
+- classic resteasy client
+- jvm docker image
