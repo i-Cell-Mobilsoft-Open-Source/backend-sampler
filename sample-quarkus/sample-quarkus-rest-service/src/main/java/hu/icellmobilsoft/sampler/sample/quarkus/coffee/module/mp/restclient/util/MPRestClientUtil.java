@@ -62,7 +62,6 @@ public class MPRestClientUtil {
      * @param e
      *            WebApplicationException
      * @return BaseException leszarmazott
-     * @see hu.icellmobilsoft.coffee.module.mp.restclient.provider.DefaultBaseExceptionResponseExceptionMapper
      */
     public static BaseException toBaseException(WebApplicationException e) {
         if (e.getCause() instanceof BaseException) {

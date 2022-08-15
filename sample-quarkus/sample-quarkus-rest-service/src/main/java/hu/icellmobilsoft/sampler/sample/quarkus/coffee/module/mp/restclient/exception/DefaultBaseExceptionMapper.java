@@ -64,6 +64,13 @@ public class DefaultBaseExceptionMapper implements ExceptionMapper<BaseException
         return handleException(e);
     }
 
+    /**
+     * Kivétel kezelése
+     *
+     * @param e
+     *            a kivétel
+     * @return összeállított válasz
+     */
     protected Response handleException(BaseException e) {
         if (e instanceof AccessDeniedException) {
             return createResponse(e, Response.Status.UNAUTHORIZED, new BusinessFault());
@@ -85,10 +92,32 @@ public class DefaultBaseExceptionMapper implements ExceptionMapper<BaseException
         }
     }
 
+    /**
+     * Válasz létrehozása
+     *
+     * @param e
+     *            a kivétel
+     * @param status
+     *            a válasznak átadni kívánt {@link Response.Status}
+     * @param dto
+     *            {@link BaseExceptionResultType} leszármazott, mely átadásra kerül a válaszban
+     * @return összeállított válasz
+     */
     protected Response createResponse(BaseException e, Response.Status status, BaseExceptionResultType dto) {
         return createResponse(e, status.getStatusCode(), dto);
     }
 
+    /**
+     * Válasz létrehozása
+     *
+     * @param e
+     *            a kivétel
+     * @param statusCode
+     *            a válasznak átadni kívánt státusz kódja (pl.: 418)
+     * @param dto
+     *            {@link BaseExceptionResultType} leszármazott, mely átadásra kerül a válaszban
+     * @return összeállított válasz
+     */
     protected Response createResponse(BaseException e, int statusCode, BaseExceptionResultType dto) {
         exceptionMessageTranslator.addCommonInfo(dto, e, e.getFaultTypeEnum());
         return Response.status(statusCode).entity(dto).build();

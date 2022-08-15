@@ -110,7 +110,7 @@ public class DefaultLoggerClientRequestFilter implements ClientRequestFilter {
     }
 
     /**
-     * Logs entity, trimmed according to {@link LogSpecifierTarget#CLIENT_REQUEST}.
+     * Logs entity
      *
      * @param requestContext
      *            context
