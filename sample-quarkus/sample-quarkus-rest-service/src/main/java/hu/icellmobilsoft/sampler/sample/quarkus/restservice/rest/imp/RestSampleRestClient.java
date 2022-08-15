@@ -17,16 +17,16 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api;
+package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.imp;
 
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
+
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
-import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSampleGetAction;
-import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSamplePostAction;
+import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRestClient;
 
 /**
  * sample service rest implementation
@@ -34,25 +34,16 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSamplePos
  * @author czenczl
  * @since 0.1.0
  */
-@Model
-public class RestSampleRest implements ISampleRest {
+@ApplicationScoped
+public class RestSampleRestClient implements ISampleRestClient {
 
     @Inject
-    private RestSampleGetAction restSampleAction;
-
-    @Inject
-    private RestSamplePostAction restSamplePostAction;
+    Logger log;
 
     @Override
     public SampleResponse getSample() throws BaseException {
-        // TODO coffee rest base action
-        return restSampleAction.sample();
-    }
-
-    @Override
-    public SampleResponse postSample(SampleRequest sampleRequest) throws BaseException {
-        // TODO coffee rest base action
-        return restSamplePostAction.postSample(sampleRequest);
+        log.info("rest client impl called");
+        return new SampleResponse();
     }
 
 }

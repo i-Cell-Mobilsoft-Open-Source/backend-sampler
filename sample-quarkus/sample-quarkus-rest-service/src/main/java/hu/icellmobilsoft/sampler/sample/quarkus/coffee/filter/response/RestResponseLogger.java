@@ -49,16 +49,16 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.stream.OutputStream
 public class RestResponseLogger implements WriterInterceptor {
 
     @Inject
-    private Logger log;
+    Logger log;
 
     @Context
-    private UriInfo uriInfo;
+    UriInfo uriInfo;
 
     @Inject
-    private RequestResponseLogger requestResponseLogger;
+    RequestResponseLogger requestResponseLogger;
 
     @Context
-    private HttpServletResponse res;
+    HttpServletResponse res;
 
     @Override
     public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {

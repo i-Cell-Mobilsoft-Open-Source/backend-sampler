@@ -20,6 +20,9 @@
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.action;
 
 import javax.enterprise.inject.Model;
+import javax.inject.Inject;
+
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
@@ -28,6 +31,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
+import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRestRegisteredClient;
 
 /**
  * Sample query action
@@ -37,6 +41,10 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
  */
 @Model
 public class RestSamplePostAction {
+
+    @Inject
+    @RestClient
+    ISampleRestRegisteredClient client;
 
     /**
      * Dummy sample query reponse
@@ -48,8 +56,10 @@ public class RestSamplePostAction {
      *             if error
      */
     public SampleResponse postSample(SampleRequest sampleRequest) throws BaseException {
-        SampleResponse response = new SampleResponse();
+        // call with rest client
+        client.getSample();
 
+        SampleResponse response = new SampleResponse();
         SampleType sampleType = new SampleType();
         sampleType.setSampleId(RandomUtil.generateId());
         sampleType.setSampleStatus(SampleStatusEnumType.DONE);
