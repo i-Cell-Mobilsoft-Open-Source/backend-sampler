@@ -33,6 +33,6 @@ import hu.icellmobilsoft.sampler.dto.path.SamplePath;
  */
 @RegisterRestClient
 @Path(SamplePath.REST_SAMPLE_SERVICE)
-public interface ISampleRestRegisteredClient extends ISampleRestClient {
+public interface ISampleRestRegisteredClient extends ISampleRest {
 
 }

@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.imp;
 
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
@@ -35,7 +35,7 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRest
  * @author czenczl
  * @since 0.1.0
  */
-@Model
+@ApplicationScoped
 public class RestSampleRest implements ISampleRest {
 
     @Inject
