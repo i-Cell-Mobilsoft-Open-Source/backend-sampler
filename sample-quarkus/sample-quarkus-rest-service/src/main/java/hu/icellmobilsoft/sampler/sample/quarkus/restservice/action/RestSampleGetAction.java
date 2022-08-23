@@ -23,11 +23,11 @@ import javax.enterprise.inject.Model;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
 
 /**
  * Sample action

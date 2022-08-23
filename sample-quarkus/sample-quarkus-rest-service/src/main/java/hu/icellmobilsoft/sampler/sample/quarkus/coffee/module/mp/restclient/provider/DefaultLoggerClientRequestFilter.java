@@ -32,12 +32,12 @@ import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 
-import org.jboss.logging.Logger;
-
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
+import hu.icellmobilsoft.coffee.tool.utils.stream.OutputStreamCopier;
+import hu.icellmobilsoft.coffee.tool.utils.string.StringHelper;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.filter.RequestResponseLogger;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.module.mp.restclient.RestClientPriority;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.StringHelper;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.stream.OutputStreamCopier;
 
 /**
  * Rest Client default request logger filter
@@ -50,7 +50,8 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.stream.OutputStream
 public class DefaultLoggerClientRequestFilter implements ClientRequestFilter {
 
     @Inject
-    Logger log;
+    @ThisLogger
+    AppLogger log;
 
     @Inject
     RequestResponseLogger requestResponseLogger;

@@ -24,8 +24,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.jboss.logging.Logger;
-
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BONotFound;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseExceptionResultType;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BusinessFault;
@@ -55,7 +55,8 @@ public class DefaultBaseExceptionMapper implements ExceptionMapper<BaseException
     IExceptionMessageTranslator exceptionMessageTranslator;
 
     @Inject
-    Logger log;
+    @ThisLogger
+    AppLogger log;
 
     @Override
     public Response toResponse(BaseException e) {

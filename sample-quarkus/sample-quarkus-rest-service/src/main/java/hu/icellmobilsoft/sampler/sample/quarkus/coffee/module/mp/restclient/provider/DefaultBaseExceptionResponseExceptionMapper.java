@@ -33,9 +33,9 @@ import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.RestClientResponseException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
+import hu.icellmobilsoft.coffee.tool.gson.JsonUtil;
+import hu.icellmobilsoft.coffee.tool.utils.marshalling.MarshallingUtil;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.module.mp.restclient.exception.FaultTypeParser;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.gson.JsonUtil;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.marshalling.MarshallingUtil;
 
 /**
  * Default BaseException ResponseExceptionMapper. Maps HTTP error responses to {@link BaseException}.

@@ -23,6 +23,7 @@ import javax.ws.rs.Path;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
+import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
 import hu.icellmobilsoft.sampler.dto.path.SamplePath;
 
 /**
