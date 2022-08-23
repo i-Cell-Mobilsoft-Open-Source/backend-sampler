@@ -60,8 +60,39 @@
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+<!--		<dependency>-->
+<!--			<groupId>hu.icellmobilsoft.coffee</groupId>-->
+<!--			<artifactId>coffee-module-mp-restclient</artifactId>-->
+<!--			<version>${version.hu.icellmobilsoft.coffee}</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.apache.deltaspike.core</groupId>-->
+<!--					<artifactId>deltaspike-core-api</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.apache.deltaspike.core</groupId>-->
+<!--					<artifactId>deltaspike-core-impl</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>hu.icellmobilsoft.coffee</groupId>-->
+<!--					<artifactId>coffee-module-localization</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>hu.icellmobilsoft.coffee</groupId>-->
+<!--					<artifactId>coffee-rest</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>hu.icellmobilsoft.coffee</groupId>-->
+<!--					<artifactId>coffee-tool</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 		<!--DELTASPIKE bekavar-->
+		<!--		<dependency>-->
+		<!--			<groupId>hu.icellmobilsoft.coffee</groupId>-->
+		<!--			<artifactId>coffee-module-mp-restclient</artifactId>-->
+		<!--			<version>${version.hu.icellmobilsoft.coffee}</version>-->
+		<!--		</dependency>-->
 		<!--		<dependency>-->
 		<!--			<groupId>hu.icellmobilsoft.coffee</groupId>-->
 		<!--			<artifactId>coffee-cdi</artifactId>-->

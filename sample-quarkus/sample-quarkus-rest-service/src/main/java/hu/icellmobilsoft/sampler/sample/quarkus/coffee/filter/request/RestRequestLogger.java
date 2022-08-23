@@ -48,19 +48,19 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
 public class RestRequestLogger implements ContainerRequestFilter {
 
     @Inject
-    private Logger log;
+    Logger log;
 
     @Inject
-    private BaseApplicationContainer baseApplicationContainer;
+    BaseApplicationContainer baseApplicationContainer;
 
     @Inject
-    private RequestResponseLogger requestResponseLogger;
+    RequestResponseLogger requestResponseLogger;
 
     @Context
-    private UriInfo uriInfo;
+    UriInfo uriInfo;
 
     @Context
-    private HttpServletResponse httpServletResponse;
+    HttpServletResponse httpServletResponse;
 
     /** {@inheritDoc} */
     @Override

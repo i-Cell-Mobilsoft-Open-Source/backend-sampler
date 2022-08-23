@@ -17,9 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api;
+package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.imp;
 
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
@@ -27,6 +27,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSampleGetAction;
 import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSamplePostAction;
+import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRest;
 
 /**
  * sample service rest implementation
@@ -34,14 +35,14 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSamplePos
  * @author czenczl
  * @since 0.1.0
  */
-@Model
+@ApplicationScoped
 public class RestSampleRest implements ISampleRest {
 
     @Inject
-    private RestSampleGetAction restSampleAction;
+    RestSampleGetAction restSampleAction;
 
     @Inject
-    private RestSamplePostAction restSamplePostAction;
+    RestSamplePostAction restSamplePostAction;
 
     @Override
     public SampleResponse getSample() throws BaseException {

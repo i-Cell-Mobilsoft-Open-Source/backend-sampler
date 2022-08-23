@@ -16,6 +16,7 @@ Hiányosságok:
 - localizació kezelése (deltaspike függőség)
 - log méret kezelés (LogSpecifier megnézni hogyan lehet beépíteni)
 - rest exception mapping (coffee DefaultGeneralExceptionMapper bekötés)
+- Jandex index generalt dto-kra
 - default dashboardok, grafana, jaeger
 
 Tartalmaz:
@@ -26,5 +27,5 @@ Tartalmaz:
 - metrics
 - Arc CDI
 - classic resteasy
-- classic resteasy client
+- classic resteasy client + basic exception mapping coffee-module-mp-restclient alapjan
 - jvm docker image

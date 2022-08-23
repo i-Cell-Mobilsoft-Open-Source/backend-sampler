@@ -80,7 +80,7 @@ public class RequestResponseLogger {
     public static final String SKIP_PATH_POSTFIX_XSD = ".xsd";
 
     @Inject
-    private Logger log;
+    Logger log;
 
     /**
      * Prints request headers to {@link String}. Masks password.
