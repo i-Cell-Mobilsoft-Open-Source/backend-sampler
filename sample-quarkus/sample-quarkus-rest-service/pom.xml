@@ -10,7 +10,7 @@
 
 	<properties>
 		<service.name>quarkusrestsample</service.name>
-		<version.hu.icellmobilsoft.coffee>1.11.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
+		<version.hu.icellmobilsoft.coffee>1.11.0</version.hu.icellmobilsoft.coffee>
 		<quarkus.microprofile>2.7.2.Final</quarkus.microprofile>
 	</properties>
 
