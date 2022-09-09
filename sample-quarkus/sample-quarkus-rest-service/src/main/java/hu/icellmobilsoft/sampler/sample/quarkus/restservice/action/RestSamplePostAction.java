@@ -26,11 +26,11 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
 import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRestRegisteredClient;
 
 /**

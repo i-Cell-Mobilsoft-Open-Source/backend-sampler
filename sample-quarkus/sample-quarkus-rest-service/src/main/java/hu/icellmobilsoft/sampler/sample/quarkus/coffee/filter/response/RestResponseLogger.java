@@ -33,10 +33,10 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
-import org.jboss.logging.Logger;
-
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
+import hu.icellmobilsoft.coffee.tool.utils.stream.OutputStreamCopier;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.filter.RequestResponseLogger;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.stream.OutputStreamCopier;
 
 /**
  * Base class for REST logging
@@ -49,7 +49,8 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.stream.OutputStream
 public class RestResponseLogger implements WriterInterceptor {
 
     @Inject
-    Logger log;
+    @ThisLogger
+    AppLogger log;
 
     @Context
     UriInfo uriInfo;

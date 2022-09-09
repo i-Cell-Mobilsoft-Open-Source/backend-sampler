@@ -23,11 +23,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSampleGetAction;
 import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSamplePostAction;
-import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRest;
 
 /**
  * sample service rest implementation

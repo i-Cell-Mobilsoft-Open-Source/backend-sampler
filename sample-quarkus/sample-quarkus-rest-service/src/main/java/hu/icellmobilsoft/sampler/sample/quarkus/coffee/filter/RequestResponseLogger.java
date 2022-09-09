@@ -43,11 +43,12 @@ import javax.ws.rs.ext.WriterInterceptorContext;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.logging.Logger;
 
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.StringHelper;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.gson.JsonUtil;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.marshalling.MarshallingUtil;
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
+import hu.icellmobilsoft.coffee.tool.gson.JsonUtil;
+import hu.icellmobilsoft.coffee.tool.utils.marshalling.MarshallingUtil;
+import hu.icellmobilsoft.coffee.tool.utils.string.StringHelper;
 
 /**
  * Request - Response logger class
@@ -80,7 +81,8 @@ public class RequestResponseLogger {
     public static final String SKIP_PATH_POSTFIX_XSD = ".xsd";
 
     @Inject
-    Logger log;
+    @ThisLogger
+    AppLogger log;
 
     /**
      * Prints request headers to {@link String}. Masks password.

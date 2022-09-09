@@ -6,8 +6,8 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>hu.icellmobilsoft.sampler.quarkus.sample</groupId>
-    <artifactId>quarkus-sample</artifactId>
+    <groupId>hu.icellmobilsoft.sampler.sample.quarkus</groupId>
+    <artifactId>sample-quarkus</artifactId>
     <packaging>pom</packaging>
 
     <modules>

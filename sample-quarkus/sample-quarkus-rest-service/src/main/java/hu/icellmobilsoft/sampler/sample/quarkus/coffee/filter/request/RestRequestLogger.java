@@ -30,13 +30,14 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.logging.Logger;
 
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.common.LogConstants;
 import hu.icellmobilsoft.coffee.se.logging.mdc.MDC;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.cdi.BaseApplicationContainer;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.filter.RequestResponseLogger;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
 
 /**
  * Base class for REST logging
@@ -48,7 +49,8 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.RandomUtil;
 public class RestRequestLogger implements ContainerRequestFilter {
 
     @Inject
-    Logger log;
+    @ThisLogger
+    AppLogger log;
 
     @Inject
     BaseApplicationContainer baseApplicationContainer;

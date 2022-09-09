@@ -34,11 +34,12 @@ import javax.ws.rs.client.ClientResponseFilter;
 import javax.ws.rs.core.NewCookie;
 
 import org.apache.commons.io.IOUtils;
-import org.jboss.logging.Logger;
 
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
+import hu.icellmobilsoft.coffee.tool.utils.string.StringHelper;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.filter.RequestResponseLogger;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.module.mp.restclient.RestClientPriority;
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.StringHelper;
 
 /**
  * Default REST client response log filter. A response filterek kozul ennek kell lennie az elsonek, hogy erintetlen adatokat tudjunk loggolni.<br>
@@ -53,7 +54,8 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.utils.StringHelper;
 public class DefaultLoggerClientResponseFilter implements ClientResponseFilter {
 
     @Inject
-    Logger log;
+    @ThisLogger
+    AppLogger log;
 
     @Inject
     RequestResponseLogger requestResponseLogger;
