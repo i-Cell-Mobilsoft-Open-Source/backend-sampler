@@ -13,7 +13,7 @@
         <version.hu.icellmobilsoft.roaster>0.8.0</version.hu.icellmobilsoft.roaster>
 
         <version.commons-logging>1.2</version.commons-logging>
-        <version.com.fasterxml.jackson.core.jackson-databind>2.13.3</version.com.fasterxml.jackson.core.jackson-databind>
+        <version.com.fasterxml.jackson.core.jackson-databind>2.13.4.1</version.com.fasterxml.jackson.core.jackson-databind>
         <version.weld-api>3.1.SP4</version.weld-api>
         <version.awaitility>4.2.0</version.awaitility>
     </properties>
