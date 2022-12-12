@@ -1,0 +1,16 @@
+# Start embedded server
+# embed-server --server-config=standalone-full.xml --std-out=echo
+
+embed-server --server-config=standalone-microprofile.xml --std-out=echo
+ 
+# Start batching commands
+/extension=org.wildfly.extension.microprofile.reactive-messaging-smallrye:add
+/extension=org.wildfly.extension.microprofile.reactive-streams-operators-smallrye:add
+/subsystem=microprofile-reactive-streams-operators-smallrye:add
+/subsystem=microprofile-reactive-messaging-smallrye:add
+
+run-batch --file=${TMP_DIR}/common/configure-logging.cli
+
+# Stop embedded server
+stop-embedded-server
+
