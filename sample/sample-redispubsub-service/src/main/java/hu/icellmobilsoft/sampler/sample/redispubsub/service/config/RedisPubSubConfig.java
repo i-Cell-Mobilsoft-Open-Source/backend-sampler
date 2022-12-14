@@ -27,21 +27,48 @@ package hu.icellmobilsoft.sampler.sample.redispubsub.service.config;
  */
 public interface RedisPubSubConfig {
 
-    public interface SamplePost{
+    /**
+     * Mp reactive redis connector keys for {@link hu.icellmobilsoft.sampler.sample.redispubsub.service.action.RedisPubSubSamplePostAction} and {@link hu.icellmobilsoft.sampler.sample.redispubsub.service.consumer.PostInListener}
+     */
+    interface SamplePost {
+        /**
+         * Outgoing mp reactive stream, configured via {@code mp.messaging.outgoing.post-out} key
+         */
         String MP_CHANNEL_OUT = "post-out";
+        /**
+         * Incoming mp reactive stream, configured via {@code mp.messaging.incoming.post-in} key
+         */
         String MP_CHANNEL_IN = "post-in";
 
+        /**
+         * Key to store last incoming message in {@link hu.icellmobilsoft.sampler.common.rest.cdi.ApplicationContainer}
+         */
         String DUMMY_KEY = "post-dummy";
 
     }
 
-    public interface NoSub{
+    /**
+     * Constants for redis channel without subscribers
+     */
+    public interface NoSub {
+        /**
+         * Redis channel
+         */
         String REDIS_CHANNEL = "no-sub";
     }
 
-    public interface SampleGet{
+    /**
+     * Mp reactive redis connector keys for {@link hu.icellmobilsoft.sampler.sample.redispubsub.service.action.RedisPubSubSampleGetAction} and {@link hu.icellmobilsoft.sampler.sample.redispubsub.service.consumer.GetListener}
+     */
+    public interface SampleGet {
+        /**
+         * Incoming mp reactive stream, configured via {@code mp.messaging.incoming.sample-get} key, also the name of the redis channel it connects to.
+         */
         String REDIS_CHANNEL = "sample-get";
 
+        /**
+         * Key to store last incoming message in {@link hu.icellmobilsoft.sampler.common.rest.cdi.ApplicationContainer}
+         */
         String DUMMY_KEY = "get-dummy";
     }
 }
