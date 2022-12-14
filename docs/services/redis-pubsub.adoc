@@ -45,7 +45,8 @@ docker exec -it bs-sample-redis redis-cli
 === POST `/rest/sample`
 
 . Üzenetet küld a `sample-post` és `no-sub` redis channelekre.
-. a `PostInListener` olvas a `sample-post` channelről és a kapott üzenetet cacheli `ApplicationContainer`-be
+. a `PostInListener` olvas a `sample-post` channelről, a kapott üzenetet cacheli `ApplicationContainer`-be
+és tovább küldi (mégegyszer) a `no-sub` redis channelre.
 . a REST közben vár 1 sec-et, majd kiolvassa az `ApplicationContainer`-ből az üzenetet - vagy BONotFound-ot dob, ha nem találja
 
 Ha szeretnénk a `no-sub` channelre redis-cli-vel fel tudunk iratkozni.
