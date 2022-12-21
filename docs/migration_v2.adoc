@@ -1,0 +1,53 @@
+= V2 migraciós tapasztalatok
+
+Az oldal a jakartaEE 10 atálás szerinti tapasztaltokat gyűjti össze.
+
+== NEW
+
+Létrejött a `bom-wf-27 alprojekt`, ami a 27.0.1.Final Wildfly verzió komponenseit követi le.
+
+== BUG
+
+.SCD "x-schema::tns" didnt match any schema component
+[source,java]
+----
+[ERROR] Error while parsing schema(s).Location [ jar:file:/home/ss/.m2/repository/hu/icellmobilsoft/coffee/coffee-dto-gen/2.0.0-SNAPSHOT/coffee-dto-gen-2.0.0-SNAPSHOT.jar!/META-INF/sun-jaxb.episode{201,105}].
+com.sun.istack.SAXParseException2: SCD "x-schema::tns" didnt match any schema component
+    at com.sun.tools.xjc.reader.internalizer.SCDBasedBindingSet.reportError (SCDBasedBindingSet.java:227)
+    at com.sun.tools.xjc.reader.internalizer.SCDBasedBindingSet.reportError (SCDBasedBindingSet.java:220)
+----
+
+Ez a hiba azért jön a feéhasznált
+`jar:file:/home/ss/.m2/repository/hu/icellmobilsoft/coffee/coffee-dto-gen/2.0.0-SNAPSHOT/coffee-dto-gen-2.0.0-SNAPSHOT.jar!/META-INF/sun-jaxb.episode{201,105}`
+fájlból nincs minden tétel használva a projekten...
+Fura probléma, egyenlőre a workaround hogy valahova bekötjük: 
+
+."x-schema::tns" workaround
+[source,xml]
+----
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://dto.sampler.icellmobilsoft.hu/sample/rest/post"
+    xmlns:coffeeCommon="http://common.dto.coffee.icellmobilsoft.hu/common" xmlns:coffeeCommonservice="http://common.dto.coffee.icellmobilsoft.hu/commonservice"
+    targetNamespace="http://dto.sampler.icellmobilsoft.hu/sample/rest/post" elementFormDefault="qualified" attributeFormDefault="unqualified" >
+
+    <xsd:import namespace="http://common.dto.coffee.icellmobilsoft.hu/common" />
+    <xsd:import namespace="http://common.dto.coffee.icellmobilsoft.hu/commonservice" />
+    <xsd:import namespace="http://common.dto.coffee.icellmobilsoft.hu/commonsecurity" /> <1>
+...
+----
+<1> Ezt az importot kell valahova bekötni (catalogba is felvenni),
+különben jön a generálásnál a "x-schema::tns" hiba.
+
+== WARNING
+
+=== Dependency
+A WF dependency-je megváltozott, és csomó API-t felülírtak sajátukra.
+Ezeket a bom-jee dependency szinten le kell "szögelni" fix verziókra.
+
+=== DTO generálás probléma
+Nincs jelenleg jaxb 4 generátor csak forkolt jaxb 3,
+ami működik, de nem végleges megoldás.
+
+[source,xml]
+----
+include::../dto/pom.xml[lines=34..42]
+---

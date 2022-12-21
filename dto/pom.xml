@@ -26,19 +26,20 @@
             <groupId>hu.icellmobilsoft.coffee</groupId>
             <artifactId>coffee-dto-gen</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
+<!-- eredeti plugin: ez nem tudja a jaxb3 vagy 4-et
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <version>0.15.1</version>
+-->
+<!-- forkolt es releaselt plugin a felsobol kiindulva: ez csak a jaxb3-at tudja, 4-et nem de lagalabb jakarta csomagok vannak hasznalva -->
+                <groupId>com.evolvedbinary.maven.jvnet</groupId>
+                <artifactId>jaxb30-maven-plugin</artifactId>
+                <version>0.15.0</version>
                 <executions>
                     <execution>
                         <id>icell-super</id>
@@ -69,16 +70,20 @@
                     <verbose>true</verbose>
                     <schemaDirectory>src/main/resources</schemaDirectory>
                     <args>
+<!-- a pluginunk nem tud jaxb3+ dolgozni
                         <arguments>-openapify</arguments>
+-->
                         <arguments>-Xfluent-api</arguments>
                         <arguments>-Xannotate</arguments>
                     </args>
                     <plugins>
+<!--
                         <plugin>
                             <groupId>hu.icellmobilsoft.jaxb</groupId>
                             <artifactId>openapi-jaxb</artifactId>
                             <version>1.1.0</version>
                         </plugin>
+-->
                         <plugin>
                             <groupId>net.java.dev.jaxb2-commons</groupId>
                             <artifactId>jaxb-fluent-api</artifactId>

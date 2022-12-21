@@ -11,5 +11,6 @@
 
     <modules>
         <module>bom-wf-26</module>
+        <module>bom-wf-27</module>
     </modules>
 </project>
