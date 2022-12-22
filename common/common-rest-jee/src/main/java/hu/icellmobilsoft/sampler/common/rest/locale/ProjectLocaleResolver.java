@@ -21,11 +21,11 @@ package hu.icellmobilsoft.sampler.common.rest.locale;
 
 import java.util.Locale;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
-import javax.interceptor.Interceptor;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+import jakarta.interceptor.Interceptor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.deltaspike.core.impl.message.DefaultLocaleResolver;

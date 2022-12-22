@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.exception;
 
-import javax.ws.rs.ext.Provider;
+import jakarta.ws.rs.ext.Provider;
 
 import hu.icellmobilsoft.coffee.rest.exception.DefaultBaseExceptionMapper;
 

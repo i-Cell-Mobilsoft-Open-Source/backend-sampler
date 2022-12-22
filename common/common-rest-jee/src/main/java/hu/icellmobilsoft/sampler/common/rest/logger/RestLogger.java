@@ -19,8 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.logger;
 
-import javax.annotation.Priority;
-import javax.ws.rs.ext.Provider;
+import jakarta.annotation.Priority;
+import jakarta.ws.rs.ext.Provider;
 
 import hu.icellmobilsoft.coffee.rest.log.BaseRestLogger;
 import hu.icellmobilsoft.sampler.common.rest.filter.CustomPriorities;

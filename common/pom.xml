@@ -14,9 +14,11 @@
         <module>common-core-jee</module>
         <module>common-util</module>
         <module>common-rest-jee</module>
+<!--
         <module>common-jpa</module>
         <module>common-system-rest</module>
         <module>common-system-jpa</module>
+-->
     </modules>
 
     <dependencyManagement>

@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.filter;
 
-import javax.ws.rs.ext.Provider;
+import jakarta.ws.rs.ext.Provider;
 
 import hu.icellmobilsoft.coffee.rest.filter.BaseCORSFilter;
 

@@ -22,7 +22,7 @@ package hu.icellmobilsoft.sampler.common.rest.jsonb;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import javax.json.bind.config.PropertyVisibilityStrategy;
+import jakarta.json.bind.config.PropertyVisibilityStrategy;
 
 /**
  * The default JSON-B output mapping has all public methods, include setter and getter. This configuration avoids this. Based on

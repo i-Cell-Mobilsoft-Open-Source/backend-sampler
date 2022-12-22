@@ -19,10 +19,10 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.exception;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
-import javax.interceptor.Interceptor;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.interceptor.Interceptor;
 
 import hu.icellmobilsoft.coffee.rest.exception.DefaultExceptionMessageTranslator;
 

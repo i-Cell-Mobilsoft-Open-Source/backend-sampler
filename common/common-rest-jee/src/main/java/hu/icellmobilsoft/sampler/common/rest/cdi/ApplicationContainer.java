@@ -22,7 +22,7 @@ package hu.icellmobilsoft.sampler.common.rest.cdi;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Application scoped container class

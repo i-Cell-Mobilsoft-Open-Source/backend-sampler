@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.filter;
 
-import javax.annotation.Priority;
+import jakarta.annotation.Priority;
 
 /**
  * Custom {@link Priority} annotation values

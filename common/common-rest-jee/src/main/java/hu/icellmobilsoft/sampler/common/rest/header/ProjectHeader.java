@@ -23,9 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import javax.enterprise.inject.Vetoed;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.enterprise.inject.Vetoed;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.util.date;
 
-import javax.enterprise.inject.Vetoed;
+import jakarta.enterprise.inject.Vetoed;
 
 /**
  * Date util.

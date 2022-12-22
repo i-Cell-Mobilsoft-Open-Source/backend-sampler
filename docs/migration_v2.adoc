@@ -6,6 +6,10 @@ Az oldal a jakartaEE 10 atálás szerinti tapasztaltokat gyűjti össze.
 
 Létrejött a `bom-wf-27 alprojekt`, ami a 27.0.1.Final Wildfly verzió komponenseit követi le.
 
+JPA modelgen egyszerűsödött,
+elég mostmár csak a org.hibernate:hibernate-jpamodelgen dependency,
+nem kell semmi már compiler beállítás.
+
 == BUG
 
 .SCD "x-schema::tns" didnt match any schema component
