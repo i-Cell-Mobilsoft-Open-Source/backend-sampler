@@ -21,13 +21,13 @@ package hu.icellmobilsoft.sampler.model.sample;
 
 import java.time.LocalDateTime;
 
-import javax.enterprise.inject.Vetoed;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import jakarta.enterprise.inject.Vetoed;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 import hu.icellmobilsoft.coffee.model.base.javatime.AbstractIdentifiedAuditEntity;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
