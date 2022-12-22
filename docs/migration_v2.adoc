@@ -10,6 +10,15 @@ JPA modelgen egyszerűsödött,
 elég mostmár csak a org.hibernate:hibernate-jpamodelgen dependency,
 nem kell semmi már compiler beállítás.
 
+RequestResponseMetricsProvider - context?
+
+Ideiglenesen kikapcsolva amig nincs deltaspike data megoldas:
+
+* common-jpa
+* common-system-jpa
+* sample-jpa-service
+
+
 == BUG
 
 .SCD "x-schema::tns" didnt match any schema component
