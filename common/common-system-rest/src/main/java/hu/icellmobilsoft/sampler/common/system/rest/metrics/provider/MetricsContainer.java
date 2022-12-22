@@ -21,7 +21,7 @@ package hu.icellmobilsoft.sampler.common.system.rest.metrics.provider;
 
 import java.time.LocalDateTime;
 
-import javax.enterprise.inject.Model;
+import jakarta.enterprise.inject.Model;
 
 /**
  * Microprofile-metrics RequestScope container

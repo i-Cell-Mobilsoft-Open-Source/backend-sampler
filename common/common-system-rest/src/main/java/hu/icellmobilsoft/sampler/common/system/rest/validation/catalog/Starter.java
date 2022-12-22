@@ -24,9 +24,9 @@ import java.net.URL;
 import java.net.URLStreamHandlerFactory;
 import java.text.MessageFormat;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
 
 import org.jboss.logging.Logger;
 
