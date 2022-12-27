@@ -41,7 +41,7 @@ import hu.icellmobilsoft.sampler.sample.restservice.action.RestSampleGetAction;
  */
 @DisplayName("Testing hu.icellmobilsoft.sampler.sample.restservice.action.RestSampleAction")
 @Tag(TestSuiteGroup.WELD_UNIT)
-class SampleActionIT extends BaseWeldUnitType {
+class SampleActionTest extends BaseWeldUnitType {
 
     @Inject
     private RestSampleGetAction underTest;

@@ -63,4 +63,8 @@ ami működik, de nem végleges megoldás.
 [source,xml]
 ----
 include::../dto/pom.xml[lines=34..42]
----
+----
+
+=== ProjectStage
+Deltaspike kidobása hatással van a `org.apache.deltaspike.core.api.projectstage.ProjectStage` osztályra,
+Coffee-ban ideiglenes athidalás van a kezelésére.
