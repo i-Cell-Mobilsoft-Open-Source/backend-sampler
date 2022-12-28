@@ -21,8 +21,8 @@ package hu.icellmobilsoft.sampler.sample.mongoservice.action;
 
 import java.lang.reflect.Type;
 
-import javax.enterprise.inject.Model;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

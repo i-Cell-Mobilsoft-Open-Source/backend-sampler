@@ -19,13 +19,12 @@
  */
 package hu.icellmobilsoft.sampler.sample.redispubsub.service.consumer;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
-import hu.icellmobilsoft.coffee.dto.exception.BusinessException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.gson.JsonUtil;
 import hu.icellmobilsoft.sampler.common.rest.cdi.ApplicationContainer;

@@ -19,8 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.sample.redisservice.rest;
 
-import javax.enterprise.inject.Model;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;

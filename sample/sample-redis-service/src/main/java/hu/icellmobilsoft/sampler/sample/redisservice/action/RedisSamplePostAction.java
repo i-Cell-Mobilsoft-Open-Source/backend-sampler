@@ -22,8 +22,8 @@ package hu.icellmobilsoft.sampler.sample.redisservice.action;
 import java.text.MessageFormat;
 import java.time.Duration;
 
-import javax.enterprise.inject.Model;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BONotFoundException;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;

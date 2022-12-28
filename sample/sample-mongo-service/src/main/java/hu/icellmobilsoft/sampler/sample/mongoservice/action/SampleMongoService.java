@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.sample.mongoservice.action;
 
-import javax.enterprise.context.Dependent;
+import jakarta.enterprise.context.Dependent;
 
 import hu.icellmobilsoft.coffee.module.mongodb.service.MongoService;
 

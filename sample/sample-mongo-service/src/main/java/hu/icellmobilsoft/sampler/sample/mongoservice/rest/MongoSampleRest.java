@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.sample.mongoservice.rest;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
