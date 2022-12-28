@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: develop.dockerfile
       args:
-        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:26.1.1.Final'
+        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
 #        custom cli script futtatása, ha a deploymenthez kell
 #        SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
     volumes:
