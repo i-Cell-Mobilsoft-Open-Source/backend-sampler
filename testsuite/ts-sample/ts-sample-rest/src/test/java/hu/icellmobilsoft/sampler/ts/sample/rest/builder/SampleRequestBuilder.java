@@ -19,8 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.ts.sample.rest.builder;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.inject.Model;
 
 import hu.icellmobilsoft.roaster.api.dto.BaseBuilder;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleCoreType;

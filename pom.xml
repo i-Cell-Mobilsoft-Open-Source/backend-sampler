@@ -214,8 +214,8 @@
         <module>sample</module>
 <!--
         <module>sample-quarkus</module>
-        <module>testsuite</module>
 -->
+        <module>testsuite</module>
     </modules>
 
     <repositories>
