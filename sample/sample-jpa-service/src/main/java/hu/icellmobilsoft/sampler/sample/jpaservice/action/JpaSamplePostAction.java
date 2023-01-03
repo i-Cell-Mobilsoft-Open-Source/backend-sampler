@@ -21,13 +21,17 @@ package hu.icellmobilsoft.sampler.sample.jpaservice.action;
 
 import java.time.LocalDateTime;
 
-import javax.enterprise.inject.Model;
-import javax.enterprise.inject.spi.CDI;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.inject.Model;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.dto.exception.SamplerException;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
@@ -51,6 +55,10 @@ public class JpaSamplePostAction extends BaseAction {
     @Inject
     private SampleTypeConverter sampleTypeConverter;
 
+    @Inject
+    @ThisLogger
+    AppLogger log;
+
     /**
      * Dummy sample write and read data from DB
      * 
@@ -62,10 +70,23 @@ public class JpaSamplePostAction extends BaseAction {
      */
     public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
 
+        try {
+            CDI.current().select(JpaSamplePostAction.class).get().createOneNeedTransaction();
+            throw new SamplerException("Unexpected successful save without @Transactional");
+        } catch (SamplerException e) {
+            throw e;
+        } catch (BaseException e) {
+            log.info("Expected exception - no transaction: [{0}]", e.getLocalizedMessage());
+        }
         // create entity
         SampleEntity created = CDI.current().select(JpaSamplePostAction.class).get().createOne();
 
         SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
+        if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
+                || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
+                || !created.getCreatorUser().equals(readed.getCreatorUser())) {
+            throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
+        }
 
         SampleResponse response = new SampleResponse();
         response.setSample(sampleTypeConverter.convert(readed));
@@ -83,6 +104,17 @@ public class JpaSamplePostAction extends BaseAction {
      */
     @Transactional
     public SampleEntity createOne() throws BaseException {
+        return createOneNeedTransaction();
+    }
+
+    /**
+     * Create one entity with dummy data. Need transaction for success.
+     * 
+     * @return created, persisted entity
+     * @throws BaseException
+     *             if error
+     */
+    public SampleEntity createOneNeedTransaction() throws BaseException {
         SampleEntity entity = new SampleEntity();
         entity.setLocalDateTime(LocalDateTime.now());
         entity.setStatus(SampleStatus.DONE);

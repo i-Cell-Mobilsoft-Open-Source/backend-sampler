@@ -58,7 +58,7 @@ public class SampleEntity extends AbstractIdentifiedAuditEntity {
      * Sample input enum value
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "VALUE", length = 10)
+    @Column(name = "ENUM_VALUE", length = 10)
     private SampleValue value;
 
     /**

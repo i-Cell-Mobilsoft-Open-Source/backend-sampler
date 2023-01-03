@@ -19,8 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.common.system.jpa.service;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.model.base.javatime.AbstractIdentifiedAuditEntity;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
@@ -36,24 +36,24 @@ import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
 @Dependent
 public class BatchService extends hu.icellmobilsoft.coffee.jpa.sql.batch.BatchService {
 
-    @Inject
-    private EntityHelper entityHelper;
-
-    @Override
-    protected <E> void handleInsertAudit(E entity) {
-        if (entity instanceof AbstractIdentifiedAuditEntity) {
-            AbstractIdentifiedAuditEntity e = (AbstractIdentifiedAuditEntity) entity;
-            e.setCreationDate(DateUtil.nowUTC());
-            e.setCreatorUser(entityHelper.currentUser());
-        }
-    }
-
-    @Override
-    protected <E> void handleUpdateAudit(E entity) {
-        if (entity instanceof AbstractIdentifiedAuditEntity) {
-            AbstractIdentifiedAuditEntity e = (AbstractIdentifiedAuditEntity) entity;
-            e.setModificationDate(DateUtil.nowUTC());
-            e.setModifierUser(entityHelper.currentUser());
-        }
-    }
+//    @Inject
+//    private EntityHelper entityHelper;
+//
+//    @Override
+//    protected <E> void handleInsertAudit(E entity) {
+//        if (entity instanceof AbstractIdentifiedAuditEntity) {
+//            AbstractIdentifiedAuditEntity e = (AbstractIdentifiedAuditEntity) entity;
+//            e.setCreationDate(DateUtil.nowUTC());
+//            e.setCreatorUser(entityHelper.currentUser());
+//        }
+//    }
+//
+//    @Override
+//    protected <E> void handleUpdateAudit(E entity) {
+//        if (entity instanceof AbstractIdentifiedAuditEntity) {
+//            AbstractIdentifiedAuditEntity e = (AbstractIdentifiedAuditEntity) entity;
+//            e.setModificationDate(DateUtil.nowUTC());
+//            e.setModifierUser(entityHelper.currentUser());
+//        }
+//    }
 }

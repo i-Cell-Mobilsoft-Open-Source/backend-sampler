@@ -21,7 +21,7 @@ package hu.icellmobilsoft.sampler.sample.jpaservice.converter;
 
 import java.util.Objects;
 
-import javax.enterprise.inject.Model;
+import jakarta.enterprise.inject.Model;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.system.jpa.converter.IResponseConverter;
