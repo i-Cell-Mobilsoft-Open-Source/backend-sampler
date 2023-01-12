@@ -97,9 +97,11 @@ public class JpaSamplePostAction extends BaseAction {
             throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
-        // delete in transaction
-        deleteOne(created.getId());
+        // deleteOne(created.getId());
 
+        // delete in transaction
+        CDI.current().select(JpaSamplePostAction.class).get().deleteOne(created.getId());
+        
         SampleResponse response = new SampleResponse();
         response.setSample(sampleTypeConverter.convert(readed));
 
