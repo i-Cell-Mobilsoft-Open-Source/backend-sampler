@@ -20,6 +20,7 @@
 package hu.icellmobilsoft.sampler.sample.jpaservice.action;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.spi.CDI;
@@ -38,6 +39,7 @@ import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleValue;
 import hu.icellmobilsoft.sampler.sample.jpaservice.converter.SampleTypeConverter;
+import hu.icellmobilsoft.sampler.sample.jpaservice.repository.SampleEntityRepository;
 import hu.icellmobilsoft.sampler.sample.jpaservice.service.SampleEntityService;
 
 /**
@@ -51,6 +53,9 @@ public class JpaSamplePostAction extends BaseAction {
 
     @Inject
     private SampleEntityService sampleEntityService;
+
+    @Inject
+    private SampleEntityRepository sampleEntityRepository;
 
     @Inject
     private SampleTypeConverter sampleTypeConverter;
@@ -70,6 +75,10 @@ public class JpaSamplePostAction extends BaseAction {
      */
     public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
 
+        // List<SampleEntity> entites = sampleEntityRepository.findAll();
+        // custom repo method
+        List<SampleEntity> entites = sampleEntityRepository.findByCustom();
+
         try {
             CDI.current().select(JpaSamplePostAction.class).get().createOneNeedTransaction();
             throw new SamplerException("Unexpected successful save without @Transactional");
@@ -88,6 +97,9 @@ public class JpaSamplePostAction extends BaseAction {
             throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
+        // delete in transaction
+        deleteOne(created.getId());
+
         SampleResponse response = new SampleResponse();
         response.setSample(sampleTypeConverter.convert(readed));
 
@@ -105,6 +117,12 @@ public class JpaSamplePostAction extends BaseAction {
     @Transactional
     public SampleEntity createOne() throws BaseException {
         return createOneNeedTransaction();
+    }
+
+    @Transactional
+    public void deleteOne(String id) throws BaseException {
+        // delete test
+        sampleEntityRepository.deleteById(id);
     }
 
     /**

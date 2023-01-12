@@ -19,7 +19,12 @@
  */
 package hu.icellmobilsoft.sampler.sample.jpaservice.repository;
 
+import java.util.List;
+
 import org.apache.deltaspike.data.api.EntityRepository;
+import org.apache.deltaspike.data.api.Modifying;
+import org.apache.deltaspike.data.api.Query;
+import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
@@ -34,4 +39,15 @@ import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
 @Repository
 public interface SampleEntityRepository extends EntityRepository<SampleEntity, String>, CriteriaSupport<SampleEntity> {
 
+	@Query("select i from SampleEntity i")
+	public List<SampleEntity> findByCustom();
+	
+	@Query("select i from SampleEntity i ORDER BY i.creationDate ASC")
+	public List<SampleEntity> findByCustomOrder();
+	
+    @Modifying
+    @Query("DELETE FROM SampleEntity i where i.id = :id")
+    int deleteById(@QueryParam("id") String id);
+	
+	
 }
