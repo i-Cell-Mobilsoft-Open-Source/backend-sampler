@@ -19,6 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.exception;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.ws.rs.ext.Provider;
 
 import hu.icellmobilsoft.coffee.rest.exception.DefaultGeneralExceptionMapper;
@@ -30,6 +31,7 @@ import hu.icellmobilsoft.coffee.rest.exception.DefaultGeneralExceptionMapper;
  * @since 0.1.0
  */
 @Provider
+@Dependent
 public class GeneralExceptionMapper extends DefaultGeneralExceptionMapper {
 
 }
