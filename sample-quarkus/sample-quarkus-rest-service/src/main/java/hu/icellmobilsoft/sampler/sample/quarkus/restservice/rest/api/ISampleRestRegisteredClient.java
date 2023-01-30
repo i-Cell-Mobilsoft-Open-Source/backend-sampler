@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api;
 
-import javax.ws.rs.Path;
+import jakarta.ws.rs.Path;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 

@@ -19,9 +19,10 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.restclient.listener;
 
+import hu.icellmobilsoft.coffee.module.mp.restclient.provider.DefaultRestClientBuilderListener;
+import hu.icellmobilsoft.sampler.common.rest.restclient.provider.ProjectSettingClientRequestFilter;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 
-import hu.icellmobilsoft.sampler.sample.quarkus.coffee.module.mp.restclient.provider.DefaultRestClientBuilderListener;
 
 /**
  * Projekt szintu REST client listener
@@ -37,8 +38,6 @@ public class ProjectRestClientBuilderListener extends DefaultRestClientBuilderLi
     @Override
     public void onNewBuilder(RestClientBuilder builder) {
         super.onNewBuilder(builder);
-
-        // TODO ProjectHeader
-        // builder.register(ProjectSettingClientRequestFilter.class);
+        builder.register(ProjectSettingClientRequestFilter.class);
     }
 }

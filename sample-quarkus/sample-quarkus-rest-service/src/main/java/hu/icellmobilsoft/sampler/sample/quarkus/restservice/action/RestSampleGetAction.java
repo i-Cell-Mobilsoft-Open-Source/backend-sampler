@@ -19,11 +19,12 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.action;
 
-import javax.enterprise.inject.Model;
+import jakarta.enterprise.inject.Model;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
@@ -36,7 +37,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
  * @since 0.1.0
  */
 @Model
-public class RestSampleGetAction {
+public class RestSampleGetAction extends BaseAction {
 
     /**
      * Dummy sample reponse
