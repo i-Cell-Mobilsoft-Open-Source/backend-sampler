@@ -56,6 +56,11 @@
                 <artifactId>common-system-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.common</groupId>
+                <artifactId>common-grpc-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

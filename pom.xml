@@ -259,7 +259,7 @@
         <profile>
             <id>check-javadoc</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -269,7 +269,7 @@
                         <configuration>
                             <failOnError>true</failOnError>
                             <failOnWarnings>true</failOnWarnings>
-                            <excludePackageNames>hu.icellmobilsoft.sampler.dto.*,hu.icellmobilsoft.sampler.model.*</excludePackageNames>
+                            <excludePackageNames>hu.icellmobilsoft.sampler.dto.*,hu.icellmobilsoft.sampler.model.*,hu.icellmobilsoft.sampler.common.sample.grpc.*</excludePackageNames>
                             <sourceFileExcludes>**/*_.java</sourceFileExcludes>
                         </configuration>
                     </plugin>

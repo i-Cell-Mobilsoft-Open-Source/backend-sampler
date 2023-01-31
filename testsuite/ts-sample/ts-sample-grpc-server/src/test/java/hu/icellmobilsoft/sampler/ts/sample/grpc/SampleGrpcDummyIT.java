@@ -1,0 +1,193 @@
+/*-
+ * #%L
+ * Sampler
+ * %%
+ * Copyright (C) 2022 - 2023 i-Cell Mobilsoft Zrt.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package hu.icellmobilsoft.sampler.ts.sample.grpc;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import jakarta.inject.Inject;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+import com.google.protobuf.Any;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Timestamp;
+import com.google.rpc.Code;
+import com.google.rpc.ErrorInfo;
+
+import hu.icellmobilsoft.coffee.se.logging.Logger;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
+import hu.icellmobilsoft.sampler.common.grpc.error.ErrorServiceGrpc;
+import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
+import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
+import io.grpc.protobuf.StatusProto;
+
+/**
+ * Sample grpc test
+ *
+ * @author czenczl
+ * @since 2.0.0
+ */
+@DisplayName("Testing Sample grpc server")
+@Tag("grpc")
+@TestInstance(Lifecycle.PER_CLASS)
+class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
+
+    private static final Logger LOGGER = Logger.getLogger(SampleGrpcDummyIT.class);
+
+    @Inject
+    @ConfigProperty(name = "testsuite.grpc.sampleGrpcServerService.grpcServer.host", defaultValue = "localhost")
+    private String grpcServerHost;
+
+    @Inject
+    @ConfigProperty(name = "testsuite.grpc.sampleGrpcServerService.grpcServer.port", defaultValue = 8199 + "")
+    private Integer grpcServerPort;
+
+    private ManagedChannel channel;
+
+    @BeforeAll
+    public void init() {
+        channel = ManagedChannelBuilder.forAddress(grpcServerHost, grpcServerPort).usePlaintext().build();
+    }
+
+    @AfterAll
+    public void close() {
+        channel.shutdown();
+    }
+
+    @Test
+    @DisplayName("test dummy grpc service")
+    void testDummyGrpcService() {
+
+        hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+
+        hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+        baseMessageBuilder.setAmount(3.14);
+        baseMessageBuilder.setFirstName("first");
+        baseMessageBuilder.setIsActive(true);
+        baseMessageBuilder.setCount(50);
+
+        LocalDate date = LocalDate.of(2022, 04, 14);
+        Timestamp timestamp = Timestamp.newBuilder().setSeconds(date.toEpochSecond(LocalTime.now(), ZoneOffset.UTC)).build();
+
+        baseMessageBuilder.setDate(timestamp);
+        reqBuilder.setRequest(baseMessageBuilder.build());
+
+        DummyRequest dummyRequest = reqBuilder.build();
+        DummyServiceGrpc.DummyServiceBlockingStub stub = DummyServiceGrpc.newBlockingStub(channel);
+        DummyResponse helloResponse = stub.getDummy(dummyRequest);
+
+        Assertions.assertEquals("first", helloResponse.getResponse().getFirstName());
+        Assertions.assertEquals(true, helloResponse.getResponse().getIsActive());
+        Assertions.assertEquals(3.14, helloResponse.getResponse().getAmount());
+        Assertions.assertEquals(50, helloResponse.getResponse().getCount());
+        Assertions.assertNotNull(helloResponse.getResponse().getDate());
+    }
+
+    @Test
+    @DisplayName("test dummy grpc service multithread")
+    void testDummyGrpcServiceMulti() throws InterruptedException {
+        int thread = 15000;
+        ExecutorService service = Executors.newFixedThreadPool(thread);
+        CountDownLatch latch = new CountDownLatch(thread);
+        Instant start = Instant.now();
+        for (int i = 0; i < thread; i++) {
+            service.submit(() -> {
+
+                hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+
+                hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+                baseMessageBuilder.setAmount(3.14);
+                baseMessageBuilder.setFirstName("first");
+                baseMessageBuilder.setIsActive(true);
+                baseMessageBuilder.setCount(50);
+
+                LocalDate date = LocalDate.of(2022, 04, 14);
+                Timestamp timestamp = Timestamp.newBuilder().setSeconds(date.toEpochSecond(LocalTime.now(), ZoneOffset.UTC)).build();
+
+                baseMessageBuilder.setDate(timestamp);
+                reqBuilder.setRequest(baseMessageBuilder.build());
+
+                DummyRequest dummyRequest = reqBuilder.build();
+                DummyServiceGrpc.DummyServiceBlockingStub stub = DummyServiceGrpc.newBlockingStub(channel);
+                DummyResponse helloResponse = stub.getDummy(dummyRequest);
+
+                latch.countDown();
+
+            });
+        }
+        latch.await();
+
+        Instant finish = Instant.now();
+        long timeElapsed = Duration.between(start, finish).toMillis();
+        long sec = TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
+        // 13 sec
+        LOGGER.info("duration: " + sec);
+
+    }
+
+    @Test
+    @DisplayName("test exception handling")
+    void testErrorGrpc() throws InvalidProtocolBufferException {
+
+        ErrorServiceGrpc.ErrorServiceBlockingStub stub = ErrorServiceGrpc.newBlockingStub(channel);
+
+        String requestId = RandomUtil.generateId();
+        StatusRuntimeException thrown = Assertions.assertThrows(StatusRuntimeException.class,
+                () -> stub.error(RequestForError.newBuilder().setRequestId(requestId).build()));
+
+        com.google.rpc.Status status = StatusProto.fromThrowable(thrown);
+        Assertions.assertEquals("INTERNAL", Code.forNumber(status.getCode()).toString());
+        Assertions.assertEquals("Grpc server error", status.getMessage());
+
+        for (Any any : status.getDetailsList()) {
+            if (any.is(ErrorInfo.class)) {
+                ErrorInfo errorInfo = any.unpack(ErrorInfo.class);
+                Assertions.assertEquals("test exception", errorInfo.getReason());
+                Assertions.assertEquals("sample", errorInfo.getDomain());
+                Assertions.assertEquals(requestId, errorInfo.getMetadataMap().get("requestId"));
+            }
+        }
+
+    }
+
+}

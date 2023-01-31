@@ -1,0 +1,44 @@
+= gRPC server service
+
+* Main: `sample/sample-grpc-server-service`
+
+A service célja a gRPC szerver használata.
+CDI alapu gRPC szerver minta implementació, tech felderítés céljából.
+Jakarta oldalon folyamatban van a kidolgozása: https://projects.eclipse.org/projects/ee4j.rpc/reviews/creation-review
+Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack
+
+== GRPC API
+common-grpc-api modul general java classokat amikkel kommunikalni lehet a szerverrel.
+*.proto file-ban van meghatározva az api leíró, erre fut meg a maven plugin.
+proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
+
+generalt tartalom:
+* target/generated-sources/protobuf/java -> ez lényegében a dto rész, a hozzá tartozó builderekkel, a grpc üzenet tartalmat írjak le
+* target/generated-sources/protobuf/grpc-java -> ez lényegében az interface rész, itt van a gRPC service leírója, milyen metódusok érhetőek el
+
+== Szerver
+Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio.
+a protobuf-maven-plugin nem CDI kompatibilisen generál API-t, belekerül egy final metódus az osztalyba, ezért nem lehet proxyzni az objektumot.
+Erre kerülő megoldás egy wrapper osztaly ami CDI beannek delegalja a gRPC api hívást, de ez hosszutavon kényelmetlen, ennek a megoldása már folyamatban van https://projects.eclipse.org/projects/ee4j.rpc
+
+Implementalva vannak:
+* Request/Response log + MDC kezelésre minta (2 interceptor)
+* 2 gRPC service, ami automatikusan deployolodik a szerverrel
+* minta exception kezeles
+* a szerver default thread poolal dolgozik, productionben nem használható, saját implementáció kell hozzá ami paraméterezhető (legalabbis ez az ajanlas)
+
+== Tesztek
+* 3 teszt gRPC kliens haszálat
+* egyszerű dummy kérés
+* többszálas teszt
+* minta hibakezelésre
+
+== REST API
+
+Automatikusan lekéréskor generált openapi végpont:
+http://localhost:8081/openapi
+(generált API leíró később lessz bekötve).
+
+== Konfiguráció
+
+Port beállítás: microprofile-config.properties -> sample.gprc.server.port: 8199

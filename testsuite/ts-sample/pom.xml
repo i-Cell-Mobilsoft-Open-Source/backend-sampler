@@ -11,6 +11,7 @@
 
     <modules>
         <module>ts-sample-rest</module>
+        <module>ts-sample-grpc-server</module>
     </modules>
 
     <dependencyManagement>
