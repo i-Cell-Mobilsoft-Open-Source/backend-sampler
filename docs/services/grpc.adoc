@@ -5,7 +5,7 @@
 A service célja a gRPC szerver használata.
 CDI alapu gRPC szerver minta implementació, tech felderítés céljából.
 Jakarta oldalon folyamatban van a kidolgozása: https://projects.eclipse.org/projects/ee4j.rpc/reviews/creation-review
-Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack
+Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack , https://www.youtube.com/watch?v=UYSNM9Dy5M4
 
 == GRPC API
 common-grpc-api modul general java classokat amikkel kommunikalni lehet a szerverrel.
