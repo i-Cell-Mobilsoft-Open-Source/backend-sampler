@@ -12,8 +12,8 @@
 	<artifactId>common-grpc-api</artifactId>
 
 	<properties>
-		<version.io.grpc.version>1.48.0</version.io.grpc.version>
-		<version.protoc.version>3.17.2</version.protoc.version>
+		<version.io.grpc.version>1.52.1</version.io.grpc.version>
+		<version.protoc.version>3.21.7</version.protoc.version>
 		<version.os-maven-plugin.version>1.6.2</version.os-maven-plugin.version>
 		<version.protobuf-maven-plugin.version>0.6.1</version.protobuf-maven-plugin.version>
 	</properties>
