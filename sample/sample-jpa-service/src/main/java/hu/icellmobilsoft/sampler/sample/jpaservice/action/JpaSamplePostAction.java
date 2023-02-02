@@ -111,7 +111,6 @@ public class JpaSamplePostAction extends BaseAction {
     public SampleEntity createOneNeedTransaction() throws BaseException {
         SampleEntity entity = new SampleEntity();
         entity.setLocalDateTime(LocalDateTime.now());
-        entity.setStatus(SampleStatus.DONE);
         entity.setStatus(SampleStatus.PROCESSING);
         entity.setInputValue("Generated");
         entity.setValue(SampleValue.VALUE_B);
