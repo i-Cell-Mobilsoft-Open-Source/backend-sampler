@@ -25,6 +25,7 @@ import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
+import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.exception.SamplerException;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
@@ -35,6 +36,7 @@ import hu.icellmobilsoft.sampler.model.sample.enums.SampleValue;
 import hu.icellmobilsoft.sampler.sample.jpaservice.converter.SampleTypeConverter;
 import hu.icellmobilsoft.sampler.sample.jpaservice.service.SampleEntityService;
 import jakarta.enterprise.inject.Model;
+import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
 /**
@@ -53,7 +55,7 @@ public class JpaSamplePostAction extends BaseAction {
     private SampleTypeConverter sampleTypeConverter;
 
     @Inject
-    private SampleEntityDBHelper sampleEntityDBHelper;
+    private TransactionHelper transactionHelper;
 
     @Inject
     @ThisLogger
@@ -71,7 +73,7 @@ public class JpaSamplePostAction extends BaseAction {
     public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
 
         try {
-            sampleEntityDBHelper.saveWithoutTransaction(createDummySampleEntity());
+            CDI.current().select(JpaSamplePostAction.class).get().createOneNeedTransaction();
             throw new SamplerException("Unexpected successful save without @Transactional");
         } catch (SamplerException e) {
             throw e;
@@ -79,11 +81,11 @@ public class JpaSamplePostAction extends BaseAction {
             log.info("Expected exception - no transaction: [{0}]", e.getLocalizedMessage());
         }
         // create entity
-        SampleEntity created = sampleEntityDBHelper.save(createDummySampleEntity());
+        SampleEntity created = transactionHelper.executeWithTransaction(this::createOneNeedTransaction);
 
         // modify entity
         created.setStatus(SampleStatus.DONE);
-        created = sampleEntityDBHelper.save(created);
+        created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
 
         SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
@@ -99,13 +101,21 @@ public class JpaSamplePostAction extends BaseAction {
         return response;
     }
 
-    private SampleEntity createDummySampleEntity() {
+    /**
+     * Create one entity with dummy data. Need transaction for success.
+     *
+     * @return created, persisted entity
+     * @throws BaseException
+     *             if error
+     */
+    public SampleEntity createOneNeedTransaction() throws BaseException {
         SampleEntity entity = new SampleEntity();
         entity.setLocalDateTime(LocalDateTime.now());
+        entity.setStatus(SampleStatus.DONE);
         entity.setStatus(SampleStatus.PROCESSING);
         entity.setInputValue("Generated");
         entity.setValue(SampleValue.VALUE_B);
-        return entity;
+        return sampleEntityService.save(entity);
     }
 
 }
