@@ -19,10 +19,11 @@
  */
 package hu.icellmobilsoft.sampler.common.system.jpa.jpa;
 
-import hu.icellmobilsoft.coffee.model.base.annotation.CurrentUser;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
+
+import hu.icellmobilsoft.coffee.model.base.annotation.CurrentUser;
 
 /**
  * Entity helper class
