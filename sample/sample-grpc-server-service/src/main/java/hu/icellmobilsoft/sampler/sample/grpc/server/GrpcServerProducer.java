@@ -28,6 +28,7 @@ import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
+import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 
 /**
@@ -45,7 +46,7 @@ public class GrpcServerProducer {
 
     @Produces
     @GrpcServer(configKey = "")
-    public GrpcServerManager produceServer() {
+    public GrpcServerManager produceServer() throws BaseException {
         // note config kulcsot nem hasznaljuk jelenleg semmire
         Instance<GrpcServerManager> instance = CDI.current().select(GrpcServerManager.class);
 

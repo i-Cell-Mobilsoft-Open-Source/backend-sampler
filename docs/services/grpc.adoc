@@ -26,6 +26,7 @@ Implementalva vannak:
 * 2 gRPC service, ami automatikusan deployolodik a szerverrel
 * minta exception kezeles
 * a szerver default thread poolal dolgozik, productionben nem használható, saját implementáció kell hozzá ami paraméterezhető (legalabbis ez az ajanlas)
+* gRPC szerver konfigurációk, NettyServerBuilder alapon
 
 == Tesztek
 * 3 teszt gRPC kliens haszálat

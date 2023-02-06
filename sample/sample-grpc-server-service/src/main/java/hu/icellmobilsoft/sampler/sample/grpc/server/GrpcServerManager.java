@@ -21,15 +21,21 @@ package hu.icellmobilsoft.sampler.sample.grpc.server;
 
 import java.io.IOException;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
+import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConfig;
+import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConnection;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.IGrpcService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerRequestInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerResponseInterceptor;
@@ -54,7 +60,7 @@ public class GrpcServerManager {
     private BeanManager beanManager;
 
     @Inject
-    @ConfigProperty(name = "sample.gprc.server.port", defaultValue = 8199 + "")
+    @ConfigProperty(name = "coffee.grpc.server.port", defaultValue = 8199 + "")
     private Integer grpcServerPort;
 
     private Server server;
@@ -63,18 +69,40 @@ public class GrpcServerManager {
      * szerver inicializacio, port bind, servicek hozzáadása a szerverhez, interceptorok definialasa
      * 
      */
-    public void init() {
+    public void init() throws BaseException {
         // grpc servicek gyujtese
         Set<Bean<?>> beans = beanManager.getBeans(IGrpcService.class);
         log.info("Found [{0}] grpc service", beans.size());
         // bind to port
         ServerBuilder<?> serverBuilder = ServerBuilder.forPort(grpcServerPort);
+        
+        //configure server
+        configureServer(serverBuilder);
         // add interceptor
         addInterceptor(serverBuilder);
         // add services
         beans.forEach((i) -> addService(i, serverBuilder));
         // build server
         server = serverBuilder.build();
+    }
+
+    private void configureServer(ServerBuilder<?> serverBuilder) throws BaseException {
+        // server configs
+        Instance<GrpcServerConfig> configInstance = CDI.current().select(GrpcServerConfig.class, new GrpcServerConnection.Literal("server"));
+        GrpcServerConfig config = configInstance.get();
+
+        // NettyServerBuilder
+        serverBuilder.maxConnectionAge(config.getMaxConnectionAge(), TimeUnit.SECONDS);
+        serverBuilder.maxConnectionAgeGrace(config.getMaxConnectionAgeGrace(), TimeUnit.SECONDS);
+        serverBuilder.keepAliveTime(config.getKeepAliveTime(), TimeUnit.MINUTES);
+        serverBuilder.keepAliveTimeout(config.getKeepAliveTimeout(), TimeUnit.SECONDS);
+        serverBuilder.maxConnectionIdle(config.getMaxConnectionIdle(), TimeUnit.SECONDS);
+        serverBuilder.maxInboundMessageSize(config.getMaxInboundMessageSize());
+        serverBuilder.maxInboundMetadataSize(config.getMaxInboundMetadataSize());
+        serverBuilder.permitKeepAliveTime(config.getPermitKeepAliveTime(), TimeUnit.MINUTES);
+        serverBuilder.permitKeepAliveWithoutCalls(config.isPermitKeepAliveWithoutCalls());
+        
+        configInstance.destroy(config);
     }
 
     /**
@@ -85,9 +113,10 @@ public class GrpcServerManager {
      * @param serverBuilder
      *            szerver builder
      */
-    public void addService(Bean<?> bean, ServerBuilder<?> serverBuilder) {
+    private void addService(Bean<?> bean, ServerBuilder<?> serverBuilder) {
         BindableService service = (BindableService) beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
         serverBuilder.addService(service);
+
     }
 
     /**
@@ -97,7 +126,7 @@ public class GrpcServerManager {
      * @param serverBuilder
      *            szerver builder
      */
-    public void addInterceptor(ServerBuilder<?> serverBuilder) {
+    private void addInterceptor(ServerBuilder<?> serverBuilder) {
         serverBuilder.intercept(new ServerResponseInterceptor());
         serverBuilder.intercept(new ServerRequestInterceptor());
     }

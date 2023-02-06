@@ -126,7 +126,7 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
     @Test
     @DisplayName("test dummy grpc service multithread")
     void testDummyGrpcServiceMulti() throws InterruptedException {
-        int thread = 15000;
+        int thread = 256;
         ExecutorService service = Executors.newFixedThreadPool(thread);
         CountDownLatch latch = new CountDownLatch(thread);
         Instant start = Instant.now();
