@@ -13,8 +13,19 @@ common-grpc-api modul general java classokat amikkel kommunikalni lehet a szerve
 proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
 
 generalt tartalom:
+
 * target/generated-sources/protobuf/java -> ez lényegében a dto rész, a hozzá tartozó builderekkel, a grpc üzenet tartalmat írjak le
 * target/generated-sources/protobuf/grpc-java -> ez lényegében az interface rész, itt van a gRPC service leírója, milyen metódusok érhetőek el
+
+=== XSD to proto
+common-grpc-api modulba belekerült egy példa XSD-ből protocol-buffer létrehozásra.
+A schema2proto maven plugin felhasználásával, aminek részletes leírást tartalmazó konfig fájlja az etc/schema2proto/config.yaml helyen található.
+
+Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok dependency-ket másolni, amik a generálás után eltávolításra kerülnek:
+
+* hu.icellmobilsoft.coffeecoffee-dto-xsd (xsd)
+* com.google.protobuf:protobuf-java (proto)
+* com.google.api.grpc:proto-google-common-protos (proto)
 
 == Szerver
 Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio.
@@ -22,6 +33,7 @@ a protobuf-maven-plugin nem CDI kompatibilisen generál API-t, belekerül egy fi
 Erre kerülő megoldás egy wrapper osztaly ami CDI beannek delegalja a gRPC api hívást, de ez hosszutavon kényelmetlen, ennek a megoldása már folyamatban van https://projects.eclipse.org/projects/ee4j.rpc
 
 Implementalva vannak:
+
 * Request/Response log + MDC kezelésre minta (2 interceptor)
 * 2 gRPC service, ami automatikusan deployolodik a szerverrel
 * minta exception kezeles

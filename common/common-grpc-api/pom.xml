@@ -12,9 +12,15 @@
 	<artifactId>common-grpc-api</artifactId>
 
 	<properties>
+		<version.maven-dependency-plugin.version>3.5.0</version.maven-dependency-plugin.version>
+		<version.maven-antrun-plugin.version>3.1.0</version.maven-antrun-plugin.version>
+
+		<version.schema2proto-maven-plugin.version>1.83</version.schema2proto-maven-plugin.version>
+
 		<version.io.grpc.version>1.52.1</version.io.grpc.version>
 		<version.protoc.version>3.21.7</version.protoc.version>
-		<version.os-maven-plugin.version>1.6.2</version.os-maven-plugin.version>
+		<version.proto-google-common-protos.version>2.9.0</version.proto-google-common-protos.version>
+		<version.os-maven-plugin.version>1.7.1</version.os-maven-plugin.version>
 		<version.protobuf-maven-plugin.version>0.6.1</version.protobuf-maven-plugin.version>
 	</properties>
 
@@ -39,7 +45,21 @@
 			<artifactId>grpc-stub</artifactId>
             <version>${version.io.grpc.version}</version>
 		</dependency>
-		 <dependency>
+
+		<!-- schema2proto miatt pluszba be kellett emelni mert nem tudta feloldani a google importokat -->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>${version.protoc.version}</version>
+		</dependency>
+		<!-- xsd:date and xsd:time equivalents -->
+		<dependency>
+			<groupId>com.google.api.grpc</groupId>
+			<artifactId>proto-google-common-protos</artifactId>
+			<version>${version.proto-google-common-protos.version}</version>
+		</dependency>
+
+		<dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
             <version>1.3.2</version>
@@ -56,11 +76,78 @@
 			</extension>
 		</extensions>
 		<plugins>
+			<!-- schema2proto generáláshoz szükséges XSD és proto dependenciák másolása classpath-ra -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${version.maven-dependency-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>resource-dependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>hu.icellmobilsoft.coffee</groupId>
+									<artifactId>coffee-dto-xsd</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<includes>**/*.xsd</includes>
+									<outputDirectory>${project.build.directory}</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>com.google.protobuf</groupId>
+									<artifactId>protobuf-java</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<includes>**/*.proto</includes>
+									<outputDirectory>${project.build.directory}/proto_deps</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>com.google.api.grpc</groupId>
+									<artifactId>proto-google-common-protos</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<includes>**/*.proto</includes>
+									<outputDirectory>${project.build.directory}/proto_deps</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- maga az XSD -> proto konverter plugin -->
+			<plugin>
+				<groupId>no.entur</groupId>
+				<artifactId>schema2proto-maven-plugin</artifactId>
+				<version>${version.schema2proto-maven-plugin.version}</version>
+				<configuration>
+					<!-- ez tartalmaz minden beállítást, részletes leírásokkal -->
+					<configFile>../../etc/schema2proto/config.yaml</configFile>
+					<!-- root xml/xsd amit konvertálni akarunk, szükséges mindenhova megadni a schemaLocation-t -->
+					<xsdFile>src/main/resources/xsd/hu/icellmobilsoft/sampler/common/superProto.xml</xsdFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>protobuf-file-generate</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.xolstice.maven.plugins</groupId>
 				<artifactId>protobuf-maven-plugin</artifactId>
 				<version>${version.protobuf-maven-plugin.version}</version>
 				<configuration>
+					<attachProtoSources>true</attachProtoSources>
 					<protocArtifact>com.google.protobuf:protoc:${version.protoc.version}:exe:${os.detected.classifier}</protocArtifact>
 					<pluginId>grpc-java</pluginId>
 					<pluginArtifact>io.grpc:protoc-gen-grpc-java:${version.io.grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
@@ -74,6 +161,29 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- maven-dependency-plugin után takarítás -->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-antrun-plugin</artifactId>-->
+<!--				<version>${version.maven-antrun-plugin.version}</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>test</phase>-->
+<!--						<goals>-->
+<!--							<goal>run</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<target>-->
+<!--								<delete includeEmptyDirs="true">-->
+<!--									<fileset dir="${basedir}/target/xsd" />-->
+<!--									<fileset dir="${basedir}/target/proto_deps" />-->
+<!--								</delete>-->
+<!--							</target>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 

@@ -19,20 +19,26 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import com.google.protobuf.Any;
 import com.google.rpc.ErrorInfo;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
 import hu.icellmobilsoft.sampler.common.grpc.error.ResponseForError;
 import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleRequestType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleResponseType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleStatusEnumType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleType;
+import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
+import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
 import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * CDI action bean
@@ -62,6 +68,38 @@ public class SampleGrpcAction {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
 
+    }
+
+    /**
+     * dummy call
+     *
+     * @param request
+     *            {@link DummyRequest}
+     * @param responseObserver
+     *            {@link StreamObserver<DummyResponse>}
+     */
+    public void call(DummyXsdRequest request, StreamObserver<DummyXsdResponse> responseObserver) {
+
+        DummyXsdResponse response = toXsdResponse(request);
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+
+    }
+
+    private DummyXsdResponse toXsdResponse(DummyXsdRequest request) {
+        SampleRequestType sampleRequest = request.getRequest();
+        DummyXsdResponse.Builder builder = DummyXsdResponse.newBuilder();
+        SampleResponseType.Builder builder1 = SampleResponseType.newBuilder();
+        SampleType.Builder builder2 = SampleType.newBuilder();
+        builder2.setSampleId(RandomUtil.generateId());
+        builder2.setSampleStatus(SampleStatusEnumType.SAMPLE_STATUS_ENUM_TYPE_DONE);
+        builder2.setColumnA(sampleRequest.getSample().getColumnA());
+        builder2.setColumnB(sampleRequest.getSample().getColumnB());
+        builder1.setSample(builder2);
+        builder.setResponse(builder1);
+
+        return builder.build();
     }
 
     private DummyResponse toResponse(DummyRequest request) {

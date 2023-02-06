@@ -11,6 +11,12 @@
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.testsuite</groupId>
             <artifactId>ts-common-rest</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>hu.icellmobilsoft.coffee</groupId>
+                    <artifactId>coffee-dto-gen</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <build>

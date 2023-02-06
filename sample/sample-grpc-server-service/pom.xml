@@ -17,6 +17,12 @@
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.common</groupId>
             <artifactId>common-system-rest</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>hu.icellmobilsoft.coffee</groupId>
+                    <artifactId>coffee-dto-gen</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.common</groupId>
@@ -29,6 +35,10 @@
                 <exclusion>
                     <groupId>org.glassfish.jaxb</groupId>
                     <artifactId>jaxb-runtime</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>hu.icellmobilsoft.coffee</groupId>
+                    <artifactId>coffee-dto-gen</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
