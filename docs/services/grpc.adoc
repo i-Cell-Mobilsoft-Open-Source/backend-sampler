@@ -27,6 +27,7 @@ Implementalva vannak:
 * minta exception kezeles
 * a szerver default thread poolal dolgozik, productionben nem használható, saját implementáció kell hozzá ami paraméterezhető (legalabbis ez az ajanlas)
 * gRPC szerver konfigurációk, NettyServerBuilder alapon
+* https://github.com/grpc/grpc-java/blob/master/netty/src/main/java/io/grpc/netty/NettyServerBuilder.java
 
 == Tesztek
 * 3 teszt gRPC kliens haszálat
