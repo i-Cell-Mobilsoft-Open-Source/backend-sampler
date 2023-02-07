@@ -23,11 +23,11 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 
-import org.apache.deltaspike.data.api.audit.CurrentUser;
+import hu.icellmobilsoft.coffee.model.base.annotation.CurrentUser;
 
 /**
  * Entity helper class
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  */
@@ -42,7 +42,7 @@ public class EntityHelper extends hu.icellmobilsoft.coffee.jpa.sql.entity.Entity
 
     /**
      * Audit user producer
-     * 
+     *
      * @return customerUser id
      */
     @Produces
