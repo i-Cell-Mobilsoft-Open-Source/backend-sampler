@@ -19,10 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.ts.sample.grpc;
 
-import com.google.protobuf.Timestamp;
-import hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType;
-import hu.icellmobilsoft.coffee.dto.common.commonservice.ContextTypeOrBuilder;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import jakarta.inject.Inject;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -33,20 +31,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import com.google.protobuf.Timestamp;
+
+import hu.icellmobilsoft.coffee.dto.common.commonservice.XsdProtoWrapper.ContextType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleCoreType;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleRequestType;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleType;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleValueEnumType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleCoreType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleRequestType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import jakarta.inject.Inject;
-
-import java.time.OffsetDateTime;
 
 /**
  * Sample XSD grpc test

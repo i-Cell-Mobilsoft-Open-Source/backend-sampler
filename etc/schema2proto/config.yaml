@@ -25,7 +25,8 @@ inheritanceToComposition: false
 # Any options that will be added to each proto file
 options:
 #  java_package: hu.icellmobilsoft.schemas
-  java_multiple_files: true
+  java_outer_classname: XsdProtoWrapper
+  java_multiple_files: false
 
 # Any extra imports added to each proto file. Must be used if referring to external types
 customImports:

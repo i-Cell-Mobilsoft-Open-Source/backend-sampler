@@ -29,10 +29,7 @@ import hu.icellmobilsoft.sampler.common.grpc.error.ResponseForError;
 import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleRequestType;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleResponseType;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleStatusEnumType;
-import hu.icellmobilsoft.sampler.common.sample.rest.post.SampleType;
+import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
 import io.grpc.protobuf.StatusProto;
@@ -88,12 +85,12 @@ public class SampleGrpcAction {
     }
 
     private DummyXsdResponse toXsdResponse(DummyXsdRequest request) {
-        SampleRequestType sampleRequest = request.getRequest();
+        XsdProtoWrapper.SampleRequestType sampleRequest = request.getRequest();
         DummyXsdResponse.Builder builder = DummyXsdResponse.newBuilder();
-        SampleResponseType.Builder builder1 = SampleResponseType.newBuilder();
-        SampleType.Builder builder2 = SampleType.newBuilder();
+        XsdProtoWrapper.SampleResponseType.Builder builder1 = XsdProtoWrapper.SampleResponseType.newBuilder();
+        XsdProtoWrapper.SampleType.Builder builder2 = XsdProtoWrapper.SampleType.newBuilder();
         builder2.setSampleId(RandomUtil.generateId());
-        builder2.setSampleStatus(SampleStatusEnumType.SAMPLE_STATUS_ENUM_TYPE_DONE);
+        builder2.setSampleStatus(XsdProtoWrapper.SampleStatusEnumType.SAMPLE_STATUS_ENUM_TYPE_DONE);
         builder2.setColumnA(sampleRequest.getSample().getColumnA());
         builder2.setColumnB(sampleRequest.getSample().getColumnB());
         builder1.setSample(builder2);
