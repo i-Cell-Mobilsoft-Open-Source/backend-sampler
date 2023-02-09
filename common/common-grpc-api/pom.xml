@@ -120,6 +120,34 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<!--schema2proto generáláshoz szükséges configot átmásoljuk, hogy lehessen filterelni maven variable-hoz
+				 multi module buildhez kell, mert a fájlban lehetnek import hivatkozások-->
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/etc/schema2proto</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../../etc/schema2proto</directory>
+									<includes>
+										<include>config.yaml</include>
+									</includes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- maga az XSD -> proto konverter plugin -->
 			<plugin>
 				<groupId>no.entur</groupId>
@@ -127,7 +155,7 @@
 				<version>${version.schema2proto-maven-plugin.version}</version>
 				<configuration>
 					<!-- ez tartalmaz minden beállítást, részletes leírásokkal -->
-					<configFile>../../etc/schema2proto/config.yaml</configFile>
+					<configFile>${project.build.directory}/etc/schema2proto/config.yaml</configFile>
 					<!-- root xml/xsd amit konvertálni akarunk, szükséges mindenhova megadni a schemaLocation-t -->
 					<xsdFile>src/main/resources/xsd/hu/icellmobilsoft/sampler/common/superProto.xml</xsdFile>
 				</configuration>
@@ -147,6 +175,8 @@
 				<artifactId>protobuf-maven-plugin</artifactId>
 				<version>${version.protobuf-maven-plugin.version}</version>
 				<configuration>
+					<protoSourceRoot>${project.build.directory}/generated-proto</protoSourceRoot>
+					<protoSourceRoot>${basedir}/src/main/proto</protoSourceRoot>
 					<attachProtoSources>true</attachProtoSources>
 					<protocArtifact>com.google.protobuf:protoc:${version.protoc.version}:exe:${os.detected.classifier}</protocArtifact>
 					<pluginId>grpc-java</pluginId>

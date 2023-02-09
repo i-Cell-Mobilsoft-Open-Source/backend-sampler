@@ -2,7 +2,7 @@
 #outputFilename: generated-file.proto
 
 # Target directory to write resulting proto files. Proto files are placed in sub folders according to their package name
-outputDirectory: ./src/main/proto/
+outputDirectory: ${project.build.directory}/generated-proto/
 
 # Include XSD annotation/documentation on message level
 #includeMessageDocs: true
@@ -37,7 +37,7 @@ customImports:
 # Any extra import locations to use when the linker is trying to validate the generated proto files.
 # Used in conjunction with customImports
 customImportLocations:
-  - target/proto_deps
+  - ${project.build.directory}/proto_deps
 
 # Ignore computed output fields. Note that the field name is the one used before converting to lower_case
 #ignoreOutputFields:
