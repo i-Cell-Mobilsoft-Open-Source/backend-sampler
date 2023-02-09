@@ -4,6 +4,8 @@ package hu.icellmobilsoft.sampler.common.grpc.error;
 
 message RequestForError {
     string requestId = 1;
+    string requestedExceptionClass = 2;
+    string exceptionMessage = 3;
 }
 
 message ResponseForError {

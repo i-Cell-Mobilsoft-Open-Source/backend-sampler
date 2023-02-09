@@ -19,10 +19,14 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service.error;
 
+import com.google.rpc.Status;
+
+import hu.icellmobilsoft.sampler.common.grpc.core.exception.ExceptionHandler;
 import hu.icellmobilsoft.sampler.common.grpc.error.ErrorServiceGrpc.ErrorServiceImplBase;
 import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
 import hu.icellmobilsoft.sampler.common.grpc.error.ResponseForError;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
+import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
 
 /**
@@ -43,7 +47,12 @@ public class ErrorServiceImpl extends ErrorServiceImplBase {
     @Override
     public void error(RequestForError request, StreamObserver<ResponseForError> responseObserver) {
         // delegate to cdi bean
-        sampleGrpcAction.call(request, responseObserver);
+        try {
+            sampleGrpcAction.call(request, responseObserver);
+        } catch (Throwable e) {
+            Status status = ExceptionHandler.getInstance().handle(e);
+            responseObserver.onError(StatusProto.toStatusRuntimeException(status));
+        }
     }
 
 }

@@ -23,6 +23,10 @@
             <artifactId>common-grpc-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>hu.icellmobilsoft.sampler.common</groupId>
+            <artifactId>common-grpc-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>hu.icellmobilsoft.roaster</groupId>
             <artifactId>roaster-weldunit</artifactId>
             <exclusions>

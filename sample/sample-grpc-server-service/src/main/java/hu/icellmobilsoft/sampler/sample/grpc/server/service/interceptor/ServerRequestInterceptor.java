@@ -19,10 +19,13 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor;
 
+import org.apache.commons.lang3.StringUtils;
+
 import hu.icellmobilsoft.coffee.dto.common.LogConstants;
 import hu.icellmobilsoft.coffee.se.logging.DefaultLogger;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.se.logging.mdc.MDC;
+import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import io.grpc.Context;
 import io.grpc.Contexts;
 import io.grpc.ForwardingServerCallListener.SimpleForwardingServerCallListener;
@@ -46,8 +49,8 @@ public class ServerRequestInterceptor implements ServerInterceptor {
     @Override
     public <ReqT, RespT> Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
 
-        String extSessionId = headers.get(Metadata.Key.of(LogConstants.LOG_SESSION_ID, Metadata.ASCII_STRING_MARSHALLER));
-
+        String extSessionIdHeader = headers.get(Metadata.Key.of(LogConstants.LOG_SESSION_ID, Metadata.ASCII_STRING_MARSHALLER));
+        String extSessionId = StringUtils.isNotBlank(extSessionIdHeader) ? extSessionIdHeader : RandomUtil.generateId();
         Context context = Context.current();
         Listener<ReqT> ctxlistener = Contexts.interceptCall(context, serverCall, headers, next);
 

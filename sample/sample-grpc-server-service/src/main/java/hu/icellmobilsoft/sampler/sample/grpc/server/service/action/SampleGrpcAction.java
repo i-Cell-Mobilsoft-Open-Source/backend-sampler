@@ -19,8 +19,13 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service.action;
 
-import com.google.protobuf.Any;
-import com.google.rpc.ErrorInfo;
+import java.lang.reflect.Constructor;
+import java.text.MessageFormat;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
@@ -32,10 +37,7 @@ import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
-import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 /**
  * CDI action bean
@@ -124,26 +126,29 @@ public class SampleGrpcAction {
      * @param responseObserver
      *            {@link StreamObserver<DummyResponse>}
      */
-    public void call(RequestForError request, StreamObserver<ResponseForError> responseObserver) {
+    public void call(RequestForError request, StreamObserver<ResponseForError> responseObserver) throws Exception {
+        throw newRequestedException(request);
+    }
 
-        try {
-            throw new Exception("test exception");
-
-        } catch (Exception e) {
-
-            com.google.rpc.Status.Builder statusBuilder = com.google.rpc.Status.newBuilder();
-
-            statusBuilder.setCode(com.google.rpc.Code.INTERNAL.getNumber());
-            statusBuilder.setMessage("Grpc server error");
-            statusBuilder.addDetails(Any.pack(ErrorInfo.newBuilder() //
-                    .setReason(e.getMessage()) //
-                    .setDomain("sample") //
-                    .putMetadata("requestId", request.getRequestId()) //
-                    .build()));
-
-            responseObserver.onError(StatusProto.toStatusRuntimeException(statusBuilder.build()));
+    private Exception newRequestedException(RequestForError request) {
+        String requestedExceptionClass = request.getRequestedExceptionClass();
+        if (StringUtils.isNotBlank(requestedExceptionClass)) {
+            try {
+                Class<Exception> exceptionClass = (Class<Exception>) Class.forName(requestedExceptionClass);
+                try {
+                    // new Exception("message");
+                    Constructor<Exception> constructor = exceptionClass.getConstructor(String.class);
+                    return constructor.newInstance(request.getExceptionMessage());
+                } catch (NoSuchMethodException e) {
+                    // new Exception();
+                    Constructor<Exception> constructor = exceptionClass.getConstructor();
+                    return constructor.newInstance();
+                }
+            } catch (Exception e) {
+                log.warn("Could not found requested exception class:[{0}], error:[{1}]", requestedExceptionClass, e.getLocalizedMessage());
+            }
         }
-
+        return new IllegalArgumentException(MessageFormat.format("No exception found for class:[{0}]", requestedExceptionClass));
     }
 
 }

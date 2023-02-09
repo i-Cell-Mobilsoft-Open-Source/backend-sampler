@@ -28,10 +28,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.ForbiddenException;
 
+import org.apache.commons.lang3.EnumUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.weld.junit5.ExplicitParamInjection;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,6 +44,9 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -47,6 +54,13 @@ import com.google.protobuf.Timestamp;
 import com.google.rpc.Code;
 import com.google.rpc.ErrorInfo;
 
+import hu.icellmobilsoft.coffee.dto.exception.AccessDeniedException;
+import hu.icellmobilsoft.coffee.dto.exception.BONotFoundException;
+import hu.icellmobilsoft.coffee.dto.exception.BusinessException;
+import hu.icellmobilsoft.coffee.dto.exception.DtoConversionException;
+import hu.icellmobilsoft.coffee.dto.exception.ServiceUnavailableException;
+import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
+import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
@@ -165,29 +179,51 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
 
     }
 
-    @Test
-    @DisplayName("test exception handling")
-    void testErrorGrpc() throws InvalidProtocolBufferException {
-
+    @DisplayName("Test exception handling")
+    @ParameterizedTest(name = "Testing exception: {0}, expecting status code {1}")
+    @MethodSource("givenWeHaveExceptions")
+    @ExplicitParamInjection
+    void testErrorGrpc(Class<Exception> exceptionToThrow, Code expectedCode) throws InvalidProtocolBufferException {
+        // given
         ErrorServiceGrpc.ErrorServiceBlockingStub stub = ErrorServiceGrpc.newBlockingStub(channel);
 
         String requestId = RandomUtil.generateId();
-        StatusRuntimeException thrown = Assertions.assertThrows(StatusRuntimeException.class,
-                () -> stub.error(RequestForError.newBuilder().setRequestId(requestId).build()));
-
+        RequestForError request = RequestForError.newBuilder()//
+                .setRequestId(requestId)//
+                .setExceptionMessage("Test error grpc")//
+                .setRequestedExceptionClass(exceptionToThrow.getName())//
+                .build();
+        // when
+        StatusRuntimeException thrown = Assertions.assertThrows(StatusRuntimeException.class, () -> stub.error(request));
+        // then
         com.google.rpc.Status status = StatusProto.fromThrowable(thrown);
-        Assertions.assertEquals("INTERNAL", Code.forNumber(status.getCode()).toString());
-        Assertions.assertEquals("Grpc server error", status.getMessage());
+        Assertions.assertEquals(expectedCode, Code.forNumber(status.getCode()));
+        Assertions.assertNotNull(EnumUtils.getEnum(CoffeeFaultType.class, status.getMessage()));
 
         for (Any any : status.getDetailsList()) {
             if (any.is(ErrorInfo.class)) {
                 ErrorInfo errorInfo = any.unpack(ErrorInfo.class);
-                Assertions.assertEquals("test exception", errorInfo.getReason());
-                Assertions.assertEquals("sample", errorInfo.getDomain());
-                Assertions.assertEquals(requestId, errorInfo.getMetadataMap().get("requestId"));
+                Assertions.assertNotNull(EnumUtils.getEnum(CoffeeFaultType.class, errorInfo.getReason()));
+                Assertions.assertEquals("sample-service", errorInfo.getDomain());
+                Assertions.assertEquals("Test error grpc", errorInfo.getMetadataOrThrow("exception"));
             }
         }
-
     }
 
+    public Stream<Arguments> givenWeHaveExceptions() {
+        return Stream.of(
+                // BaseExceptionMapper
+                Arguments.of(AccessDeniedException.class, Code.UNAUTHENTICATED), //
+                Arguments.of(BONotFoundException.class, Code.NOT_FOUND), //
+                Arguments.of(DtoConversionException.class, Code.INVALID_ARGUMENT), //
+                Arguments.of(ServiceUnavailableException.class, Code.UNAVAILABLE), //
+                Arguments.of(BusinessException.class, Code.FAILED_PRECONDITION), //
+                Arguments.of(TechnicalException.class, Code.INTERNAL), //
+
+                // GeneralExceptionMapper
+                Arguments.of(ForbiddenException.class, Code.PERMISSION_DENIED), //
+                Arguments.of(IllegalArgumentException.class, Code.INVALID_ARGUMENT), //
+                Arguments.of(RuntimeException.class, Code.INTERNAL) //
+        );
+    }
 }

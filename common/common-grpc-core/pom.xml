@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>hu.icellmobilsoft.sampler.common</groupId>
+        <artifactId>common</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>common-grpc-core</artifactId>
+
+    <properties>
+        <version.io.grpc.version>1.52.1</version.io.grpc.version>
+        <version.protoc.version>3.21.7</version.protoc.version>
+        <version.os-maven-plugin.version>1.6.2</version.os-maven-plugin.version>
+        <version.protobuf-maven-plugin.version>0.6.1</version.protobuf-maven-plugin.version>
+    </properties>
+
+    <!-- GRPC -->
+    <dependencies>
+        <dependency>
+            <groupId>hu.icellmobilsoft.sampler.common</groupId>
+            <artifactId>common-core-jee</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>${version.io.grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>${version.io.grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>${version.io.grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

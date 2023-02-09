@@ -27,6 +27,16 @@ Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok depe
 * com.google.protobuf:protobuf-java (proto)
 * com.google.api.grpc:proto-google-common-protos (proto)
 
+== GRPC Core
+common-grpc-core modul szolgál általános grpc-nél használandó osztályok gyűjtésére. pl. hibakezelés, logolás, mdc kezelés stb
+
+=== ExceptionMapper és ExceptionHandler
+Készült egy generikus ExceptionMapper interface JAX-RS mintára,
+adott Exception típus grpc Status-ra konvertálását teszi lehetővé a CDI adta lehetőségeket kihasználva.
+A megfelelő Mapper implementáció megkeresésére szolgál az ExceptionHandler osztály,
+ezt interceptoron nem sikerült bekötni, sajnos még mielőtt eljutna hozzá az Exception a grpc lib előbb elkapja és lekezeli.
+Így base osztályban, vagy az Impl részen lehet aktiválni try-catch be.
+
 == Szerver
 Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio.
 a protobuf-maven-plugin nem CDI kompatibilisen generál API-t, belekerül egy final metódus az osztalyba, ezért nem lehet proxyzni az objektumot.
