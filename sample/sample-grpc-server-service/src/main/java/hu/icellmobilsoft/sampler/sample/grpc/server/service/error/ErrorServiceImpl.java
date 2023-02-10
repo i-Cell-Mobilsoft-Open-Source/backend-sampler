@@ -19,10 +19,12 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service.error;
 
-import hu.icellmobilsoft.sampler.common.grpc.core.exception.GrpcRuntimeExceptionWrapper;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import hu.icellmobilsoft.sampler.common.grpc.error.ErrorService;
 import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
 import hu.icellmobilsoft.sampler.common.grpc.error.ResponseForError;
-import hu.icellmobilsoft.sampler.common.grpc.error.ErrorServiceGrpc.ErrorServiceImplBase;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
 import io.grpc.stub.StreamObserver;
 
@@ -33,22 +35,16 @@ import io.grpc.stub.StreamObserver;
  * @since 2.0.0
  *
  */
-public class ErrorServiceImpl extends ErrorServiceImplBase {
+@ApplicationScoped
+public class ErrorServiceImpl implements ErrorService {
 
+    @Inject
     private SampleGrpcAction sampleGrpcAction;
 
-    public ErrorServiceImpl(SampleGrpcAction sampleGrpcAction) {
-        this.sampleGrpcAction = sampleGrpcAction;
-    }
-
     @Override
-    public void error(RequestForError request, StreamObserver<ResponseForError> responseObserver) {
+    public void error(RequestForError request, StreamObserver<ResponseForError> responseObserver) throws Exception {
         // delegate to cdi bean
-        try {
-            sampleGrpcAction.call(request, responseObserver);
-        } catch (Throwable e) {
-            throw new GrpcRuntimeExceptionWrapper(e);
-        }
+        sampleGrpcAction.call(request, responseObserver);
     }
 
 }

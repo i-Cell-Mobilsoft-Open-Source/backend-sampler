@@ -19,32 +19,32 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdServiceGrpc.DummyXsdServiceImplBase;
+import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
 import io.grpc.stub.StreamObserver;
 
 /**
- * Delegate gRPC service call to CDI bean
+ * gRPC service call to CDI bean
  * 
  * @author balazs.joo
  * @since 2.0.0
  *
  */
-public class DummyXsdServiceImpl extends DummyXsdServiceImplBase {
+@ApplicationScoped
+public class DummyXsdServiceImpl implements DummyXsdService {
 
+    @Inject
     private SampleGrpcAction sampleGrpcAction;
-
-    public DummyXsdServiceImpl(SampleGrpcAction sampleGrpcAction) {
-        this.sampleGrpcAction = sampleGrpcAction;
-    }
 
     @Override
     public void getXsdDummy(DummyXsdRequest request, StreamObserver<DummyXsdResponse> responseObserver) {
         // delegate to cdi bean
         sampleGrpcAction.call(request, responseObserver);
-
     }
 
 }
