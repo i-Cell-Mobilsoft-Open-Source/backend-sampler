@@ -77,21 +77,27 @@ public class ExceptionHandler {
     }
 
     /**
-     * Handles the given exception by finding the matching ExceptionMapper instance and using it to get the corresponding
-     * {@link com.google.rpc.Status}.
+     * Handles the given exception by finding the matching ExceptionMapper instance and using it to get the corresponding {@link StatusResponse}.
      *
      * @param t
      *            the exception to be handled
-     * @return the corresponding {@link com.google.rpc.Status}
+     * @return the corresponding {@link StatusResponse}
      */
-    public <E extends Throwable> Status handle(E t) {
+    public <E extends Throwable> StatusResponse handle(E t) {
+        if (t instanceof GrpcRuntimeExceptionWrapper && ((GrpcRuntimeExceptionWrapper) t).getWrapped() != null) {
+            return handleStatus(((GrpcRuntimeExceptionWrapper) t).getWrapped());
+        }
+        return handleStatus(t);
+    }
+
+    private <E extends Throwable> StatusResponse handleStatus(E t) {
         try {
             List<Bean<?>> mapperBeans = getExceptionMapperBeans(t.getClass());
             for (Bean<?> exceptionMapperBean : mapperBeans) {
                 Status status = handleByBean(t, exceptionMapperBean);
                 // ha nem null visszaadjuk, ha null jön priority szerint a következő, esetleg az exception super class-ára írt
                 if (status != null) {
-                    return status;
+                    return StatusResponse.of(status, t);
                 }
             }
         } catch (Throwable e) {
@@ -152,7 +158,7 @@ public class ExceptionHandler {
         return beansFound;
     }
 
-    private Status buildInternalErrorStatus(Throwable throwableNotHandled, String reason) {
+    private StatusResponse buildInternalErrorStatus(Throwable throwableNotHandled, String reason) {
         // ha exception mapper elszáll, akkor internal server error.
         Status.Builder statusBuilder = Status.newBuilder();
 
@@ -161,6 +167,6 @@ public class ExceptionHandler {
         statusBuilder.addDetails(Any.pack(ErrorInfo.newBuilder() //
                 .setReason(reason) //
                 .setDomain(throwableNotHandled.getClass().toString()).build()));
-        return statusBuilder.build();
+        return StatusResponse.of(statusBuilder.build(), throwableNotHandled);
     }
 }

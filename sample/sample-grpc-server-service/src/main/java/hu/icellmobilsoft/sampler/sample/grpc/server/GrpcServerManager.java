@@ -37,6 +37,7 @@ import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConfig;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConnection;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.IGrpcService;
+import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ErrorHandlerInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerRequestInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerResponseInterceptor;
 import io.grpc.BindableService;
@@ -127,6 +128,7 @@ public class GrpcServerManager {
      *            szerver builder
      */
     private void addInterceptor(ServerBuilder<?> serverBuilder) {
+        serverBuilder.intercept(new ErrorHandlerInterceptor());
         serverBuilder.intercept(new ServerResponseInterceptor());
         serverBuilder.intercept(new ServerRequestInterceptor());
     }

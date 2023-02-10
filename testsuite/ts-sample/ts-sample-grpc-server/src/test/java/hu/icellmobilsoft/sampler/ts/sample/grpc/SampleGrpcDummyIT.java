@@ -24,6 +24,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -70,8 +71,13 @@ import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc;
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
+import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.MethodDescriptor;
 import io.grpc.StatusRuntimeException;
 import io.grpc.protobuf.StatusProto;
 
@@ -195,6 +201,11 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
                 .build();
         // when
         StatusRuntimeException thrown = Assertions.assertThrows(StatusRuntimeException.class, () -> stub.error(request));
+        LOGGER.error("thrown: " + thrown.getMessage(), thrown);
+        Throwable cause = thrown.getCause();
+        if(cause != null) {
+            LOGGER.error("cause: " + cause.getMessage(), cause);
+        }
         // then
         com.google.rpc.Status status = StatusProto.fromThrowable(thrown);
         Assertions.assertEquals(expectedCode, Code.forNumber(status.getCode()));
