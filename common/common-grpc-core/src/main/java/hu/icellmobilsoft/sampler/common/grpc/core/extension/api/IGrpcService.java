@@ -17,7 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.grpc.server.service;
+package hu.icellmobilsoft.sampler.common.grpc.core.extension.api;
+
+import io.grpc.BindableService;
 
 /**
  * Marker interface for gRPC service
@@ -27,5 +29,7 @@ package hu.icellmobilsoft.sampler.sample.grpc.server.service;
  *
  */
 public interface IGrpcService {
+
+    Class<? extends BindableService> bindableDelegator();
 
 }

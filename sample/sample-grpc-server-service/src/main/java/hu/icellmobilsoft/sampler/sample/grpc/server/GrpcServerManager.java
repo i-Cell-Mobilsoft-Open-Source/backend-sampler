@@ -20,6 +20,11 @@
 package hu.icellmobilsoft.sampler.sample.grpc.server;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -30,13 +35,14 @@ import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
+import hu.icellmobilsoft.sampler.common.grpc.core.extension.api.IGrpcService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConfig;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConnection;
-import hu.icellmobilsoft.sampler.sample.grpc.server.service.IGrpcService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ErrorHandlerInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerRequestInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerResponseInterceptor;
@@ -76,8 +82,8 @@ public class GrpcServerManager {
         log.info("Found [{0}] grpc service", beans.size());
         // bind to port
         ServerBuilder<?> serverBuilder = ServerBuilder.forPort(grpcServerPort);
-        
-        //configure server
+
+        // configure server
         configureServer(serverBuilder);
         // add interceptor
         addInterceptor(serverBuilder);
@@ -102,7 +108,7 @@ public class GrpcServerManager {
         serverBuilder.maxInboundMetadataSize(config.getMaxInboundMetadataSize());
         serverBuilder.permitKeepAliveTime(config.getPermitKeepAliveTime(), TimeUnit.MINUTES);
         serverBuilder.permitKeepAliveWithoutCalls(config.isPermitKeepAliveWithoutCalls());
-        
+
         configInstance.destroy(config);
     }
 
@@ -115,9 +121,41 @@ public class GrpcServerManager {
      *            szerver builder
      */
     private void addService(Bean<?> bean, ServerBuilder<?> serverBuilder) {
-        BindableService service = (BindableService) beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
-        serverBuilder.addService(service);
+        IGrpcService service = (IGrpcService) beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
+        Class<? extends BindableService> grpcImpl = service.bindableDelegator();
+        Constructor<? extends BindableService> constructor = findConstructor(bean, grpcImpl);
+        if (constructor != null) {
+            try {
+                BindableService bindableService = constructor.newInstance(service);
+                serverBuilder.addService(bindableService);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                log.warn(MessageFormat.format(
+                        "Could not call constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]",
+                        grpcImpl, bean.getBeanClass()), e);
+            }
+        } else {
+            log.warn("Could not find constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]", grpcImpl,
+                    bean.getBeanClass());
+        }
 
+    }
+
+    private Constructor<? extends BindableService> findConstructor(Bean<?> bean, Class<? extends BindableService> grpcImpl) {
+        if (grpcImpl == null) {
+            return null;
+        }
+        Constructor<?>[] constructors = grpcImpl.getConstructors();
+        if (ArrayUtils.isEmpty(constructors)) {
+            return null;
+        }
+        for (Constructor<?> constructor : constructors) {
+            if (constructor.getParameterCount() == 1 && constructor.getParameterTypes()[0] != null
+                    && constructor.getParameterTypes()[0].isAssignableFrom(bean.getBeanClass())) {
+                return (Constructor<? extends BindableService>) constructor;
+            }
+        }
+
+        return null;
     }
 
     /**

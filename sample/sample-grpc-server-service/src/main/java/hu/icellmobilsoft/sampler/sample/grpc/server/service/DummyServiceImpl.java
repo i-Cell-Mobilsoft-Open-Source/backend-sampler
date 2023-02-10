@@ -19,26 +19,27 @@
  */
 package hu.icellmobilsoft.sampler.sample.grpc.server.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc.DummyServiceImplBase;
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
 import io.grpc.stub.StreamObserver;
 
 /**
- * Delegate gRPC service call to CDI bean
+ * gRPC service call to CDI bean
  * 
  * @author czenczl
  * @since 2.0.0
  *
  */
-public class DummyServiceImpl extends DummyServiceImplBase {
+@ApplicationScoped
+public class DummyServiceImpl implements DummyService {
 
+    @Inject
     private SampleGrpcAction sampleGrpcAction;
-
-    public DummyServiceImpl(SampleGrpcAction sampleGrpcAction) {
-        this.sampleGrpcAction = sampleGrpcAction;
-    }
 
     @Override
     public void getDummy(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
