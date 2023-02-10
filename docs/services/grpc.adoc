@@ -51,6 +51,9 @@ Implementalva vannak:
 * gRPC szerver konfigurációk, NettyServerBuilder alapon
 * https://github.com/grpc/grpc-java/blob/master/netty/src/main/java/io/grpc/netty/NettyServerBuilder.java
 
+== Kliens
+Grpc client kezeléshez CDI extension...TODO
+
 == Tesztek
 * 3 teszt gRPC kliens haszálat
 * egyszerű dummy kérés
@@ -65,4 +68,4 @@ http://localhost:8081/openapi
 
 == Konfiguráció
 
-Port beállítás: microprofile-config.properties -> sample.gprc.server.port: 8199
+Port beállítás: microprofile-config.properties -> coffee.grpc.server.port: 8199

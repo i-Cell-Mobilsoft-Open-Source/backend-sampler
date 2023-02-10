@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.grpc.server.config;
+package hu.icellmobilsoft.sampler.sample.grpc.client;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -37,10 +37,10 @@ import jakarta.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE })
-public @interface GrpcServerConnection {
+public @interface GrpcClient {
 
     /**
-     * Config key of the desired gRPC connection. <br>
+     * Config key of the desired gRPC client connection. <br>
      * 
      * @return config key
      */
@@ -48,12 +48,12 @@ public @interface GrpcServerConnection {
     String configKey();
 
     /**
-     * Supports inline instantiation of the {@link GrpcServerConnection} qualifier.
+     * Supports inline instantiation of the {@link GrpcClient} qualifier.
      *
      * @author czenczl
      *
      */
-    final class Literal extends AnnotationLiteral<GrpcServerConnection> implements GrpcServerConnection {
+    final class Literal extends AnnotationLiteral<GrpcClient> implements GrpcClient {
 
         private static final long serialVersionUID = 1L;
 
