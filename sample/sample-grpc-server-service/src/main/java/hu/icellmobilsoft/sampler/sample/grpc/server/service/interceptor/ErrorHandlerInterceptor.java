@@ -38,7 +38,7 @@ import io.grpc.ServerInterceptor;
  * the request handling process.
  * <p>
  * The interceptor uses the {@link ExceptionHandler} singleton to handle exceptions thrown during the request handling process. If an exception is
- * thrown, the exception handler returns a {@link StatusResponse} object containing a gRPC {@link Status} and metadata. The interceptor then closes
+ * thrown, the exception handler returns a {@code StatusResponse} object containing a gRPC {@code Status} and metadata. The interceptor then closes
  * the call with the returned status and metadata.
  * 
  * </p>

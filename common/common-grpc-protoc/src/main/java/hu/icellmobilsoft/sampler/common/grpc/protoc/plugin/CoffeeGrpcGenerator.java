@@ -409,6 +409,10 @@ public class CoffeeGrpcGenerator extends Generator {
         }
     }
 
+    /**
+     * main
+     * @param args args
+     */
     public static void main(String[] args) {
         if (args.length == 0) {
             ProtocPlugin.generate(new CoffeeGrpcGenerator());

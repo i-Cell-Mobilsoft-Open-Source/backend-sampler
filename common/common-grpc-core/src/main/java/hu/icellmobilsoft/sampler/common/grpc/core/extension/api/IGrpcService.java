@@ -30,6 +30,11 @@ import io.grpc.BindableService;
  */
 public interface IGrpcService {
 
+    /**
+     * delegator binding
+     * 
+     * @return BindableService
+     */
     Class<? extends BindableService> bindableDelegator();
 
 }
