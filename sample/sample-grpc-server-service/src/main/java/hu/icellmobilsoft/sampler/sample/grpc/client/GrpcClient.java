@@ -28,6 +28,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.enterprise.util.Nonbinding;
 import jakarta.inject.Qualifier;
 
+import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConfig;
+
 /**
  * Qualifier for instantiating {@link GrpcServerConfig}
  *
@@ -61,16 +63,6 @@ public @interface GrpcClient {
          * Redis configuration key
          */
         private final String configKey;
-
-        /**
-         * Annotation Literal for Redis configuration
-         * 
-         * @param configKey
-         *            Redis configuration key
-         */
-        public Literal(String configKey, String poolConfigKey) {
-            this.configKey = configKey;
-        }
 
         /**
          * Instantiates the literal with configKey

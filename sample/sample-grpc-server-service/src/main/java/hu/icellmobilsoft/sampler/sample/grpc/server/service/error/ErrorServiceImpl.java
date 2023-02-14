@@ -41,6 +41,10 @@ public class ErrorServiceImpl implements ErrorService {
     @Inject
     private SampleGrpcAction sampleGrpcAction;
 
+    public ErrorServiceImpl(SampleGrpcAction sampleGrpcAction) {
+        this.sampleGrpcAction = sampleGrpcAction;
+    }
+
     @Override
     public void error(RequestForError request, StreamObserver<ResponseForError> responseObserver) throws Exception {
         // delegate to cdi bean

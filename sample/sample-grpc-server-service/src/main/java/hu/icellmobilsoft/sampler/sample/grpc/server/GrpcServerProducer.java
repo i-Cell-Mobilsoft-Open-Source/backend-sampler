@@ -44,6 +44,13 @@ public class GrpcServerProducer {
     @Inject
     private Logger log;
 
+    /**
+     * Produce GrpcServerManager
+     * 
+     * @return GrpcServerManager
+     * @throws BaseException
+     *             on error
+     */
     @Produces
     @GrpcServer(configKey = "")
     public GrpcServerManager produceServer() throws BaseException {
@@ -58,6 +65,12 @@ public class GrpcServerProducer {
         return serverManager;
     }
 
+    /**
+     * Disposes GrpcServerManager
+     * 
+     * @param grpcServerManager
+     *            to dispose
+     */
     public void returnResource(@Disposes @GrpcServer(configKey = "") GrpcServerManager grpcServerManager) {
         if (Objects.nonNull(grpcServerManager)) {
             grpcServerManager.stopServer();

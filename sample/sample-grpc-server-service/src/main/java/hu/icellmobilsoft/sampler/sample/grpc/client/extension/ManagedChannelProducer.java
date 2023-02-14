@@ -56,6 +56,13 @@ public class ManagedChannelProducer {
 
     private Map<String, ManagedChannel> managedChannelInstances = new HashMap<>();
 
+    /**
+     * produce ManagedChannel
+     * 
+     * @param injectionPoint
+     *            the injection point
+     * @return ManagedChannel
+     */
     @Produces
     @Dependent
     @GrpcClient(configKey = "")

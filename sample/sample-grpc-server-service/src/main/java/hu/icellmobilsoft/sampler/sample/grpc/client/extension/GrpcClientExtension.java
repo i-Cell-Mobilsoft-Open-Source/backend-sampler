@@ -21,17 +21,14 @@ package hu.icellmobilsoft.sampler.sample.grpc.client.extension;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.Default;
-import jakarta.enterprise.inject.build.compatible.spi.Types;
 import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
 import jakarta.enterprise.inject.spi.AnnotatedMethod;
 import jakarta.enterprise.inject.spi.AnnotatedType;
@@ -55,9 +52,16 @@ public class GrpcClientExtension implements Extension {
 
     private static final Logger LOGGER = Logger.getLogger(GrpcClientExtension.class);
 
-    public List<Types> grpcClientTypes = new ArrayList<>();
     private Map<Type, Annotation> grpcClientMap = new HashMap<>();
 
+    /**
+     * Creates CDI producer beans for gRPC clients
+     * 
+     * @param abd
+     *            event fired by the CDI container when it has fully completed the bean discovery process
+     * @param beanManager
+     *            object to interact directly with the CDI container
+     */
     @SuppressWarnings("unchecked")
     public void afterBeanDiscovery(@Observes final AfterBeanDiscovery abd, BeanManager beanManager) {
         LOGGER.info("gRPC client extension is active");
@@ -67,7 +71,7 @@ public class GrpcClientExtension implements Extension {
         final BeanAttributes<?> producerAttributes = beanManager.createBeanAttributes(producerMethodTemplate);
 
         // get grpc client template
-        @SuppressWarnings("rawtypes")   
+        @SuppressWarnings("rawtypes")
         Bean producerFactory = beanManager.getBeans(GrpcClientProducerFactory.class, new Default.Literal()).iterator().next();
 
         for (Type type : grpcClientMap.keySet()) {
@@ -94,6 +98,17 @@ public class GrpcClientExtension implements Extension {
 
     }
 
+    /**
+     * Collect {@code GrpcClient} injections
+     * 
+     * @param <T>
+     *            generic
+     * @param <X>
+     *            generic
+     * @param pip
+     *            The container fires an event of this type for every injection point of every Java EE component class supporting injection that may
+     *            be instantiated by the container at runtime
+     */
     public <T, X> void processInjectionTarget(final @Observes ProcessInjectionPoint<T, X> pip) {
         InjectionPoint ip = pip.getInjectionPoint();
 

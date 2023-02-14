@@ -45,6 +45,23 @@ import io.grpc.ManagedChannel;
 @ApplicationScoped
 public class GrpcClientProducerFactory {
 
+    /**
+     * Producer template bean
+     * 
+     * @param injectionPoint
+     *            Provides access to metadata about an injection point
+     * @return concrete io.grpc.stub.AbstractBlockingStub implementation by extension
+     * @throws NoSuchMethodException
+     *             if a matching method is not found by the declared class of io.grpc.stub.AbstractBlockingStub
+     * @throws SecurityException
+     *             if checkPackageAccess() denies
+     * @throws IllegalAccessException
+     *             if 'newBlockingStub' Method is enforcing Java language access control and the underlying method is inaccessible.
+     * @throws IllegalArgumentException
+     *             if the number of actual and formal parameters differ
+     * @throws InvocationTargetException
+     *             if the 'newBlockingStub' throws an exception
+     */
     @SuppressWarnings("rawtypes")
     @Dependent
     @GrpcClient(configKey = "")

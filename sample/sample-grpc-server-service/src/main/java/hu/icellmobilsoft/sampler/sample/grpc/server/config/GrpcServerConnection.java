@@ -63,16 +63,6 @@ public @interface GrpcServerConnection {
         private final String configKey;
 
         /**
-         * Annotation Literal for Redis configuration
-         * 
-         * @param configKey
-         *            Redis configuration key
-         */
-        public Literal(String configKey, String poolConfigKey) {
-            this.configKey = configKey;
-        }
-
-        /**
          * Instantiates the literal with configKey
          *
          * @param configKey

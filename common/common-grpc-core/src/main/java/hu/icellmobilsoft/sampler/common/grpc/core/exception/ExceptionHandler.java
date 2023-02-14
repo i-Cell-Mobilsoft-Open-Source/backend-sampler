@@ -72,13 +72,20 @@ public class ExceptionHandler {
     private static final Logger LOG = Logger.getLogger(ExceptionHandler.class);
     private static final ExceptionHandler exceptionHandler = new ExceptionHandler();
 
+    /**
+     * Get exception handler instance
+     * 
+     * @return {@link ExceptionHandler}
+     */
     public static ExceptionHandler getInstance() {
         return exceptionHandler;
     }
 
     /**
      * Handles the given exception by finding the matching ExceptionMapper instance and using it to get the corresponding {@link StatusResponse}.
-     *
+     * 
+     * @param <E>
+     *            Generic type of the exception
      * @param t
      *            the exception to be handled
      * @return the corresponding {@link StatusResponse}

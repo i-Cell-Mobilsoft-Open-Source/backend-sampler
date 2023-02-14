@@ -125,6 +125,8 @@ public class SampleGrpcAction {
      *            {@link DummyRequest}
      * @param responseObserver
      *            {@link StreamObserver<DummyResponse>}
+     * @throws Exception
+     *             on error 
      */
     public void call(RequestForError request, StreamObserver<ResponseForError> responseObserver) throws Exception {
         throw newRequestedException(request);

@@ -31,6 +31,10 @@ package hu.icellmobilsoft.sampler.common.grpc.core.exception;
  * @since 2.0.0
  */
 public class GrpcRuntimeExceptionWrapper extends RuntimeException {
+
+    /**
+     * The original exception
+     */
     private final Throwable wrapped;
 
     /**

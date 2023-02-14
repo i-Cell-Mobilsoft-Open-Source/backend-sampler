@@ -75,6 +75,8 @@ public class GrpcServerManager {
     /**
      * szerver inicializacio, port bind, servicek hozzáadása a szerverhez, interceptorok definialasa
      * 
+     * @throws BaseException
+     *             on error
      */
     public void init() throws BaseException {
         // grpc servicek gyujtese

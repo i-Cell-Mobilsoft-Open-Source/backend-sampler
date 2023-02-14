@@ -45,11 +45,20 @@ public class GrpcStarter {
     @Resource
     private ManagedExecutorService executorService;
 
+    /**
+     * Start gRPC server in unmanaged mode
+     * 
+     * @param init
+     *            observe object
+     */
     public void begin(@Observes @Initialized(ApplicationScoped.class) Object init) {
         // sajat szalban futtatjuk a szervert
         start();
     }
 
+    /**
+     * Start gRPC server in unmanaged mode
+     */
     protected void start() {
         log.info("Starting grpc server service...");
 

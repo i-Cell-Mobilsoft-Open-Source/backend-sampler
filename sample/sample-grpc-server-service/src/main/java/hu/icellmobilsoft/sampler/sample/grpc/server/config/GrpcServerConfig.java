@@ -52,8 +52,6 @@ public class GrpcServerConfig implements IGrpcServerConfig {
 
     /**
      * Config delimiter
-     * 
-     * @Override public Long getPort() throws BaseException { // TODO Auto-generated method stub return null; }
      */
     public static final String KEY_DELIMITER = ".";
 
@@ -62,15 +60,45 @@ public class GrpcServerConfig implements IGrpcServerConfig {
      */
     public static final String GRPC_SERVER_PREFIX = "coffee.grpc";
 
+    /**
+     * gRPC server {@value} config
+     */
     public static final String PORT = "port";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String MAX_CONNECTION_AGE = "maxConnectionAge";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String MAX_CONNECTION_AGE_GRACE = "maxConnectionAgeGrace";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String MAX_INBOUND_MESSAGE_SIZE = "maxInboundMessageSize";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String MAX_INBOUND_METADATA_SIZE = "maxInboundMetadataSize";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String MAX_CONNECTION_IDLE = "maxConnectionIdle";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String KEEP_ALIVE_TIME = "keepAliveTime";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String KEEP_ALIVE_TIMEOUT = "keepAliveTimout";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String PERMIT_KEEP_ALIVE_TIME = "permitKeepAliveTime";
+    /**
+     * gRPC server {@value} config
+     */
     public static final String PERMIT_KEEP_ALIVE_WITHOUT_CALLS = "permitKeepAliveWithoutCalls";
 
     @Inject
