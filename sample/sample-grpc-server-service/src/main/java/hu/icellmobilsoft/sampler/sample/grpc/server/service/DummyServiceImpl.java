@@ -20,12 +20,14 @@
 package hu.icellmobilsoft.sampler.sample.grpc.server.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
+import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcRequestScopeAction;
 import io.grpc.stub.StreamObserver;
 
 /**
@@ -41,11 +43,21 @@ public class DummyServiceImpl implements DummyService {
     @Inject
     private SampleGrpcAction sampleGrpcAction;
 
+    @Inject
+    private SampleGrpcRequestScopeAction sampleGrpcRequestScopeAction;
+
     @Override
     public void getDummy(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
         // delegate to cdi bean
         sampleGrpcAction.call(request, responseObserver);
 
+    }
+
+    @Override
+    @ActivateRequestContext
+    public void getDummyRequestScope(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        // delegate to cdi bean
+        sampleGrpcRequestScopeAction.call(request, responseObserver);
     }
 
 }

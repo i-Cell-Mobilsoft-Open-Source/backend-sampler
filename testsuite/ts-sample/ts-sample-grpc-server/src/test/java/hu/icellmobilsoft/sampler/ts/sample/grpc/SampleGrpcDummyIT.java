@@ -185,6 +185,48 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
 
     }
 
+    @Test
+    @DisplayName("test dummy grpc service request scoped multithread")
+    void testDummyGrpcServiceRequestMulti() throws InterruptedException {
+        int thread = 256;
+        ExecutorService service = Executors.newFixedThreadPool(thread);
+        CountDownLatch latch = new CountDownLatch(thread);
+        Instant start = Instant.now();
+        for (int i = 0; i < thread; i++) {
+            service.submit(() -> {
+
+                hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+
+                hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+                baseMessageBuilder.setAmount(3.14);
+                baseMessageBuilder.setFirstName("first");
+                baseMessageBuilder.setIsActive(true);
+                baseMessageBuilder.setCount(50);
+
+                LocalDate date = LocalDate.of(2022, 04, 14);
+                Timestamp timestamp = Timestamp.newBuilder().setSeconds(date.toEpochSecond(LocalTime.now(), ZoneOffset.UTC)).build();
+
+                baseMessageBuilder.setDate(timestamp);
+                reqBuilder.setRequest(baseMessageBuilder.build());
+
+                DummyRequest dummyRequest = reqBuilder.build();
+                DummyServiceGrpc.DummyServiceBlockingStub stub = DummyServiceGrpc.newBlockingStub(channel);
+                DummyResponse helloResponse = stub.getDummyRequestScope(dummyRequest);
+
+                latch.countDown();
+
+            });
+        }
+        latch.await();
+
+        Instant finish = Instant.now();
+        long timeElapsed = Duration.between(start, finish).toMillis();
+        long sec = TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
+        // 13 sec
+        LOGGER.info("duration: " + sec);
+
+    }
+
     @DisplayName("Test exception handling")
     @ParameterizedTest(name = "Testing exception: {0}, expecting status code {1}")
     @MethodSource("givenWeHaveExceptions")

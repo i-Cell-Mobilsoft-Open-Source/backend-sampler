@@ -22,4 +22,5 @@ message DummyResponse {
 
 service DummyService {
     rpc getDummy(DummyRequest) returns (DummyResponse);
+    rpc getDummyRequestScope(DummyRequest) returns (DummyResponse);
 }
