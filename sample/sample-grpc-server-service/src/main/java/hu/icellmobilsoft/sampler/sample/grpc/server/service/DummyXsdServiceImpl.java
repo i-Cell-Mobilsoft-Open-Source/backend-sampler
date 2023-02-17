@@ -22,9 +22,11 @@ package hu.icellmobilsoft.sampler.sample.grpc.server.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import hu.icellmobilsoft.sampler.common.grpc.core.extension.api.IGrpcService;
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
 import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdService;
+import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdServiceGrpc;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
 import io.grpc.stub.StreamObserver;
 
@@ -36,12 +38,16 @@ import io.grpc.stub.StreamObserver;
  *
  */
 @ApplicationScoped
-public class DummyXsdServiceImpl implements DummyXsdService {
+public class DummyXsdServiceImpl implements IGrpcService {
 
     @Inject
     private SampleGrpcAction sampleGrpcAction;
 
     @Override
+    public Class<? extends io.grpc.BindableService> bindableDelegator() {
+        return DummyXsdServiceGrpc.DummyXsdServiceImplBase.class;
+    }
+
     public void getXsdDummy(DummyXsdRequest request, StreamObserver<DummyXsdResponse> responseObserver) {
         // delegate to cdi bean
         sampleGrpcAction.call(request, responseObserver);

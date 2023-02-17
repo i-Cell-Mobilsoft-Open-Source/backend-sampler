@@ -217,10 +217,6 @@
 							<type>grpc-java</type>
 							<pluginArtifact>io.grpc:protoc-gen-grpc-java:${version.io.grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
 						</outputTarget>
-						<outputTarget>
-							<type>grpc-coffee</type>
-							<pluginArtifact>hu.icellmobilsoft.sampler.common:common-grpc-protoc:${project.version}</pluginArtifact>
-						</outputTarget>
 					</outputTargets>
 				</configuration>
 				<executions>

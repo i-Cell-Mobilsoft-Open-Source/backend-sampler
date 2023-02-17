@@ -20,11 +20,10 @@
 package hu.icellmobilsoft.sampler.sample.grpc.server;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.text.MessageFormat;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -39,16 +38,19 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.grpc.core.extension.api.IGrpcService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConfig;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConnection;
+import hu.icellmobilsoft.sampler.sample.grpc.server.service.DelegatingMethodHandler;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ErrorHandlerInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerRequestInterceptor;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ServerResponseInterceptor;
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import javassist.util.proxy.ProxyFactory;
 
 /**
  * Sample gRPC server manager
@@ -124,22 +126,21 @@ public class GrpcServerManager {
      */
     private void addService(Bean<?> bean, ServerBuilder<?> serverBuilder) {
         IGrpcService service = (IGrpcService) beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
-        Class<? extends BindableService> grpcImpl = service.bindableDelegator();
-        Constructor<? extends BindableService> constructor = findConstructor(bean, grpcImpl);
-        if (constructor != null) {
-            try {
-                BindableService bindableService = constructor.newInstance(service);
-                serverBuilder.addService(bindableService);
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                log.warn(MessageFormat.format(
-                        "Could not call constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]",
-                        grpcImpl, bean.getBeanClass()), e);
-            }
-        } else {
-            log.warn("Could not find constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]", grpcImpl,
-                    bean.getBeanClass());
-        }
 
+
+
+
+        Class<? extends BindableService> grpcImpl = service.bindableDelegator();
+        ProxyFactory factory = new ProxyFactory();
+        factory.setSuperclass(grpcImpl);
+        factory.setFilter(method -> !Modifier.isFinal(method.getModifiers()));
+        try {
+            BindableService bindableService = (BindableService) factory.create(new Class<?>[0], new Object[0], new DelegatingMethodHandler(service));
+            serverBuilder.addService(bindableService);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException | TechnicalException e) {
+            log.error(MessageFormat.format("Could not create delegator proxy implementation of [{0}] for grpc service [{1}]! error:[{2}]", grpcImpl,
+                    service, e.getLocalizedMessage()), e);
+        }
     }
 
     private Constructor<? extends BindableService> findConstructor(Bean<?> bean, Class<? extends BindableService> grpcImpl) {

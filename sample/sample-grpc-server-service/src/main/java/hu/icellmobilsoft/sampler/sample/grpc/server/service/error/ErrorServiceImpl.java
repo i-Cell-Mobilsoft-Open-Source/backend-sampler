@@ -22,7 +22,8 @@ package hu.icellmobilsoft.sampler.sample.grpc.server.service.error;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import hu.icellmobilsoft.sampler.common.grpc.error.ErrorService;
+import hu.icellmobilsoft.sampler.common.grpc.core.extension.api.IGrpcService;
+import hu.icellmobilsoft.sampler.common.grpc.error.ErrorServiceGrpc;
 import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
 import hu.icellmobilsoft.sampler.common.grpc.error.ResponseForError;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
@@ -36,12 +37,16 @@ import io.grpc.stub.StreamObserver;
  *
  */
 @ApplicationScoped
-public class ErrorServiceImpl implements ErrorService {
+public class ErrorServiceImpl implements IGrpcService {
 
     @Inject
     private SampleGrpcAction sampleGrpcAction;
 
     @Override
+    public Class<? extends io.grpc.BindableService> bindableDelegator() {
+        return ErrorServiceGrpc.ErrorServiceImplBase.class;
+    }
+
     public void error(RequestForError request, StreamObserver<ResponseForError> responseObserver) throws Exception {
         // delegate to cdi bean
         sampleGrpcAction.call(request, responseObserver);

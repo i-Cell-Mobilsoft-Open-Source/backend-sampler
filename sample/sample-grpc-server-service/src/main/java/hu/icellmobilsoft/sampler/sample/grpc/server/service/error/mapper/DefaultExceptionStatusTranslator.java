@@ -56,7 +56,7 @@ public class DefaultExceptionStatusTranslator implements IExceptionStatusTransla
                 // .setReason(localizedMessage.message(faultTypeToReturn)) //
                 .setReason(faultTypeToReturn.name())//
                 .setDomain("sample-service");
-        if (!projectStage.isProductionStage()) {
+        if (!projectStage.isProductionStage() && e.getLocalizedMessage() != null) {
             errorInfoBuilder.putMetadata("exception", e.getLocalizedMessage());
         }
         return Status.newBuilder() //
