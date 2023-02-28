@@ -33,7 +33,7 @@
                             <include>**/*Tests.java</include>
                             <include>**/*TestCase.java</include>
                         </includes>
-                        <groups>it,integration,restassured</groups>
+                        <groups>it,integration,jaxrs,restassured</groups>
                         <argLine>${failsafeArgLine}</argLine>
                     </configuration>
                 </plugin>
