@@ -19,6 +19,10 @@
 		
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.common</groupId>
+			<artifactId>common-grpc-protoc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hu.icellmobilsoft.sampler.common</groupId>
 			<artifactId>common-grpc-core</artifactId>
 		</dependency>
 		<dependency>

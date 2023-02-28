@@ -83,6 +83,11 @@
                 <artifactId>common-grpc-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.common</groupId>
+                <artifactId>common-grpc-protoc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
