@@ -13,10 +13,6 @@
             <groupId>hu.icellmobilsoft.sampler.testsuite</groupId>
             <artifactId>ts-common-rest</artifactId>
             <exclusions>
-            	<exclusion>
-            		<groupId>org.jboss.resteasy</groupId>
-            		<artifactId>resteasy-jaxrs</artifactId>
-            	</exclusion>
             </exclusions>
         </dependency>
     </dependencies>
