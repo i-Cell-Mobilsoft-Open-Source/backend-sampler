@@ -180,7 +180,6 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
         Instant finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
         long sec = TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
-        // 13 sec
         LOGGER.info("duration: " + sec);
 
     }
@@ -222,7 +221,6 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
         Instant finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
         long sec = TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
-        // 13 sec
         LOGGER.info("duration: " + sec);
 
     }

@@ -18,7 +18,6 @@
         <module>common-jpa</module>
         <module>common-system-jpa</module>
         <module>common-grpc-protoc</module>
-        <module>common-grpc-api</module>
         <module>common-grpc-core</module>
     </modules>
 

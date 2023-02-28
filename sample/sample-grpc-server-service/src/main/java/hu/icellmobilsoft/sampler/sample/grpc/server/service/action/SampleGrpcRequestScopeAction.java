@@ -45,6 +45,9 @@ public class SampleGrpcRequestScopeAction {
 
     private String requestCache;
 
+    /**
+     * init requestCache 
+     */
     @PostConstruct
     public void init() {
         requestCache = RandomUtil.generateId();

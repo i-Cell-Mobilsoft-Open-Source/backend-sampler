@@ -10,6 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
         <service.name>grpc-server-sample</service.name>
     </properties>
 
@@ -19,13 +20,9 @@
             <artifactId>common-system-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>hu.icellmobilsoft.sampler.common</groupId>
-            <artifactId>common-grpc-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hu.icellmobilsoft.sampler.common</groupId>
-            <artifactId>common-grpc-core</artifactId>
-        </dependency>
+			<groupId>hu.icellmobilsoft.sampler.api</groupId>
+			<artifactId>api-grpc-stub-gen</artifactId>
+		</dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.roaster</groupId>
             <artifactId>roaster-weldunit</artifactId>
