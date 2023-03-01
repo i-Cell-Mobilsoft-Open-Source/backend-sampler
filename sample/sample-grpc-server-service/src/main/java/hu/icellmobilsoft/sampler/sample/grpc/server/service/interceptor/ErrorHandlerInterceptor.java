@@ -21,8 +21,8 @@ package hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor;
 
 import hu.icellmobilsoft.coffee.se.logging.DefaultLogger;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.common.grpc.core.exception.ExceptionHandler;
-import hu.icellmobilsoft.sampler.common.grpc.core.exception.StatusResponse;
+import hu.icellmobilsoft.sampler.grpc.core.exception.ExceptionHandler;
+import hu.icellmobilsoft.sampler.grpc.core.exception.StatusResponse;
 import io.grpc.Context;
 import io.grpc.Contexts;
 import io.grpc.ForwardingServerCallListener.SimpleForwardingServerCallListener;

@@ -18,12 +18,12 @@
 	<dependencies>
 		
 		<dependency>
-			<groupId>hu.icellmobilsoft.sampler.common</groupId>
-			<artifactId>common-grpc-protoc</artifactId>
+			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+			<artifactId>grpc-protoc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>hu.icellmobilsoft.sampler.common</groupId>
-			<artifactId>common-grpc-core</artifactId>
+			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+			<artifactId>grpc-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
@@ -118,7 +118,7 @@
 						</outputTarget>
 						<outputTarget>
 							<type>grpc-coffee</type>
-							<pluginArtifact>hu.icellmobilsoft.sampler.common:common-grpc-protoc:${project.version}</pluginArtifact>
+							<pluginArtifact>hu.icellmobilsoft.sampler.grpc:grpc-protoc:${project.version}</pluginArtifact>
 						</outputTarget>
 					</outputTargets>
 				</configuration>

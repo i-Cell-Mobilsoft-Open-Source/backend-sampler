@@ -20,27 +20,22 @@
 package hu.icellmobilsoft.sampler.sample.grpc.server;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import jakarta.enterprise.context.Dependent;
-import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
-import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.common.grpc.core.extension.api.IGrpcService;
+import hu.icellmobilsoft.sampler.grpc.core.extension.api.IGrpcService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConfig;
 import hu.icellmobilsoft.sampler.sample.grpc.server.config.GrpcServerConnection;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.interceptor.ErrorHandlerInterceptor;

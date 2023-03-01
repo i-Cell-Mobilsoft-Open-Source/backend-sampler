@@ -6,17 +6,13 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>hu.icellmobilsoft.sampler.common</groupId>
-    <artifactId>common</artifactId>
+    <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+    <artifactId>grpc</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>common-core-jee</module>
-        <module>common-util</module>
-        <module>common-rest-jee</module>
-        <module>common-system-rest</module>
-        <module>common-jpa</module>
-        <module>common-system-jpa</module>
+        <module>grpc-core</module>
+        <module>grpc-protoc</module>
     </modules>
 
     <dependencyManagement>

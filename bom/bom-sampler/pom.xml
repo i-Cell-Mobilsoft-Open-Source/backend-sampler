@@ -79,13 +79,13 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>hu.icellmobilsoft.sampler.common</groupId>
-                <artifactId>common-grpc-core</artifactId>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>hu.icellmobilsoft.sampler.common</groupId>
-                <artifactId>common-grpc-protoc</artifactId>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-protoc</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
