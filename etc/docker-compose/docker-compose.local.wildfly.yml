@@ -24,6 +24,7 @@ services:
       - '8081:8080'
       - '9991:9990'
       - '8788:8787'
+      - '8199:8199' #GRPC
 #    environment:
 #      MP_CONFIG_PROFILE: local
     deploy:

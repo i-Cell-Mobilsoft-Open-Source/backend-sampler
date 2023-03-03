@@ -1,0 +1,129 @@
+= gRPC server service
+
+* Main: `sample/sample-grpc-server-service`
+
+A service célja a gRPC szerver használata.
+CDI alapu gRPC szerver minta implementació, tech felderítés céljából.
+Jakarta oldalon folyamatban van a kidolgozása: https://projects.eclipse.org/projects/ee4j.rpc/reviews/creation-review
+Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack , https://www.youtube.com/watch?v=UYSNM9Dy5M4
+
+== GRPC API
+common-grpc-api modul general java classokat amikkel kommunikalni lehet a szerverrel.
+*.proto file-ban van meghatározva az api leíró, erre fut meg a maven plugin.
+proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
+
+generalt tartalom:
+
+* target/generated-sources/protobuf/java -> ez lényegében a dto rész, a hozzá tartozó builderekkel, a grpc üzenet tartalmat írjak le
+* target/generated-sources/protobuf/grpc-java -> ez lényegében az interface rész, itt van a gRPC service leírója, milyen metódusok érhetőek el
+
+=== XSD to proto
+common-grpc-api modulba belekerült egy példa XSD-ből protocol-buffer létrehozásra.
+A schema2proto maven plugin felhasználásával, aminek részletes leírást tartalmazó konfig fájlja az etc/schema2proto/config.yaml helyen található.
+
+Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok dependency-ket másolni, amik a generálás után eltávolításra kerülnek:
+
+* hu.icellmobilsoft.coffeecoffee-dto-xsd (xsd)
+* com.google.protobuf:protobuf-java (proto)
+* com.google.api.grpc:proto-google-common-protos (proto)
+
+== GRPC Core
+common-grpc-core modul szolgál általános grpc-nél használandó osztályok gyűjtésére. pl. hibakezelés, logolás, mdc kezelés stb
+
+=== ExceptionMapper és ExceptionHandler
+Készült egy generikus ExceptionMapper interface JAX-RS mintára,
+adott Exception típus grpc Status-ra konvertálását teszi lehetővé a CDI adta lehetőségeket kihasználva.
+A megfelelő Mapper implementáció megkeresésére szolgál az ExceptionHandler osztály,
+ezt interceptoron nem sikerült bekötni, sajnos még mielőtt eljutna hozzá az Exception a grpc lib előbb elkapja és lekezeli.
+Így base osztályban, vagy az Impl részen lehet aktiválni try-catch be.
+
+== Szerver
+Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio.
+a protobuf-maven-plugin nem CDI kompatibilisen generál API-t, belekerül egy final metódus az osztalyba, ezért nem lehet proxyzni az objektumot.
+Erre kerülő megoldás egy wrapper osztaly ami CDI beannek delegalja a gRPC api hívást, de ez hosszutavon kényelmetlen, ennek a megoldása már folyamatban van https://projects.eclipse.org/projects/ee4j.rpc
+
+Implementalva vannak:
+
+* Request/Response log + MDC kezelésre minta (2 interceptor)
+* 2 gRPC service, ami automatikusan deployolodik a szerverrel
+* minta exception kezeles
+* a szerver default thread poolal dolgozik, productionben nem használható, saját implementáció kell hozzá ami paraméterezhető (legalabbis ez az ajanlas)
+* gRPC szerver konfigurációk, NettyServerBuilder alapon
+* https://github.com/grpc/grpc-java/blob/master/netty/src/main/java/io/grpc/netty/NettyServerBuilder.java
+
+=== Service implementálás
+
+. A proto generálásnál aktiválni kell a common-grpc-protoc plugint.
++
+.common-grpc-plugin aktiválás mavenen keresztül
+[source,xml]
+----
+						<outputTarget>
+							<type>grpc-coffee</type>
+							<pluginArtifact>hu.icellmobilsoft.sampler.common:common-grpc-protoc:${project.version}</pluginArtifact>
+						</outputTarget>
+----
++
+A plugin két plusz fájl generál egy interface leírót, amit full CDI környezetben tudunk implementálni.
+Valamint egy BindableService implementációt, ami az interface CDI implementációjának delegálja a grpc hívásokat,
+a delegálás a GRPCServerManager-en keresztül megtörténik, így fejlesztéskor ezzel nincs további dolgunk.
+
+==== Példa
+
+.service.proto
+[source,protobuf]
+----
+service DummyService {
+    rpc getDummy(DummyRequest) returns (DummyResponse);
+    rpc getDummyRequestScope(DummyRequest) returns (DummyResponse);
+}
+----
+
+.service implementáció
+[source,java]
+----
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyService; //<1>
+
+@ApplicationScoped //<2>
+public class DummyServiceImpl implements DummyService { //<1>
+
+    @Inject
+    private SampleGrpcAction sampleGrpcAction;
+
+    @Inject
+    private SampleGrpcRequestScopeAction sampleGrpcRequestScopeAction; //<3>
+
+    @Override
+    public void getDummy(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        sampleGrpcAction.call(request, responseObserver);
+    }
+
+    @Override
+    @ActivateRequestContext //<3>
+    public void getDummyRequestScope(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        sampleGrpcRequestScopeAction.call(request, responseObserver);
+    }
+}
+----
+<1> Generált interface leíró a proto fájlban definiált servicehez
+<2> ApplicationScope szükséges
+<3> Ha nagyon muszáj lehet Request scope-ú beant is használni, ilyenkor az érintett metódusra ki kell tenni az `@ActivateRequestContext` annotációt.
+
+== Kliens
+Grpc client kezeléshez CDI extension...TODO
+
+== Tesztek
+* 3 teszt gRPC kliens haszálat
+* egyszerű dummy kérés
+* többszálas teszt
+* minta hibakezelésre
+
+== REST API
+
+Automatikusan lekéréskor generált openapi végpont:
+http://localhost:8081/openapi
+(generált API leíró később lessz bekötve).
+
+== Konfiguráció
+
+Port beállítás: microprofile-config.properties -> coffee.grpc.server.port: 8199

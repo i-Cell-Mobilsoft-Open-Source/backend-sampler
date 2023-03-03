@@ -1,0 +1,17 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package hu.icellmobilsoft.sampler.common.sample.xsd.grpc;
+
+import "hu/icellmobilsoft/sampler/common/sample/rest/post/hu_icellmobilsoft_sampler_common_sample_rest_post.proto";
+
+message DummyXsdRequest {
+    hu.icellmobilsoft.sampler.common.sample.rest.post.SampleRequestType request = 1;
+}
+
+message DummyXsdResponse {
+    hu.icellmobilsoft.sampler.common.sample.rest.post.SampleResponseType response = 1;
+}
+
+service DummyXsdService {
+    rpc getXsdDummy(DummyXsdRequest) returns (DummyXsdResponse);
+}
