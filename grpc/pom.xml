@@ -13,6 +13,8 @@
     <modules>
         <module>grpc-core</module>
         <module>grpc-protoc</module>
+        <module>grpc-server-extension</module>
+        <module>grpc-client-extension</module>
     </modules>
 
     <dependencyManagement>

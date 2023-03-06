@@ -20,6 +20,14 @@
             <artifactId>common-system-rest</artifactId>
         </dependency>
         <dependency>
+			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+			<artifactId>grpc-server-extension</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+			<artifactId>grpc-client-extension</artifactId>
+		</dependency>
+        <dependency>
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
 			<artifactId>api-grpc-stub-gen</artifactId>
 		</dependency>
