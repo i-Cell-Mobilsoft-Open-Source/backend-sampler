@@ -38,7 +38,7 @@ import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
 import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
-import hu.icellmobilsoft.sampler.sample.grpc.client.GrpcClient;
+import hu.icellmobilsoft.sampler.grpc.client.GrpcClient;
 
 /**
  * Sample action for testing gRPC

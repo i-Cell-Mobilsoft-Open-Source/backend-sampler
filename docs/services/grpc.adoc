@@ -8,14 +8,19 @@ Jakarta oldalon folyamatban van a kidolgozása: https://projects.eclipse.org/pro
 Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack , https://www.youtube.com/watch?v=UYSNM9Dy5M4
 
 == GRPC API
-common-grpc-api modul general java classokat amikkel kommunikalni lehet a szerverrel.
-*.proto file-ban van meghatározva az api leíró, erre fut meg a maven plugin.
+gRPC API szinten a következő részekre van bontva:
+* api-schema: XSD-ket tartalmazza amiből .proto fileokat tudunk generálni
+* api-service-grpc: azokat a .proto file-okat tartalmazza ami definiálja az endpointot, mellette olyan objektumokat tehetünk ide, amihez nem akarunk XSD-t írni
+* api-grpc-proto-gen: a modul generál .proto file-okat XSD-ből
+* api-grpc-stub-gen: összefogja az api-grpc-proto-gen és api-service-grpc modulokat, amiből java alapú stub-okat generál. Ezeket a stubokat használja fel a kliens és szerver is egységesen.
+
 proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
 
 generalt tartalom:
 
-* target/generated-sources/protobuf/java -> ez lényegében a dto rész, a hozzá tartozó builderekkel, a grpc üzenet tartalmat írjak le
-* target/generated-sources/protobuf/grpc-java -> ez lényegében az interface rész, itt van a gRPC service leírója, milyen metódusok érhetőek el
+* api-grpc-proto-gen/target/generated-sources/src -> generalt *.proto
+* api-grpc-proto-gen/target/proto_deps -> google *.proto
+* api-grpc-stub-gen/target/generated-sources -> *.java stub-ok
 
 === XSD to proto
 common-grpc-api modulba belekerült egy példa XSD-ből protocol-buffer létrehozásra.
@@ -38,14 +43,12 @@ ezt interceptoron nem sikerült bekötni, sajnos még mielőtt eljutna hozzá az
 Így base osztályban, vagy az Impl részen lehet aktiválni try-catch be.
 
 == Szerver
-Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio.
-a protobuf-maven-plugin nem CDI kompatibilisen generál API-t, belekerül egy final metódus az osztalyba, ezért nem lehet proxyzni az objektumot.
-Erre kerülő megoldás egy wrapper osztaly ami CDI beannek delegalja a gRPC api hívást, de ez hosszutavon kényelmetlen, ennek a megoldása már folyamatban van https://projects.eclipse.org/projects/ee4j.rpc
+Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio. A grpc-server-extension foglalja magába a minta managelt szervert.
 
 Implementalva vannak:
 
-* Request/Response log + MDC kezelésre minta (2 interceptor)
-* 2 gRPC service, ami automatikusan deployolodik a szerverrel
+* Request/Response log + MDC kezelésre minta (3 interceptor)
+* 3 gRPC service, ami automatikusan deployolodik a szerverrel
 * minta exception kezeles
 * a szerver default thread poolal dolgozik, productionben nem használható, saját implementáció kell hozzá ami paraméterezhető (legalabbis ez az ajanlas)
 * gRPC szerver konfigurációk, NettyServerBuilder alapon
@@ -110,7 +113,39 @@ public class DummyServiceImpl implements DummyService { //<1>
 <3> Ha nagyon muszáj lehet Request scope-ú beant is használni, ilyenkor az érintett metódusra ki kell tenni az `@ActivateRequestContext` annotációt.
 
 == Kliens
-Grpc client kezeléshez CDI extension...TODO
+Grpc client kezeléshez CDI extension a grpc-cliens-extension alatt található. Az extension a dependency bekötéssel aktiválódik.
+
+[source,xml]
+----
+<dependency>
+	<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+	<artifactId>grpc-client-extension</artifactId>
+</dependency>
+----
+
+A kliensek használatához konfigurációra van szükség, minta megtalálható a microprofile-config.properties file-ban.
+Az inject során az itt beállított paraméterekkel azonnal használhatóvá válik hasonlóan a rest kliens-hez.
+
+.config DummyServiceGrpc gRPC kliens számára
+[source,yaml]
+----
+coffee.grpc.client.DummyServiceGrpc.port=8199
+coffee.grpc.client.DummyServiceGrpc.host=localhost
+----
+
+.CDI inject DummyServiceGrpc haszálatához
+----
+@Inject
+@GrpcClient(configKey = "DummyServiceGrpc") //<1>
+private DummyServiceGrpc.DummyServiceBlockingStub dummyGrpcService; //<2>
+
+...
+DummyResponse helloResponse = dummyGrpcService.getDummy(dummyRequest); //<3>
+...
+----
+<1> Konfigurációs kulcs a csatlakozási paraméterekről, szerver host és port értéke
+<2> Stub amin definiálva van a service hívás
+<3> gRPC service hívás
 
 == Tesztek
 * 3 teszt gRPC kliens haszálat

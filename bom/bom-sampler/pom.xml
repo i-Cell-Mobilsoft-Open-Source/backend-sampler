@@ -88,6 +88,16 @@
                 <artifactId>grpc-protoc</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-server-extension</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-client-extension</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
