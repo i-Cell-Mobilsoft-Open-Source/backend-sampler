@@ -10,11 +10,11 @@
 
 	<properties>
 		<service.name>quarkusrestsample</service.name>
-		<version.hu.icellmobilsoft.coffee>2.0.0-quarkus-SNAPSHOT</version.hu.icellmobilsoft.coffee>
-		<quarkus.microprofile>3.0.0.Alpha3</quarkus.microprofile>
 	</properties>
 
 	<dependencies>
+
+		<!-- Quarkus dependencies -->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-core</artifactId>
@@ -30,6 +30,10 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jaxb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -61,74 +65,68 @@
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-undertow</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>hu.icellmobilsoft.sampler.dto</groupId>
-			<artifactId>dto</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>hu.icellmobilsoft.sampler.api</groupId>
-			<artifactId>api-jee</artifactId>
-			<version>${project.version}</version>
+			<artifactId>quarkus-config-yaml</artifactId>
 		</dependency>
 
-		<!--COFFEE-->
-<!--		<dependency>-->
-<!--			<groupId>hu.icellmobilsoft.coffee</groupId>-->
-<!--			<artifactId>coffee-tool</artifactId>-->
-<!--			<version>${version.hu.icellmobilsoft.coffee}</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>hu.icellmobilsoft.coffee</groupId>-->
-<!--			<artifactId>coffee-module-configdoc</artifactId>-->
-<!--			<version>${version.hu.icellmobilsoft.coffee}</version>-->
-<!--		</dependency>-->
+		<!-- With quarkus-undertow the classic restEasy implementations are used instead of the Vertx ones -->
 		<dependency>
-			<groupId>hu.icellmobilsoft.coffee</groupId>
-			<artifactId>coffee-module-mp-restclient</artifactId>
-			<version>${version.hu.icellmobilsoft.coffee}</version>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow</artifactId>
 		</dependency>
+
+		<!-- Project dependencies -->
+
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.common</groupId>
 			<artifactId>common-system-rest</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>hu.icellmobilsoft.sampler.common</groupId>
-					<artifactId>common-core-jee</artifactId>
-				</exclusion>
-			</exclusions>
+		</dependency>
+
+		<!--COFFEE-->
+		<dependency>
+			<groupId>hu.icellmobilsoft.coffee</groupId>
+			<artifactId>coffee-rest</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.coffee</groupId>
-			<artifactId>coffee-cdi</artifactId>
-			<version>${version.hu.icellmobilsoft.coffee}</version>
+			<artifactId>coffee-module-mp-restclient</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>hu.icellmobilsoft.coffee</groupId>
+			<artifactId>coffee-module-configdoc</artifactId>
+		</dependency>
+
 		<!--TEST-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>io.quarkus.platform</groupId>
+					<artifactId>quarkus-maven-plugin</artifactId>
+					<version>${version.io.quarkus.platform.quarkus-bom}</version>
+					<extensions>true</extensions>
+					<executions>
+						<execution>
+							<goals>
+								<goal>build</goal>
+								<goal>generate-code</goal>
+								<goal>generate-code-tests</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>io.quarkus.platform</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
-				<version>3.0.0.Alpha3</version>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<goals>
-							<goal>build</goal>
-							<goal>generate-code</goal>
-							<goal>generate-code-tests</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		<resources>
@@ -140,6 +138,7 @@
 				<directory>../../etc/config</directory>
 				<includes>
 					<include>META-INF/microprofile-config*</include>
+					<include>application.properties</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>

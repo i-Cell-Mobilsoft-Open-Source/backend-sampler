@@ -19,6 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.rest.jsonb;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbConfig;
@@ -35,6 +36,7 @@ import jakarta.ws.rs.ext.Provider;
  * @see <a href="https://github.com/eclipse-ee4j/jsonb-api/issues/172">Future configuration option</a>
  */
 @Provider
+@Dependent
 public class CustomJsonb implements ContextResolver<Jsonb> {
 
     @Override

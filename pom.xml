@@ -25,6 +25,12 @@
         <failsafe.reportsDir>${project.build.directory}/failsafe-reports</failsafe.reportsDir>
         <sonar.junit.reportPaths>${surefire.reportsDir}, ${failsafe.reportsDir}</sonar.junit.reportPaths>
         <sonar.jacoco.reportPaths>${jacoco.ut.execution.data.file}, ${jacoco.it.execution.data.file}</sonar.jacoco.reportPaths>
+
+        <!-- For quarkus bom and service -->
+        <version.io.quarkus.platform.quarkus-bom>3.0.0.Beta1</version.io.quarkus.platform.quarkus-bom>
+        <!-- Coffee version use in bom-all and sample-quarkus -->
+        <version.hu.icellmobilsoft.coffee>2.0.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
+
     </properties>
 
     <scm>
