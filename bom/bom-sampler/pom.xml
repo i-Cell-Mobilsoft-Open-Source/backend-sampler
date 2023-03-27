@@ -21,6 +21,28 @@
                 <artifactId>api-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.api</groupId>
+                <artifactId>api-schema</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.api</groupId>
+                <artifactId>api-grpc-proto-gen</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.api</groupId>
+                <artifactId>api-service-grpc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+	        <dependency>
+				<groupId>hu.icellmobilsoft.sampler.api</groupId>
+				<artifactId>api-grpc-stub-gen</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+            
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.model</groupId>
                 <artifactId>model</artifactId>
@@ -54,6 +76,26 @@
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.common</groupId>
                 <artifactId>common-system-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-protoc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-server-extension</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-client-extension</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -21,6 +21,11 @@
             <groupId>hu.icellmobilsoft.sampler.api</groupId>
             <artifactId>api-jee</artifactId>
         </dependency>
+		<dependency>
+			<groupId>hu.icellmobilsoft.sampler.api</groupId>
+			<artifactId>api-grpc-stub-gen</artifactId>
+		</dependency>
+        
         <!-- ez nalunk exclude org.apache.httpcomponents:httpclient-ben itt viszont kell -->
         <dependency>
             <groupId>commons-logging</groupId>
