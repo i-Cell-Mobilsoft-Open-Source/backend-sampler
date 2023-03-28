@@ -18,25 +18,30 @@
         <dependencies>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.bom</groupId>
+                <artifactId>bom-all</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>hu.icellmobilsoft.sampler.bom</groupId>
+                        <artifactId>bom-wf-27</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.deltaspike.distribution</groupId>
+                        <artifactId>distributions-bom</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.bom</groupId>
                 <artifactId>bom-quarkus</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.sampler.bom</groupId>
-                <artifactId>bom-sampler</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-bom</artifactId>
-                <version>${version.hu.icellmobilsoft.coffee}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

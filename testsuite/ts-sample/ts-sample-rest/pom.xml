@@ -12,8 +12,6 @@
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.testsuite</groupId>
             <artifactId>ts-common-rest</artifactId>
-            <exclusions>
-            </exclusions>
         </dependency>
     </dependencies>
 
