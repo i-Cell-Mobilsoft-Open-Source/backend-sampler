@@ -51,10 +51,19 @@ class GetSampleIT extends BaseConfigurableWeldIT {
     private ConfigurableResponseProcessor<SampleResponse> responseProcessor;
 
     @Test
-    @DisplayName("test get")
-    void testGet() {
+    @DisplayName("test get - json")
+    void testGet_json() {
 
         SampleResponse response = responseProcessor.getJson(SampleResponse.class);
+
+        Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
+    }
+
+    @Test
+    @DisplayName("test get - xml")
+    void testGet_xml() {
+
+        SampleResponse response = responseProcessor.getXml(SampleResponse.class);
 
         Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
     }
