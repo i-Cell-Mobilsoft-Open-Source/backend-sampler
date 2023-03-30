@@ -55,10 +55,19 @@ class PostSampleIT extends BaseConfigurableWeldIT {
     private ConfigurableResponseProcessor<SampleResponse> responseProcessor;
 
     @Test
-    @DisplayName("empty request")
-    void testEmpty() {
+    @DisplayName("empty request - json")
+    void testEmpty_json() {
 
         SampleResponse response = responseProcessor.postJson(requestBuilder.getDefault(), SampleResponse.class);
+
+        Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
+    }
+
+    @Test
+    @DisplayName("empty request - xml")
+    void testEmpty_xml() {
+
+        SampleResponse response = responseProcessor.postXml(requestBuilder.getDefault(), SampleResponse.class);
 
         Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
     }
