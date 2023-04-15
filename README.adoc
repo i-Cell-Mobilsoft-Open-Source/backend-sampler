@@ -48,18 +48,21 @@ Ez a Wildfly deploy autoscan tulajdonságát használja fel,
 tehát a scannelt könyvtárába bele másoljuk a war fájlt.
 Ez megtörténhet konzolból (nem kényelmes) vagy ANT fájl segítségével (`sample/sample-*-service/build.xml`).
 A Wilfly server és konfigurációja egyszerre 1 service futásra van beállítva.
-Tehát a következő telepítési "másoló" scriptet lehet használni:
+Tehát a következő telepítési "másoló" scriptet lehet használni, melyben a <PROJECT_VERSION>-t az aktuális verziószámra kell beállítani:
 
 .war fájl telepítése
 [source,bash]
 ----
 # sample-rest-service esetében
-docker cp local_path/sample/sample-rest-service/target/sample-rest-service-2.0.0-SNAPSHOT.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+docker cp local_path/sample/sample-rest-service/target/sample-rest-service-<PROJECT_VERSION>.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+
 # sample-jpa-service esetében
-docker cp local_path/sample/sample-jpa-service/target/sample-jpa-service-2.0.0-SNAPSHOT.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+docker cp local_path/sample/sample-jpa-service/target/sample-jpa-service-<PROJECT_VERSION>.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+
 # sample-mongo-service esetében
-docker cp local_path/sample/sample-mongo-service/target/sample-mongo-service-2.0.0-SNAPSHOT.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+docker cp local_path/sample/sample-mongo-service/target/sample-mongo-service-<PROJECT_VERSION>.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
 ----
+
 De kényelmesebben az Ant segítségével 1 kattintással az IDEből,
 például a `sample/sample-rest-service/build.xml` ant fájl
 - "deploy-war-docker" targetjével (default).
