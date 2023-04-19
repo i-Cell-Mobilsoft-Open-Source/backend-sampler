@@ -19,6 +19,8 @@
 
     <properties>
         <project.scm.id>icell-github-server</project.scm.id>
+
+        <version.quarkus>3.0.0.Final</version.quarkus>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <surefire.reportsDir>${project.build.directory}/surefire-reports</surefire.reportsDir>
@@ -178,6 +180,21 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <plugin>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${version.quarkus}</version>
+                    <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>generate-code</goal>
+                                <goal>generate-code-tests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -220,9 +237,7 @@
         <module>common</module>
         <module>sample</module>
         <module>grpc</module>
-<!--
         <module>sample-quarkus</module>
--->
         <module>testsuite</module>
     </modules>
 

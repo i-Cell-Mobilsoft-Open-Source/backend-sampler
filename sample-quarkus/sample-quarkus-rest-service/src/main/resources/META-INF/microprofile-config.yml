@@ -1,0 +1,15 @@
+# Default `microprofile-config.yml` is needed for other profile yml processing
+quarkus:
+  # REST Client configuration
+  # url: All requests performed per interface will use this configuration value as the base URL
+  # scope: The default scope per interface.
+  #   Supported scope values are @Singleton, @Dependent, @ApplicationScoped and @RequestScoped.
+  #   The default scope is @Dependent.
+  #   The default scope can also be defined on the interface
+  # read / connection-timeout: default 30 seconds can be overridden in milliseconds
+  rest-client:
+    "hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRestRegisteredClient":
+      url: http://localhost:8080
+      scope: jakarta.enterprise.context.ApplicationScoped
+      #read-timeout: 5000
+      #connect-timeout: 5000

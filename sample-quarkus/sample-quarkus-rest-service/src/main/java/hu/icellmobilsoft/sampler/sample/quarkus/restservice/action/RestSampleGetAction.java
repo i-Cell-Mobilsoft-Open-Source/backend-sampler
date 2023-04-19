@@ -19,7 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.action;
 
-import javax.enterprise.inject.Model;
+import jakarta.enterprise.inject.Model;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;

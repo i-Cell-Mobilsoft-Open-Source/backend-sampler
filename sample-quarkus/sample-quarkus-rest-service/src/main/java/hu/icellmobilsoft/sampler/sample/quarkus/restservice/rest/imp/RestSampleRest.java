@@ -19,8 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.imp;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;

@@ -10,42 +10,92 @@
 
 	<properties>
 		<service.name>quarkusrestsample</service.name>
-		<version.hu.icellmobilsoft.coffee>1.11.0</version.hu.icellmobilsoft.coffee>
-		<quarkus.microprofile>2.7.2.Final</quarkus.microprofile>
+		<version.hu.icellmobilsoft.coffee>2.0.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
 	</properties>
 
 	<dependencies>
+		<!-- Project -->
 		<dependency>
-			<groupId>io.quarkiverse.microprofile</groupId>
-			<artifactId>quarkus-microprofile</artifactId>
-			<version>${quarkus.microprofile}</version>
+			<groupId>hu.icellmobilsoft.sampler.common</groupId>
+			<artifactId>common-system-rest</artifactId>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>hu.icellmobilsoft.sampler.common</groupId>
+					<artifactId>common-core-jee</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<!-- Quarkus -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-arc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-jwt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-fault-tolerance</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-metrics</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-openapi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-opentracing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-config-yaml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-rest-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jaxb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-undertow</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>hu.icellmobilsoft.sampler.dto</groupId>
-			<artifactId>dto</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>hu.icellmobilsoft.sampler.api</groupId>
-			<artifactId>api-jee</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>hu.icellmobilsoft.coffee</groupId>
-					<artifactId>coffee-rest</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-health</artifactId>
 		</dependency>
 
 		<!--COFFEE-->
 		<dependency>
 			<groupId>hu.icellmobilsoft.coffee</groupId>
-			<artifactId>coffee-tool</artifactId>
+			<artifactId>coffee-module-mp-restclient</artifactId>
 			<version>${version.hu.icellmobilsoft.coffee}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.microprofile.rest.client</groupId>
+			<artifactId>microprofile-rest-client-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.coffee</groupId>
@@ -53,19 +103,13 @@
 			<version>${version.hu.icellmobilsoft.coffee}</version>
 		</dependency>
 
-		<!--TEST-->
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-junit5</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>io.quarkus.platform</groupId>
+				<groupId>io.quarkus</groupId>
 				<artifactId>quarkus-maven-plugin</artifactId>
-				<version>2.11.1.Final</version>
+				<version>${version.quarkus}</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>

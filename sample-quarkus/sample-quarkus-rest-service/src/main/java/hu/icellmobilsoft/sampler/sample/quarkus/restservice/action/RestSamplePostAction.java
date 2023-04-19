@@ -19,8 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.action;
 
-import javax.enterprise.inject.Model;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
