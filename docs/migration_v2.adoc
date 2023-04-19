@@ -38,6 +38,9 @@ Pár példa:
 * hu.icellmobilsoft.coffee.rest.validation.xml.utils.XsdHelper
 * ...
 
+Quarkus almodul 3.0.0.Final verziót kapott, amivel a coff:ee 2.0.0 már használható, és JakartaEE 10 alapon működik.
+
+
 == BUG
 
 .SCD "x-schema::tns" didnt match any schema component
