@@ -21,6 +21,7 @@ package hu.icellmobilsoft.sampler.common.rest.exception;
 
 import java.io.IOException;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.ForbiddenException;
@@ -57,6 +58,7 @@ import hu.icellmobilsoft.sampler.dto.exception.enums.FaultType;
  * @since 0.1.0
  */
 @Provider
+@Dependent
 public class JaxrsExceptionMapper implements ExceptionMapper<WebApplicationException> {
 
     @Inject

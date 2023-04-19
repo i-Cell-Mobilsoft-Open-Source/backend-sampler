@@ -33,7 +33,6 @@ import hu.icellmobilsoft.sampler.dto.exception.enums.FaultType;
  * @author imre.scheffer
  * @since 0.1.0
  */
-@Vetoed
 public class FaultTypeParser {
 
     /**

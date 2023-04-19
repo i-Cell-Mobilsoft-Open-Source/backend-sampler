@@ -27,6 +27,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
@@ -40,7 +41,7 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.api.ISampleRest
  * @since 0.1.0
  */
 @Model
-public class RestSamplePostAction {
+public class RestSamplePostAction extends BaseAction {
 
     @Inject
     @RestClient

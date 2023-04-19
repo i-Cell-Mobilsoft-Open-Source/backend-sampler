@@ -20,10 +20,14 @@
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.action;
 
 import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
+import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
+import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
@@ -36,8 +40,10 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
  * @since 0.1.0
  */
 @Model
-public class RestSampleGetAction {
+public class RestSampleGetAction extends BaseAction {
 
+    @ThisLogger
+    @Inject AppLogger logger;
     /**
      * Dummy sample reponse
      * 
@@ -46,6 +52,7 @@ public class RestSampleGetAction {
      *             if error
      */
     public SampleResponse sample() throws BaseException {
+        logger.trace(">> RestSampleGetAction.sample()");
         SampleResponse response = new SampleResponse();
 
         SampleType sampleType = new SampleType();
@@ -55,7 +62,8 @@ public class RestSampleGetAction {
         sampleType.setColumnB(SampleValueEnumType.VALUE_A);
         response.setSample(sampleType);
         response.setFuncCode(FunctionCodeType.OK);
-        // handleSuccessResultType(response);
+        handleSuccessResultType(response);
+        logger.trace("<< RestSampleGetAction.sample()");
         return response;
     }
 }

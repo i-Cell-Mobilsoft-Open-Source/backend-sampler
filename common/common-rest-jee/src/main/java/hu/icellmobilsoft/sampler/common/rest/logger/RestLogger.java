@@ -20,6 +20,7 @@
 package hu.icellmobilsoft.sampler.common.rest.logger;
 
 import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
 import jakarta.ws.rs.ext.Provider;
 
 import hu.icellmobilsoft.coffee.rest.log.BaseRestLogger;
@@ -34,6 +35,7 @@ import hu.icellmobilsoft.sampler.dto.constant.IHttpHeaderConstants;
  * 
  */
 @Provider
+@Dependent
 @Priority(CustomPriorities.PRE_AUTHENTICATION)
 public class RestLogger extends BaseRestLogger {
 
