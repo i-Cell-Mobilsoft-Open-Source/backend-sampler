@@ -44,6 +44,10 @@
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
+                <excludes>
+                    <!-- xml (pl. super-proto.xml) fajlok nem tartoznak a csomagba -->
+                    <exclude>**/*.xml</exclude>
+                </excludes>
 			</resource>
 		</resources>
 		<extensions>
@@ -72,8 +76,8 @@
 									<artifactId>api-schema</artifactId>
 									<type>jar</type>
 									<overWrite>true</overWrite>
-									<includes>**/*</includes>
-									<outputDirectory>${project.build.directory}/src/main/resources</outputDirectory>
+									<includes>**/*.xsd</includes>
+									<outputDirectory>${project.build.directory}</outputDirectory>
 								</artifactItem>
 								<artifactItem>
 									<groupId>hu.icellmobilsoft.coffee</groupId>
@@ -139,7 +143,7 @@
 					<!--					 ez tartalmaz minden beállítást, részletes leírásokkal -->
 					<configFile>${project.build.directory}/etc/schema2proto/config.yaml</configFile>
 					<!--					 root xml/xsd amit konvertálni akarunk, szükséges mindenhova megadni a schemaLocation-t -->
-					<xsdFile>${project.build.directory}/src/main/resources/xsd/hu/icellmobilsoft/sampler/common/superProto.xml</xsdFile>
+					<xsdFile>src/main/resources/xsd/hu/icellmobilsoft/sampler/common/superProto.xml</xsdFile>
 				</configuration>
 				<executions>
 					<execution>

@@ -34,7 +34,7 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.api</groupId>
-                <artifactId>api-service-grpc</artifactId>
+                <artifactId>api-grpc-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 	        <dependency>

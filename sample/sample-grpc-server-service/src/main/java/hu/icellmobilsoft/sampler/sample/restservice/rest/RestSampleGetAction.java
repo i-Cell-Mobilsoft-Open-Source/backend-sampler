@@ -31,13 +31,13 @@ import com.google.protobuf.Timestamp;
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.common.grpc.error.ErrorServiceGrpc;
-import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.error.ErrorServiceGrpc;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.BaseMessage;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyServiceGrpc;
 import hu.icellmobilsoft.sampler.grpc.client.GrpcClient;
 
 /**
@@ -71,8 +71,8 @@ public class RestSampleGetAction extends BaseAction {
     public SampleResponse sample() throws BaseException {
 
         // sample message build
-        hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
-        hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+        DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+        BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
         baseMessageBuilder.setAmount(3.14);
         baseMessageBuilder.setFirstName("first");
         baseMessageBuilder.setIsActive(true);

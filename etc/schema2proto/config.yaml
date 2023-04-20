@@ -2,7 +2,7 @@
 #outputFilename: generated-file.proto
 
 # Target directory to write resulting proto files. Proto files are placed in sub folders according to their package name
-outputDirectory: ${project.build.directory}/generated-sources/src/main/proto
+outputDirectory: ${project.build.directory}/generated-sources
 
 # Include XSD annotation/documentation on message level
 #includeMessageDocs: true

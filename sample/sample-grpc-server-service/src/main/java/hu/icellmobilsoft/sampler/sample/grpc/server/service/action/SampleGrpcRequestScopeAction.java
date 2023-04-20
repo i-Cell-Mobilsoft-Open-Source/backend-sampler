@@ -25,9 +25,9 @@ import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
-import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.BaseMessage;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyResponse;
 import io.grpc.stub.StreamObserver;
 
 /**

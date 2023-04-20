@@ -22,9 +22,9 @@ package hu.icellmobilsoft.sampler.sample.grpc.server.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdService;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
 import io.grpc.stub.StreamObserver;
 

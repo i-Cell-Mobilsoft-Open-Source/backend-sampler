@@ -14,7 +14,6 @@
         <module>api-jee</module>
         <module>api-grpc</module>
         <module>api-schema</module>
-        <module>api-service</module>
     </modules>
 
     <dependencyManagement>
