@@ -22,6 +22,12 @@
 			<artifactId>grpc-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+			<artifactId>grpc-protoc</artifactId>
+			<!-- csak a generalashoz kell es a compile elofeltelhez -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
 			<artifactId>api-grpc-proto-gen</artifactId>
 		</dependency>
