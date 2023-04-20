@@ -9,9 +9,10 @@ Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pac
 
 == GRPC API
 gRPC API szinten a következő részekre van bontva:
+
 * api-schema: XSD-ket tartalmazza amiből .proto fileokat tudunk generálni
-* api-service-grpc: azokat a .proto file-okat tartalmazza ami definiálja az endpointot, mellette olyan objektumokat tehetünk ide, amihez nem akarunk XSD-t írni
 * api-grpc-proto-gen: a modul generál .proto file-okat XSD-ből
+* api-grpc-service: azokat a .proto file-okat tartalmazza ami definiálja az endpointot, mellette olyan objektumokat tehetünk ide, amihez nem akarunk XSD-t írni
 * api-grpc-stub-gen: összefogja az api-grpc-proto-gen és api-service-grpc modulokat, amiből java alapú stub-okat generál. Ezeket a stubokat használja fel a kliens és szerver is egységesen.
 
 proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
