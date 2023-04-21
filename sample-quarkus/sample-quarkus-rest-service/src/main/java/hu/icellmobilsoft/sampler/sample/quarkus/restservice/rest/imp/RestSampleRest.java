@@ -20,10 +20,12 @@
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.imp;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
+import hu.icellmobilsoft.sampler.common.system.rest.rest.BaseRestService;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSampleGetAction;
@@ -35,8 +37,8 @@ import hu.icellmobilsoft.sampler.sample.quarkus.restservice.action.RestSamplePos
  * @author czenczl
  * @since 0.1.0
  */
-@ApplicationScoped
-public class RestSampleRest implements ISampleRest {
+@Model
+public class RestSampleRest extends BaseRestService implements ISampleRest {
 
     @Inject
     RestSampleGetAction restSampleAction;
@@ -46,14 +48,12 @@ public class RestSampleRest implements ISampleRest {
 
     @Override
     public SampleResponse getSample() throws BaseException {
-        // TODO coffee rest base action
-        return restSampleAction.sample();
+        return wrapNoParam(restSampleAction::sample, "getSample");
     }
 
     @Override
     public SampleResponse postSample(SampleRequest sampleRequest) throws BaseException {
-        // TODO coffee rest base action
-        return restSamplePostAction.postSample(sampleRequest);
+        return wrapPathParam1(restSamplePostAction::postSample, sampleRequest,"postSample","sampleRequest");
     }
 
 }

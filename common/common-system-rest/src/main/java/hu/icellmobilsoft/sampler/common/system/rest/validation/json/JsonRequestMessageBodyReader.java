@@ -20,6 +20,7 @@
 package hu.icellmobilsoft.sampler.common.system.rest.validation.json;
 
 import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.core.MediaType;
@@ -35,6 +36,7 @@ import hu.icellmobilsoft.coffee.rest.validation.json.JsonMessageBodyReaderBase;
  * @since 0.1.0
  */
 @Provider
+@Dependent
 @Consumes({ MediaType.APPLICATION_JSON })
 @Priority(Priorities.ENTITY_CODER)
 public class JsonRequestMessageBodyReader extends JsonMessageBodyReaderBase<BaseRequestType> {

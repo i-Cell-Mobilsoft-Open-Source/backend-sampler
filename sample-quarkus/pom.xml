@@ -10,9 +10,6 @@
     <artifactId>sample-quarkus</artifactId>
     <packaging>pom</packaging>
 
-    <properties>
-        <version.hu.icellmobilsoft.coffee>2.0.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
-    </properties>
     <modules>
         <module>sample-quarkus-rest-service</module>
     </modules>

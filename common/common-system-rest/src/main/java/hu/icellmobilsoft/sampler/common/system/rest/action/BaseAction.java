@@ -19,6 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.common.system.rest.action;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
@@ -34,6 +35,7 @@ import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
  * @author imre.scheffer
  * @since 0.1.0
  */
+@Dependent
 public class BaseAction extends AbstractBaseAction {
 
     @Inject

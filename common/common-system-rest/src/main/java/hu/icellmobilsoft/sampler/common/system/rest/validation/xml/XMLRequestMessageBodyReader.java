@@ -20,6 +20,7 @@
 package hu.icellmobilsoft.sampler.common.system.rest.validation.xml;
 
 import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.core.MediaType;
@@ -35,6 +36,7 @@ import hu.icellmobilsoft.coffee.rest.validation.xml.XmlMessageBodyReaderBase;
  * @since 0.1.0
  */
 @Provider
+@Dependent
 @Consumes({ MediaType.APPLICATION_XML, MediaType.TEXT_XML })
 @Priority(Priorities.ENTITY_CODER)
 public class XMLRequestMessageBodyReader extends XmlMessageBodyReaderBase<BaseRequestType> {

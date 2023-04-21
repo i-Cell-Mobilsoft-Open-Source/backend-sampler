@@ -16,5 +16,7 @@
         <module>bom-quarkus</module>
         <module>bom-sampler</module>
         <module>bom-all</module>
+        <module>bom-coffee</module>
+        <module>bom-test</module>
     </modules>
 </project>

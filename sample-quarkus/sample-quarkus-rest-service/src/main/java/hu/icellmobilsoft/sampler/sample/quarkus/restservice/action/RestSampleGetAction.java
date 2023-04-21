@@ -43,7 +43,9 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 public class RestSampleGetAction extends BaseAction {
 
     @ThisLogger
-    @Inject AppLogger logger;
+    @Inject
+    AppLogger logger;
+
     /**
      * Dummy sample reponse
      * 

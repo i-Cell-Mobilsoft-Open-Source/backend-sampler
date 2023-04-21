@@ -68,7 +68,7 @@ public class RestSamplePostAction extends BaseAction {
         sampleType.setColumnB(sampleRequest.getSample().getColumnB());
         response.setSample(sampleType);
         response.setFuncCode(FunctionCodeType.OK);
-        // handleSuccessResultType(response, sampleRequest);
+        handleSuccessResultType(response, sampleRequest);
         return response;
     }
 }

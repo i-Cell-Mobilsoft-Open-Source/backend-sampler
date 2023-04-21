@@ -56,69 +56,23 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <dependency>
-                <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-bom</artifactId>
-                <version>${version.hu.icellmobilsoft.coffee}</version>
+                <groupId>hu.icellmobilsoft.sampler.bom</groupId>
+                <artifactId>bom-coffee</artifactId>
+                <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
             <dependency>
-                <groupId>hu.icellmobilsoft.roaster</groupId>
-                <artifactId>roaster-weldunit</artifactId>
-                <version>${version.hu.icellmobilsoft.roaster}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.roaster</groupId>
-                <artifactId>roaster-common-util</artifactId>
-                <version>${version.hu.icellmobilsoft.roaster}</version>
-                <scope>test</scope>
+                <groupId>hu.icellmobilsoft.sampler.bom</groupId>
+                <artifactId>bom-test</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-rest</artifactId>
-                <version>${version.hu.icellmobilsoft.coffee}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.jboss.resteasy</groupId>
-                        <artifactId>resteasy-jaxrs</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.httpcomponents</groupId>
-                        <artifactId>httpclient</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.httpcomponents</groupId>
-                        <artifactId>httpcore</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.httpcomponents</groupId>
-                        <artifactId>httpmime</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-dto-base</artifactId>
-                <version>${version.hu.icellmobilsoft.coffee}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.glassfish.jaxb</groupId>
-                        <artifactId>jaxb-runtime</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!--Test dependecies -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
-                <version>${version.org.junit.jupiter}</version>
-                <scope>test</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

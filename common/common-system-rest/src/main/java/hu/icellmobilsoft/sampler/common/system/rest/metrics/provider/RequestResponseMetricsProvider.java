@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.HttpMethod;
@@ -52,6 +53,7 @@ import hu.icellmobilsoft.sampler.dto.path.SamplePath;
  * @since 0.1.0
  */
 @Provider
+@Dependent
 public class RequestResponseMetricsProvider implements ContainerRequestFilter, WriterInterceptor {
 
     @Inject

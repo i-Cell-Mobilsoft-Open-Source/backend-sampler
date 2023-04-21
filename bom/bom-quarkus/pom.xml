@@ -12,9 +12,45 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>hu.icellmobilsoft.sampler.bom</groupId>
+				<artifactId>bom-jee</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>hu.icellmobilsoft.sampler.bom</groupId>
+				<artifactId>bom-sampler</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
 				<groupId>io.quarkus</groupId>
 				<artifactId>quarkus-bom</artifactId>
 				<version>${version.quarkus}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>io.quarkiverse.microprofile</groupId>
+				<artifactId>quarkus-microprofile</artifactId>
+				<version>${version.quarkus}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>hu.icellmobilsoft.sampler.bom</groupId>
+				<artifactId>bom-coffee</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>hu.icellmobilsoft.sampler.bom</groupId>
+				<artifactId>bom-test</artifactId>
+				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
