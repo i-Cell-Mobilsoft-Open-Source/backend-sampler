@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hu.icellmobilsoft.sampler.api</groupId>
+		<artifactId>api-grpc</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>api-grpc-service</artifactId>
+
+    <build>
+        <resources>
+           <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/proto_deps</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- a csomagnak tartalmaznia kell minden proto fajlt amit hasznal (kulsost is) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>resource-dependencies</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>hu.icellmobilsoft.sampler.api</groupId>
+                                    <artifactId>api-grpc-proto-gen</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <includes>**/*.proto</includes>
+                                    <outputDirectory>
+                                        ${project.build.directory}/proto_deps</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

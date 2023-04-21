@@ -19,11 +19,13 @@
 		
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-			<artifactId>grpc-protoc</artifactId>
+			<artifactId>grpc-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-			<artifactId>grpc-core</artifactId>
+			<artifactId>grpc-protoc</artifactId>
+			<!-- csak a generalashoz kell es a compile elofeltelhez -->
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
@@ -31,7 +33,7 @@
 		</dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
-			<artifactId>api-service-grpc</artifactId>
+			<artifactId>api-grpc-service</artifactId>
 		</dependency>
 
 		<!-- override for javax.annotation-->
@@ -73,15 +75,7 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>hu.icellmobilsoft.sampler.api</groupId>
-									<artifactId>api-grpc-proto-gen</artifactId>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-									<includes>**/*.proto</includes>
-									<outputDirectory>${project.build.directory}/generatedproto</outputDirectory>
-								</artifactItem>
-								<artifactItem>
-									<groupId>hu.icellmobilsoft.sampler.api</groupId>
-									<artifactId>api-service-grpc</artifactId>
+									<artifactId>api-grpc-service</artifactId>
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<includes>**/*.proto</includes>
@@ -99,14 +93,11 @@
 				<configuration>
 					<protocArtifact>com.google.protobuf:protoc:${version.protoc.version}:exe:${os.detected.classifier}</protocArtifact>
 					<inputDirectories>
-						<!-- generalt proto-->
-						<include>${project.build.directory}/generatedproto/src/main/proto</include>
-						<!-- kezi proto-->
-						<include>${project.build.directory}/serviceproto/proto</include>
+						<!-- generalt + kezi proto, csak a sajat csomagjainkat kell generalni a generalt google tipusok benne vannak a dependencyben-->
+						<include>${project.build.directory}/serviceproto/hu</include>
 					</inputDirectories>
 					<includeDirectories>
-						<directory>${project.build.directory}/generatedproto/src/main/proto</directory>
-						<directory>${project.build.directory}/generatedproto</directory>
+						<directory>${project.build.directory}/serviceproto</directory>
 					</includeDirectories>
 					<outputTargets>
 						<outputTarget>

@@ -11,6 +11,7 @@
     <modules>
         <module>api-grpc-proto-gen</module>
         <module>api-grpc-stub-gen</module>
+        <module>api-grpc-service</module>
     </modules>
 	
 </project>

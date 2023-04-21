@@ -23,9 +23,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyService;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyService;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcAction;
 import hu.icellmobilsoft.sampler.sample.grpc.server.service.action.SampleGrpcRequestScopeAction;
 import io.grpc.stub.StreamObserver;

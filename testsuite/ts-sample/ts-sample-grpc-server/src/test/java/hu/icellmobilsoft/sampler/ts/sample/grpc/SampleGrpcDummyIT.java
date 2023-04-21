@@ -24,7 +24,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,19 +64,14 @@ import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
-import hu.icellmobilsoft.sampler.common.grpc.error.ErrorServiceGrpc;
-import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
-import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyServiceGrpc;
-import io.grpc.CallOptions;
-import io.grpc.Channel;
-import io.grpc.ClientCall;
-import io.grpc.ClientInterceptor;
+import hu.icellmobilsoft.sampler.grpc.api.service.error.ErrorServiceGrpc;
+import hu.icellmobilsoft.sampler.grpc.api.service.error.RequestForError;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.BaseMessage;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.MethodDescriptor;
 import io.grpc.StatusRuntimeException;
 import io.grpc.protobuf.StatusProto;
 
@@ -118,9 +112,9 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
     @DisplayName("test dummy grpc service")
     void testDummyGrpcService() {
 
-        hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+        DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
 
-        hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+        BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
         baseMessageBuilder.setAmount(3.14);
         baseMessageBuilder.setFirstName("first");
         baseMessageBuilder.setIsActive(true);
@@ -153,9 +147,9 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
         for (int i = 0; i < thread; i++) {
             service.submit(() -> {
 
-                hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+                DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
 
-                hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+                BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
                 baseMessageBuilder.setAmount(3.14);
                 baseMessageBuilder.setFirstName("first");
                 baseMessageBuilder.setIsActive(true);
@@ -194,9 +188,9 @@ class SampleGrpcDummyIT extends BaseConfigurableWeldIT {
         for (int i = 0; i < thread; i++) {
             service.submit(() -> {
 
-                hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
+                DummyRequest.Builder reqBuilder = DummyRequest.newBuilder();
 
-                hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+                BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
                 baseMessageBuilder.setAmount(3.14);
                 baseMessageBuilder.setFirstName("first");
                 baseMessageBuilder.setIsActive(true);

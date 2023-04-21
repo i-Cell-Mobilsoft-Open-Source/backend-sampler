@@ -29,14 +29,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
-import hu.icellmobilsoft.sampler.common.grpc.error.RequestForError;
-import hu.icellmobilsoft.sampler.common.grpc.error.ResponseForError;
-import hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyRequest;
-import hu.icellmobilsoft.sampler.common.sample.grpc.DummyResponse;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.error.RequestForError;
+import hu.icellmobilsoft.sampler.grpc.api.service.error.ResponseForError;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.BaseMessage;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdResponse;
 import io.grpc.stub.StreamObserver;
 
 /**
@@ -106,7 +106,7 @@ public class SampleGrpcAction {
 
         DummyResponse.Builder builder = DummyResponse.newBuilder();
 
-        hu.icellmobilsoft.sampler.common.sample.grpc.BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
+        BaseMessage.Builder baseMessageBuilder = BaseMessage.newBuilder();
         baseMessageBuilder.setAmount(baseMessage.getAmount());
         baseMessageBuilder.setFirstName(baseMessage.getFirstName());
         baseMessageBuilder.setIsActive(baseMessage.getIsActive());

@@ -41,9 +41,9 @@ import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleC
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleRequestType;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleType;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleValueEnumType;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdRequest;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdResponse;
-import hu.icellmobilsoft.sampler.common.sample.xsd.grpc.DummyXsdServiceGrpc;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdRequest;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdResponse;
+import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyXsdServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
