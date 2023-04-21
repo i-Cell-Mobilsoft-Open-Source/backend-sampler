@@ -19,7 +19,6 @@
  */
 package hu.icellmobilsoft.sampler.sample.quarkus.restservice.rest.imp;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 

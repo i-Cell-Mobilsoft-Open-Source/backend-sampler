@@ -68,6 +68,7 @@ public class QuarkusCatalogProducer extends CatalogProducer {
      *             exception
      */
     @Produces
+    @Override
     public Catalog publicCatalogResolver() throws BaseException {
         Optional<String> xmlCatalogPath = applicationConfiguration.getOptionalString(IConfigKey.CATALOG_XML_PATH);
         String path = xmlCatalogPath
