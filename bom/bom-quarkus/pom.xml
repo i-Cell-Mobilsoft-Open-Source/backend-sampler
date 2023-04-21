@@ -33,6 +33,7 @@
 				<scope>import</scope>
 			</dependency>
 
+			<!-- https://github.com/quarkiverse/quarkus-microprofile -->
 			<dependency>
 				<groupId>io.quarkiverse.microprofile</groupId>
 				<artifactId>quarkus-microprofile</artifactId>

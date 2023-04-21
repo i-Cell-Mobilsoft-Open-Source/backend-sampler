@@ -21,7 +21,6 @@
         <project.scm.id>icell-github-server</project.scm.id>
 
         <version.quarkus>3.0.0.Alpha3</version.quarkus>
-        <version.hu.icellmobilsoft.coffee>2.0.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
 
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
