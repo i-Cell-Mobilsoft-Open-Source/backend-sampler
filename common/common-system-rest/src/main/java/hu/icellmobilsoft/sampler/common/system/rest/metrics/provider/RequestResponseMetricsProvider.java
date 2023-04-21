@@ -53,7 +53,6 @@ import hu.icellmobilsoft.sampler.dto.path.SamplePath;
  * @since 0.1.0
  */
 @Provider
-@Dependent
 public class RequestResponseMetricsProvider implements ContainerRequestFilter, WriterInterceptor {
 
     @Inject
