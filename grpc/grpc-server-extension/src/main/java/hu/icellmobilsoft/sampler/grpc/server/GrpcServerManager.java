@@ -40,6 +40,8 @@ import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.grpc.core.extension.api.IGrpcService;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ServerMetricInterceptorQualifier;
+import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;
+import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ServerOpentracingInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.server.config.GrpcServerConfig;
 import hu.icellmobilsoft.sampler.grpc.server.config.GrpcServerConnection;
 import hu.icellmobilsoft.sampler.grpc.server.interceptor.ErrorHandlerInterceptor;
@@ -162,15 +164,22 @@ public class GrpcServerManager {
      *            szerver builder
      */
     private void addInterceptor(ServerBuilder<?> serverBuilder) {
-        serverBuilder.intercept(new ErrorHandlerInterceptor()); // 4
-        serverBuilder.intercept(new ServerResponseInterceptor()); // 3
-        serverBuilder.intercept(new ServerRequestInterceptor()); // 2
+        serverBuilder.intercept(new ErrorHandlerInterceptor()); // 5
+        serverBuilder.intercept(new ServerResponseInterceptor()); // 4
+        serverBuilder.intercept(new ServerRequestInterceptor()); // 3
         // modul szintu dependency, mp-metric, micrometer, telemetry...
-        Instance<IMetricInterceptor> instance = CDI.current().select(IMetricInterceptor.class, new ServerMetricInterceptorQualifier.Literal());
-        if (instance.isResolvable()) {
-            serverBuilder.intercept((ServerInterceptor) instance.get()); // 1
+        Instance<IMetricInterceptor> instanceMetric = CDI.current().select(IMetricInterceptor.class, new ServerMetricInterceptorQualifier.Literal());
+        if (instanceMetric.isResolvable()) {
+            serverBuilder.intercept((ServerInterceptor) instanceMetric.get()); // 2
         } else {
             log.warn("Could not find Metric interceptor implementation for gRPC server.");
+        }
+        Instance<IOpentracingInterceptor> instanceOpentrace = CDI.current().select(IOpentracingInterceptor.class,
+                new ServerOpentracingInterceptorQualifier.Literal());
+        if (instanceOpentrace.isResolvable()) {
+            serverBuilder.intercept((ServerInterceptor) instanceOpentrace.get()); // 1
+        } else {
+            log.warn("Could not find Opentracing interceptor implementation for gRPC server.");
         }
     }
 

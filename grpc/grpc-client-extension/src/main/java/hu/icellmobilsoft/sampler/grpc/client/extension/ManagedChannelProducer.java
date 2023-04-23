@@ -39,6 +39,8 @@ import hu.icellmobilsoft.coffee.tool.utils.annotation.AnnotationUtil;
 import hu.icellmobilsoft.sampler.grpc.client.GrpcClient;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ClientMetricInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
+import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ClientOpentracingInterceptorQualifier;
+import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;
 import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -109,11 +111,19 @@ public class ManagedChannelProducer {
     }
 
     private void configureInterceptor(ManagedChannelBuilder<?> channelBuilder) {
-        Instance<IMetricInterceptor> instance = CDI.current().select(IMetricInterceptor.class, new ClientMetricInterceptorQualifier.Literal());
-        if (instance.isResolvable()) {
-            channelBuilder.intercept((ClientInterceptor) instance.get());
+        Instance<IMetricInterceptor> instanceMetric = CDI.current().select(IMetricInterceptor.class, new ClientMetricInterceptorQualifier.Literal());
+        if (instanceMetric.isResolvable()) {
+            channelBuilder.intercept((ClientInterceptor) instanceMetric.get());
         } else {
             log.warn("Could not find Metric interceptor implementation for gRPC client.");
         }
+        Instance<IOpentracingInterceptor> instanceOpentracing = CDI.current().select(IOpentracingInterceptor.class,
+                new ClientOpentracingInterceptorQualifier.Literal());
+        if (instanceOpentracing.isResolvable()) {
+            channelBuilder.intercept((ClientInterceptor) instanceOpentracing.get());
+        } else {
+            log.warn("Could not find Opentracing interceptor implementation for gRPC client.");
+        }
+
     }
 }

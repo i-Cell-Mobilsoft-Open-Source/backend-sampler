@@ -37,9 +37,9 @@ import io.grpc.Status.Code;
  * @param <R>
  *            The type of message received.
  */
-public class MetricServerCallListener<R> extends ForwardingServerCallListener<R> {
+public class MetricServerCallListener<ReqT> extends ForwardingServerCallListener<ReqT> {
 
-    private final Listener<R> delegate;
+    private final Listener<ReqT> delegate;
     private MetricBundle metricBundle;
     private Supplier<Code> responseCode;
 
@@ -53,19 +53,19 @@ public class MetricServerCallListener<R> extends ForwardingServerCallListener<R>
      * @param responseCode
      *            determined response code
      */
-    public MetricServerCallListener(Listener<R> delegate, MetricBundle metricBundle, Supplier<Code> responseCode) {
+    public MetricServerCallListener(Listener<ReqT> delegate, MetricBundle metricBundle, Supplier<Code> responseCode) {
         this.delegate = delegate;
         this.responseCode = responseCode;
         this.metricBundle = metricBundle;
     }
 
     @Override
-    protected Listener<R> delegate() {
+    protected Listener<ReqT> delegate() {
         return delegate;
     }
 
     @Override
-    public void onMessage(R message) {
+    public void onMessage(ReqT message) {
         metricBundle.getRequestCounter().inc();
         super.onMessage(message);
     }

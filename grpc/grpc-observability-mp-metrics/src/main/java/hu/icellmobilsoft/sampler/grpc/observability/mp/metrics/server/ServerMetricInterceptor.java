@@ -46,13 +46,14 @@ public class ServerMetricInterceptor extends AbstractMetricInterceptor implement
     private static final String METADATA_NAME_TIMER = "grpc_server_processing_duration_seconds";
 
     @Override
-    public <R, S> ServerCall.Listener<R> interceptCall(ServerCall<R, S> call, Metadata requestMetadata, ServerCallHandler<R, S> next) {
+    public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata requestMetadata,
+            ServerCallHandler<ReqT, RespT> next) {
 
         MetricBundle metricBundle = createMetricBundle(call.getMethodDescriptor());
 
-        MetricServerCall<R, S> monitoringCall = new MetricServerCall<R, S>(call, metricBundle);
+        MetricServerCall<ReqT, RespT> monitoringCall = new MetricServerCall<ReqT, RespT>(call, metricBundle);
 
-        return new MetricServerCallListener<R>(next.startCall(monitoringCall, requestMetadata), metricBundle, monitoringCall::getResponseCode);
+        return new MetricServerCallListener<ReqT>(next.startCall(monitoringCall, requestMetadata), metricBundle, monitoringCall::getResponseCode);
     }
 
     @Override

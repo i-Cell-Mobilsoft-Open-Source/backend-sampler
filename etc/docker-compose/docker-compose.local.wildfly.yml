@@ -17,7 +17,8 @@ services:
       args:
         WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
 #        custom cli script futtatása, ha a deploymenthez kell
-        SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
+#        SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
+        SERVICE_CLI_DIR: 'wildfly/cli/mp-opentracing'
     volumes:
       - './wildfly/sample.properties:/sampler/wildfly.properties'
     ports:
@@ -25,7 +26,9 @@ services:
       - '9991:9990'
       - '8788:8787'
       - '8199:8199' #GRPC
-#    environment:
+    environment:
+      OPENTRACING_JAEGER_AGENT_HOST: jaeger
+      JAEGER_SERVICE_NAME: bs-sample-service
 #      MP_CONFIG_PROFILE: local
     deploy:
       resources:

@@ -9,5 +9,6 @@ datasources:
   - name: jaeger
     type: jaeger
     access: proxy
+    uid: fixedjaegeruid
     url: http://jaeger:16686
 

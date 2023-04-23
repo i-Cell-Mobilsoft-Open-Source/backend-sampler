@@ -35,7 +35,7 @@ import io.grpc.Status;
  * @since 2.0.0
  *
  */
-public class MetricClientCallListener<R> extends SimpleForwardingClientCallListener<R> {
+public class MetricClientCallListener<ReqT> extends SimpleForwardingClientCallListener<ReqT> {
 
     private MetricBundle metricBundle;
 
@@ -47,7 +47,7 @@ public class MetricClientCallListener<R> extends SimpleForwardingClientCallListe
      * @param metricBundle
      *            counter and timer function container
      */
-    public MetricClientCallListener(Listener<R> delegate, MetricBundle metricBundle) {
+    public MetricClientCallListener(Listener<ReqT> delegate, MetricBundle metricBundle) {
         super(delegate);
         this.metricBundle = metricBundle;
     }
@@ -59,7 +59,7 @@ public class MetricClientCallListener<R> extends SimpleForwardingClientCallListe
     }
 
     @Override
-    public void onMessage(R message) {
+    public void onMessage(ReqT message) {
 
         metricBundle.getResponseCounter().inc();
         super.onMessage(message);
