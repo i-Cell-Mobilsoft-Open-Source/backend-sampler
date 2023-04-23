@@ -34,7 +34,7 @@ import io.grpc.Status.Code;
  * 
  * @author czenczl
  * @since 2.0.0
- * @param <R>
+ * @param <ReqT>
  *            The type of message received.
  */
 public class MetricServerCallListener<ReqT> extends ForwardingServerCallListener<ReqT> {

@@ -39,7 +39,14 @@ import jakarta.inject.Qualifier;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE })
 public @interface ServerOpentracingInterceptorQualifier {
 
-    public static final class Literal extends AnnotationLiteral<ServerOpentracingInterceptorQualifier> implements ServerOpentracingInterceptorQualifier {
+    /**
+     * Literal for injection
+     * 
+     * @author czenczl
+     * @since 2.0.0
+     */
+    public static final class Literal extends AnnotationLiteral<ServerOpentracingInterceptorQualifier>
+            implements ServerOpentracingInterceptorQualifier {
 
         private static final long serialVersionUID = 1L;
 

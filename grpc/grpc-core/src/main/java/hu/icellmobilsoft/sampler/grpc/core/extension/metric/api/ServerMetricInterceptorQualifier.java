@@ -39,6 +39,12 @@ import jakarta.inject.Qualifier;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE })
 public @interface ServerMetricInterceptorQualifier {
 
+    /**
+     * Literal for injection
+     * 
+     * @author czenczl
+     * @since 2.0.0
+     */
     public static final class Literal extends AnnotationLiteral<ServerMetricInterceptorQualifier> implements ServerMetricInterceptorQualifier {
 
         private static final long serialVersionUID = 1L;

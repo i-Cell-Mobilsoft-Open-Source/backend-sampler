@@ -110,8 +110,8 @@ public class MetricBundle {
     /**
      * Sets the start time of the process
      * 
-     * @param process
-     *            start time
+     * @param startTime
+     *            metric timer start time
      */
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;

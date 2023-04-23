@@ -42,6 +42,16 @@ public class OpenTraceClientCall<ReqT, RespT> extends SimpleForwardingClientCall
     private Span span;
     private Scope scope;
 
+    /**
+     * Creates client call to handle tracing
+     * 
+     * @param delegate
+     *            origin
+     * @param span
+     *            opentracing span to finish
+     * @param scope
+     *            opentracing scope to close
+     */
     public OpenTraceClientCall(ClientCall<ReqT, RespT> delegate, Span span, Scope scope) {
         super(delegate);
         this.span = span;

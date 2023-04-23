@@ -43,6 +43,8 @@ public abstract class AbstractOpenTraceInterceptor {
      * 
      * @param methodDescriptor
      *            gRPC method info
+     * @param tracer
+     *            microprofile opentracing tracer
      * @return trace span builder
      */
     protected SpanBuilder createSpanBuilder(MethodDescriptor<?, ?> methodDescriptor, Tracer tracer) {
@@ -59,6 +61,11 @@ public abstract class AbstractOpenTraceInterceptor {
         return spanBuilder;
     }
 
+    /**
+     * Gets the span kind form interceptor logic
+     * 
+     * @return trace span kind name
+     */
     protected abstract String getSpanKind();
 
 }

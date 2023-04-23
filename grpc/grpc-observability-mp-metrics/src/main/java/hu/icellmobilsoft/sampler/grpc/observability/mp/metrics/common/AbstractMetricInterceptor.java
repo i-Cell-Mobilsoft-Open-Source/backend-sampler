@@ -83,10 +83,25 @@ public abstract class AbstractMetricInterceptor {
 
     }
 
+    /**
+     * Gets the request metadata name from interceptor logic
+     * 
+     * @return request metadata name
+     */
     protected abstract String getRequestMetadataName();
 
+    /**
+     * Gets the response metadata name from interceptor logic
+     * 
+     * @return response metadata name
+     */
     protected abstract String getResponseMetadataName();
 
+    /**
+     * Gets the timer metadata name from interceptor logic
+     * 
+     * @return timer metadata name
+     */
     protected abstract String getTimerMetadataName();
 
 }

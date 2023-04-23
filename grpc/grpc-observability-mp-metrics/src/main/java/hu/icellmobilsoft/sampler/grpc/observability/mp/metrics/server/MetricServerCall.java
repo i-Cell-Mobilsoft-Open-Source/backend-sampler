@@ -57,6 +57,11 @@ public class MetricServerCall<ReqT, RespT> extends ForwardingServerCall.SimpleFo
         this.metricBundle = metricBundle;
     }
 
+    /**
+     * Gets the server response code to use with mertics data
+     * 
+     * @return server response code
+     */
     public Code getResponseCode() {
         return this.responseCode;
     }

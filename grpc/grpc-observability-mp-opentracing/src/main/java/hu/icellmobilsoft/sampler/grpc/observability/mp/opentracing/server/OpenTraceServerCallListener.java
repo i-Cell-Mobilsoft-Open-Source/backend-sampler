@@ -32,6 +32,12 @@ import io.grpc.ServerCall.Listener;
  */
 public class OpenTraceServerCallListener<ReqT> extends SimpleForwardingServerCallListener<ReqT> {
 
+    /**
+     * Creates server call to handle tracing forwarding
+     * 
+     * @param delegate
+     *            origin
+     */
     public OpenTraceServerCallListener(Listener<ReqT> delegate) {
         super(delegate);
     }
