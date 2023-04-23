@@ -55,6 +55,29 @@ Implementalva vannak:
 * gRPC szerver konfigurációk, NettyServerBuilder alapon
 * https://github.com/grpc/grpc-java/blob/master/netty/src/main/java/io/grpc/netty/NettyServerBuilder.java
 
+=== Observability
+
+gRPC szerver és kliens aktiválhat interceptorokat metrika és trace adatok szolgáltatására.
+Ha nincs dependency szinten bekötve az adott observability modul akkor a működés az eredeti, csak nem szolgáltat metrika vagy trace adatot.
+
+A következő két modul a grpc-server-extension és grpc-client-extension modulokba vannak bekötve:
+* grpc-observability-mp-metrics -> microprofile-metrics alapú metrika gyűjtés
+* grpc-observability-mp-opentracing -> microprofile-opentracing alapú trace gyűjtés
+
+Elérhetők a metrikák: http://localhost:9991/metrics/application 
+
+* gRPC szerver fogadott request
+* gRPC szerver válaszolt response
+* gRPC szerver API process duration
+
+* gRPC kliens elküldött request
+* gRPC kliens válaszolt response
+* gRPC kliens API process duration
+
+A jaeger felé továbbítódnak a span adatok, gRPC + REST + redis stream consumer közös trace flowba kerül.
+
+Két dashboard a /etc/config/grafana/provisioning/dashboards alatt érhető el.
+
 === Service implementálás
 
 . A proto generálásnál aktiválni kell a common-grpc-protoc plugint.
