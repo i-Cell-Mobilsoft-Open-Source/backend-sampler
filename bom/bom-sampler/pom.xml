@@ -90,6 +90,11 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
+                <artifactId>grpc-observability-mp-metrics</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
                 <artifactId>grpc-server-extension</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -12,6 +12,7 @@
 
     <modules>
         <module>grpc-core</module>
+        <module>grpc-observability-mp-metrics</module>
         <module>grpc-protoc</module>
         <module>grpc-server-extension</module>
         <module>grpc-client-extension</module>

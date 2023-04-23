@@ -27,8 +27,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -36,6 +38,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.grpc.core.extension.api.IGrpcService;
+import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
+import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ServerMetricInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.server.config.GrpcServerConfig;
 import hu.icellmobilsoft.sampler.grpc.server.config.GrpcServerConnection;
 import hu.icellmobilsoft.sampler.grpc.server.interceptor.ErrorHandlerInterceptor;
@@ -44,6 +48,7 @@ import hu.icellmobilsoft.sampler.grpc.server.interceptor.ServerResponseIntercept
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.ServerInterceptor;
 
 /**
  * Sample gRPC server manager
@@ -157,9 +162,16 @@ public class GrpcServerManager {
      *            szerver builder
      */
     private void addInterceptor(ServerBuilder<?> serverBuilder) {
-        serverBuilder.intercept(new ErrorHandlerInterceptor());
-        serverBuilder.intercept(new ServerResponseInterceptor());
-        serverBuilder.intercept(new ServerRequestInterceptor());
+        serverBuilder.intercept(new ErrorHandlerInterceptor()); // 4
+        serverBuilder.intercept(new ServerResponseInterceptor()); // 3
+        serverBuilder.intercept(new ServerRequestInterceptor()); // 2
+        // modul szintu dependency, mp-metric, micrometer, telemetry...
+        Instance<IMetricInterceptor> instance = CDI.current().select(IMetricInterceptor.class, new ServerMetricInterceptorQualifier.Literal());
+        if (instance.isResolvable()) {
+            serverBuilder.intercept((ServerInterceptor) instance.get()); // 1
+        } else {
+            log.warn("Could not find Metric interceptor implementation for gRPC server.");
+        }
     }
 
     /**

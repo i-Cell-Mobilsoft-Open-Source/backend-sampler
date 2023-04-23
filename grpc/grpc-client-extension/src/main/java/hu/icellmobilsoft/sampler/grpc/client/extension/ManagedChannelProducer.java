@@ -26,7 +26,9 @@ import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.CDI;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
 
@@ -35,6 +37,9 @@ import org.eclipse.microprofile.config.Config;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.annotation.AnnotationUtil;
 import hu.icellmobilsoft.sampler.grpc.client.GrpcClient;
+import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ClientMetricInterceptorQualifier;
+import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
+import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -90,12 +95,25 @@ public class ManagedChannelProducer {
                             "Missing configuration property by `configKey` " + configKey + ", must be set with `port` parameter"));
 
             // TODO usePlaintext config
-            ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
-            return channel;
+            ManagedChannelBuilder<?> channelBuilder = ManagedChannelBuilder.forAddress(host, port).usePlaintext();
+
+            // metric interceptor configuration
+            configureInterceptor(channelBuilder);
+
+            return channelBuilder.build();
         } catch (Exception e) {
             log.error(MessageFormat.format("Exception on initializing ManagedChannel for configKey [{0}], [{1}]", configKey, e.getLocalizedMessage()),
                     e);
             throw new IllegalStateException(e);
+        }
+    }
+
+    private void configureInterceptor(ManagedChannelBuilder<?> channelBuilder) {
+        Instance<IMetricInterceptor> instance = CDI.current().select(IMetricInterceptor.class, new ClientMetricInterceptorQualifier.Literal());
+        if (instance.isResolvable()) {
+            channelBuilder.intercept((ClientInterceptor) instance.get());
+        } else {
+            log.warn("Could not find Metric interceptor implementation for gRPC client.");
         }
     }
 }

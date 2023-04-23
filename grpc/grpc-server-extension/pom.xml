@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-            <artifactId>grpc-core</artifactId>
+            <artifactId>grpc-observability-mp-metrics</artifactId>
         </dependency>
     </dependencies>
 </project>
