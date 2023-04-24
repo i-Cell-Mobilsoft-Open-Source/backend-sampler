@@ -1,9 +1,5 @@
-# Start embedded server
-# embed-server --server-config=standalone-full.xml --std-out=echo
+# $ {jbossHomeName}/bin/jboss-cli.sh --connect --file=configure-opentracing.cli
 
-embed-server --server-config=standalone-microprofile.xml --std-out=echo
- 
-# Start batching commands
 set jaegerHost=\${env.OPENTRACING_JAEGER_AGENT_HOST,opentracing.jaeger.agent.host:localhost}
 set jaegerPort=\${env.OPENTRACING_JAEGER_AGENT_PORT,opentracing.jaeger.agent.port:6831}
 set jaegerSamplerPort=\${env.OPENTRACING_JAEGER_AGENT_SAMPLER_PORT,opentracing.jaeger.agent.sampler.port:5778}
@@ -18,10 +14,3 @@ set jaegerPropagation=\${env.OPENTRACING_JAEGER_PROPAGATION,opentracing.jaeger.p
 
 # define this new tracer as the default tracer to be used by WildFly
 /subsystem=microprofile-opentracing-smallrye:write-attribute(name=default-tracer, value=jaeger-opentrace)
-
-
-run-batch --file=${TMP_DIR}/common/configure-logging.cli
-
-# Stop embedded server
-stop-embedded-server
-
