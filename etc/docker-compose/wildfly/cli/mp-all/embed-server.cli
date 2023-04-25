@@ -4,11 +4,9 @@
 embed-server --server-config=standalone-microprofile.xml --std-out=echo
  
 # Start batching commands
-/extension=org.wildfly.extension.microprofile.reactive-messaging-smallrye:add
-/extension=org.wildfly.extension.microprofile.reactive-streams-operators-smallrye:add
-/subsystem=microprofile-reactive-streams-operators-smallrye:add
-/subsystem=microprofile-reactive-messaging-smallrye:add
 
+run-batch --file=${TMP_DIR}/service/configure-reactive.cli
+run-batch --file=${TMP_DIR}/service/configure-opentracing.cli
 run-batch --file=${TMP_DIR}/common/configure-logging.cli
 
 # Stop embedded server
