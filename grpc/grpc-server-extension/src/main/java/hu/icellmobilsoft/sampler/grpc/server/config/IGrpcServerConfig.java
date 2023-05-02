@@ -131,4 +131,32 @@ public interface IGrpcServerConfig {
      */
     boolean isPermitKeepAliveWithoutCalls() throws BaseException;
 
+    /**
+     * Sets the core pool size, the default is {@code 32}.
+     * 
+     * @return the number of threads to keep in the pool, even if they are idle
+     * @throws BaseException
+     *             Exception on read properties
+     */
+    Integer getThreadPoolCorePoolSize() throws BaseException;
+
+    /**
+     * Sets the maxmimum pool size, the default is {@code 32}.
+     * 
+     * @return the maximum number of threads to allow in the pool
+     * @throws BaseException
+     *             Exception on read properties
+     */
+    Integer getThreadPoolMaximumPoolSize() throws BaseException;
+
+    /**
+     * Sets the keep alive time for the pool, the default is {@code 0}.
+     * 
+     * @return when the number of threads is greater than the core, this is the maximum time that excess idle threads will wait for new tasks before
+     *         terminating.
+     * @throws BaseException
+     *             Exception on read properties
+     */
+    Long getThreadPoolKeepAliveTime() throws BaseException;
+
 }
