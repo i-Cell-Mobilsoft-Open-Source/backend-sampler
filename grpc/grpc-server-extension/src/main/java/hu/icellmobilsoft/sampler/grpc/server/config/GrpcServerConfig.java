@@ -42,6 +42,9 @@ import hu.icellmobilsoft.coffee.dto.exception.BaseException;
  *       keepAliveTimout: 20
  *       permitKeepAliveTime: 5
  *       permitKeepAliveWithoutCalls: false
+ *       threadpool.default.corePoolSize: 32
+ *       threadpool.default.maximumPoolSize: 32
+ *       threadpool.default.keepAliveTime: 0 #milliseconds
  * </pre>
  * 
  * @author czenczl
@@ -101,6 +104,21 @@ public class GrpcServerConfig implements IGrpcServerConfig {
      */
     public static final String PERMIT_KEEP_ALIVE_WITHOUT_CALLS = "permitKeepAliveWithoutCalls";
 
+    /**
+     * gRPC server thread pool {@value} config
+     */
+    public static final String THREAD_POOL_CORE_POOL_SIZE = "threadpool.default.corePoolSize";
+
+    /**
+     * gRPC server thread pool {@value} config
+     */
+    public static final String THREAD_POOL_MAXIMUM_POOL_SIZE = "threadpool.default.maximumPoolSize";
+
+    /**
+     * gRPC server thread pool {@value} config
+     */
+    public static final String THREAD_POOL_KEEP_ALIVE_TIME = "threadpool.default.keepAliveTime";
+
     @Inject
     private Config config;
 
@@ -154,6 +172,21 @@ public class GrpcServerConfig implements IGrpcServerConfig {
     @Override
     public boolean isPermitKeepAliveWithoutCalls() throws BaseException {
         return config.getOptionalValue(joinKey(PERMIT_KEEP_ALIVE_WITHOUT_CALLS), Boolean.class).orElse(false);
+    }
+
+    @Override
+    public Integer getThreadPoolCorePoolSize() throws BaseException {
+        return config.getOptionalValue(joinKey(THREAD_POOL_CORE_POOL_SIZE), Integer.class).orElse(32);
+    }
+
+    @Override
+    public Integer getThreadPoolMaximumPoolSize() throws BaseException {
+        return config.getOptionalValue(joinKey(THREAD_POOL_MAXIMUM_POOL_SIZE), Integer.class).orElse(32);
+    }
+
+    @Override
+    public Long getThreadPoolKeepAliveTime() throws BaseException {
+        return config.getOptionalValue(joinKey(THREAD_POOL_KEEP_ALIVE_TIME), Long.class).orElse(0L);
     }
 
     /**

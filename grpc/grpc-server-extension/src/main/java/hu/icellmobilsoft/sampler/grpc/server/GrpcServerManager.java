@@ -24,6 +24,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import jakarta.enterprise.context.Dependent;
@@ -99,6 +104,10 @@ public class GrpcServerManager {
 
     private void configureServer(ServerBuilder<?> serverBuilder) throws BaseException {
         // NettyServerBuilder
+        // server executor config
+        serverBuilder.executor(createThreadPool());
+
+        // server config
         serverBuilder.maxConnectionAge(serverConfig.getMaxConnectionAge(), TimeUnit.SECONDS);
         serverBuilder.maxConnectionAgeGrace(serverConfig.getMaxConnectionAgeGrace(), TimeUnit.SECONDS);
         serverBuilder.keepAliveTime(serverConfig.getKeepAliveTime(), TimeUnit.MINUTES);
@@ -108,6 +117,18 @@ public class GrpcServerManager {
         serverBuilder.maxInboundMetadataSize(serverConfig.getMaxInboundMetadataSize());
         serverBuilder.permitKeepAliveTime(serverConfig.getPermitKeepAliveTime(), TimeUnit.MINUTES);
         serverBuilder.permitKeepAliveWithoutCalls(serverConfig.isPermitKeepAliveWithoutCalls());
+    }
+
+    // simple executor to control server threads
+    private Executor createThreadPool() throws BaseException {
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        return new ThreadPoolExecutor(
+                serverConfig.getThreadPoolCorePoolSize(),
+                serverConfig.getThreadPoolMaximumPoolSize(),
+                serverConfig.getThreadPoolKeepAliveTime(),
+                TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(),
+                threadFactory);
     }
 
     /**
@@ -127,12 +148,17 @@ public class GrpcServerManager {
                 BindableService bindableService = constructor.newInstance(service);
                 serverBuilder.addService(bindableService);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                log.warn(MessageFormat.format(
-                        "Could not call constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]",
-                        grpcImpl, bean.getBeanClass()), e);
+                log.warn(
+                        MessageFormat.format(
+                                "Could not call constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]",
+                                grpcImpl,
+                                bean.getBeanClass()),
+                        e);
             }
         } else {
-            log.warn("Could not find constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]", grpcImpl,
+            log.warn(
+                    "Could not find constructor of BindableService [{0}], it must have a public constructor with one parameter of [{1}]",
+                    grpcImpl,
                     bean.getBeanClass());
         }
 
@@ -174,8 +200,8 @@ public class GrpcServerManager {
         } else {
             log.warn("Could not find Metric interceptor implementation for gRPC server.");
         }
-        Instance<IOpentracingInterceptor> instanceOpentrace = CDI.current().select(IOpentracingInterceptor.class,
-                new ServerOpentracingInterceptorQualifier.Literal());
+        Instance<IOpentracingInterceptor> instanceOpentrace = CDI.current()
+                .select(IOpentracingInterceptor.class, new ServerOpentracingInterceptorQualifier.Literal());
         if (instanceOpentrace.isResolvable()) {
             serverBuilder.intercept((ServerInterceptor) instanceOpentrace.get()); // 1
         } else {
@@ -189,8 +215,8 @@ public class GrpcServerManager {
     public void startServer() {
         try {
             server.start();
-            server.awaitTermination();
             log.info("grpc server runnning");
+            server.awaitTermination();
         } catch (InterruptedException | IOException e) {
             log.error("grpc server error", e);
         } finally {

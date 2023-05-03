@@ -51,9 +51,16 @@ Implementalva vannak:
 * Request/Response log + MDC kezelésre minta (3 interceptor)
 * 3 gRPC service, ami automatikusan deployolodik a szerverrel
 * minta exception kezeles
-* a szerver default thread poolal dolgozik, productionben nem használható, saját implementáció kell hozzá ami paraméterezhető (legalabbis ez az ajanlas)
 * gRPC szerver konfigurációk, NettyServerBuilder alapon
 * https://github.com/grpc/grpc-java/blob/master/netty/src/main/java/io/grpc/netty/NettyServerBuilder.java
+
+== Szerver thread pool
+Szerver saját thread pool-al dolgozik, amit lehet paraméterezni, ez a minimum implementáció ami szükséges ahhoz hogy control legyen a működésében.
+* configok:
+** coffee.grpc.server.threadpool.default.corePoolSize=64 -> default 32
+** coffee.grpc.server.threadpool.default.maximumPoolSize=64 -> default 32
+** coffee.grpc.server.threadpool.default.keepAliveTime=60000 -> milliseconds, default 0
+* TODO: microprofile-context-propagation, microprofile ManagedExecutorService
 
 === Observability
 
