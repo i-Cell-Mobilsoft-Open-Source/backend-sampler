@@ -62,6 +62,9 @@ Szerver saját thread pool-al dolgozik, amit lehet paraméterezni, ez a minimum 
 ** coffee.grpc.server.threadpool.default.keepAliveTime=60000 -> milliseconds, default 0
 * TODO: microprofile-context-propagation, microprofile ManagedExecutorService
 
+== Kliens
+Kliens tartalmaz 2 interceptort, request/response logolásra. Aktiválva vannak, nem kell külön konfiguráció, ugyan ugy mint a szerver oldali esetben.
+
 === Observability
 
 gRPC szerver és kliens aktiválhat interceptorokat metrika és trace adatok szolgáltatására.
