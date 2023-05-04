@@ -37,6 +37,8 @@ import org.eclipse.microprofile.config.Config;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.annotation.AnnotationUtil;
 import hu.icellmobilsoft.sampler.grpc.client.GrpcClient;
+import hu.icellmobilsoft.sampler.grpc.client.interceptor.ClientRequestInterceptor;
+import hu.icellmobilsoft.sampler.grpc.client.interceptor.ClientResponseInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ClientMetricInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ClientOpentracingInterceptorQualifier;
@@ -111,6 +113,11 @@ public class ManagedChannelProducer {
     }
 
     private void configureInterceptor(ManagedChannelBuilder<?> channelBuilder) {
+        // request/response interceptor
+        channelBuilder.intercept(new ClientRequestInterceptor());
+        channelBuilder.intercept(new ClientResponseInterceptor());
+        
+        // observability interceptors if available
         Instance<IMetricInterceptor> instanceMetric = CDI.current().select(IMetricInterceptor.class, new ClientMetricInterceptorQualifier.Literal());
         if (instanceMetric.isResolvable()) {
             channelBuilder.intercept((ClientInterceptor) instanceMetric.get());
