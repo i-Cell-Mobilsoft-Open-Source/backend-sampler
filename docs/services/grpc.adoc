@@ -56,10 +56,14 @@ Implementalva vannak:
 
 == Szerver thread pool
 Szerver saját thread pool-al dolgozik, amit lehet paraméterezni, ez a minimum implementáció ami szükséges ahhoz hogy control legyen a működésében.
-* configok:
+* simple thread pool:
 ** coffee.grpc.server.threadpool.default.corePoolSize=64 -> default 32
 ** coffee.grpc.server.threadpool.default.maximumPoolSize=64 -> default 32
 ** coffee.grpc.server.threadpool.default.keepAliveTime=60000 -> milliseconds, default 0
+* jakarta thread pool:
+** szerver által kezelt thread pool, context propagation support
+** coffee.grpc.server.threadpool.jakarta.active=true -> default false
+
 * TODO: microprofile-context-propagation, microprofile ManagedExecutorService
 
 == Kliens

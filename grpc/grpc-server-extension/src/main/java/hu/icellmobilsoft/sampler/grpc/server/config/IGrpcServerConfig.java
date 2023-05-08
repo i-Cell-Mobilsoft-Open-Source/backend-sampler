@@ -159,4 +159,13 @@ public interface IGrpcServerConfig {
      */
     Long getThreadPoolKeepAliveTime() throws BaseException;
 
+    /**
+     * Gets whether to use {@code ManagedExecutorService} provided by Jakarta, the default is false.
+     * 
+     * @return the server uses {@code ManagedExecutorService} to handle threads.
+     * @throws BaseException
+     *             Exception on read properties
+     */
+    boolean isThreadPoolJakartaActive() throws BaseException;
+
 }

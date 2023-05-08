@@ -31,6 +31,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import jakarta.annotation.Resource;
+import jakarta.enterprise.concurrent.ManagedExecutorService;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.Bean;
@@ -77,6 +79,9 @@ public class GrpcServerManager {
     @GrpcServerConnection(configKey = "server")
     private GrpcServerConfig serverConfig;
 
+    @Resource
+    private ManagedExecutorService managedExecutorService;
+
     private Server server;
 
     /**
@@ -91,7 +96,8 @@ public class GrpcServerManager {
         log.info("Found [{0}] grpc service", beans.size());
         // bind to port
         ServerBuilder<?> serverBuilder = ServerBuilder.forPort(serverConfig.getPort());
-
+        // configure server threadpool
+        configureServerPool(serverBuilder);
         // configure server
         configureServer(serverBuilder);
         // add interceptor
@@ -104,9 +110,6 @@ public class GrpcServerManager {
 
     private void configureServer(ServerBuilder<?> serverBuilder) throws BaseException {
         // NettyServerBuilder
-        // server executor config
-        serverBuilder.executor(createThreadPool());
-
         // server config
         serverBuilder.maxConnectionAge(serverConfig.getMaxConnectionAge(), TimeUnit.SECONDS);
         serverBuilder.maxConnectionAgeGrace(serverConfig.getMaxConnectionAgeGrace(), TimeUnit.SECONDS);
@@ -117,6 +120,16 @@ public class GrpcServerManager {
         serverBuilder.maxInboundMetadataSize(serverConfig.getMaxInboundMetadataSize());
         serverBuilder.permitKeepAliveTime(serverConfig.getPermitKeepAliveTime(), TimeUnit.MINUTES);
         serverBuilder.permitKeepAliveWithoutCalls(serverConfig.isPermitKeepAliveWithoutCalls());
+    }
+
+    private void configureServerPool(ServerBuilder<?> serverBuilder) throws BaseException {
+        if (serverConfig.isThreadPoolJakartaActive()) {
+            serverBuilder.executor(managedExecutorService);
+            log.info("gRPC server using Jakarta ManagedExecutorService.");
+        } else {
+            serverBuilder.executor(createThreadPool());
+            log.info("gRPC server using default ThreadPoolExecutor.");
+        }
     }
 
     // simple executor to control server threads

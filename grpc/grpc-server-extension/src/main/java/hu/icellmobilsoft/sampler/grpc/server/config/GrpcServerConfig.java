@@ -45,6 +45,7 @@ import hu.icellmobilsoft.coffee.dto.exception.BaseException;
  *       threadpool.default.corePoolSize: 32
  *       threadpool.default.maximumPoolSize: 32
  *       threadpool.default.keepAliveTime: 0 #milliseconds
+ *       threadpool.jakarta.active: true -> default false
  * </pre>
  * 
  * @author czenczl
@@ -119,6 +120,11 @@ public class GrpcServerConfig implements IGrpcServerConfig {
      */
     public static final String THREAD_POOL_KEEP_ALIVE_TIME = "threadpool.default.keepAliveTime";
 
+    /**
+     * gRPC server thread pool {@value} config
+     */
+    public static final String THREAD_POOL_JAKARTA_ACTIVE = "threadpool.jakarta.active";
+
     @Inject
     private Config config;
 
@@ -187,6 +193,11 @@ public class GrpcServerConfig implements IGrpcServerConfig {
     @Override
     public Long getThreadPoolKeepAliveTime() throws BaseException {
         return config.getOptionalValue(joinKey(THREAD_POOL_KEEP_ALIVE_TIME), Long.class).orElse(0L);
+    }
+
+    @Override
+    public boolean isThreadPoolJakartaActive() throws BaseException {
+        return config.getOptionalValue(joinKey(THREAD_POOL_JAKARTA_ACTIVE), Boolean.class).orElse(false);
     }
 
     /**
