@@ -67,7 +67,7 @@ public class OpenTraceServerInterceptor extends AbstractOpenTraceInterceptor imp
         Scope scope = tracer.activateSpan(span);
         OpenTraceServerCall<ReqT, RespT> tracingServerCall = new OpenTraceServerCall<>(call, span, scope);
 
-        Context context = Context.current().withValue(OpenTraceInterceptor.openTraceGrpcContextKey, span);
+        Context context = Context.current().withValue(OpenTraceInterceptor.OPEN_TRACE_GRPC_CONTEXT_KEY, span);
         return Contexts.interceptCall(context, tracingServerCall, requestMetadata, next);
 
     }
