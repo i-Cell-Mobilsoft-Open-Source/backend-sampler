@@ -45,7 +45,7 @@ import hu.icellmobilsoft.coffee.dto.exception.BaseException;
  *       threadpool.default.corePoolSize: 32
  *       threadpool.default.maximumPoolSize: 32
  *       threadpool.default.keepAliveTime: 0 #milliseconds
- *       threadpool.jakarta.active: true -> default false
+ *       threadpool.jakarta.active: true  #default false
  * </pre>
  * 
  * @author czenczl
