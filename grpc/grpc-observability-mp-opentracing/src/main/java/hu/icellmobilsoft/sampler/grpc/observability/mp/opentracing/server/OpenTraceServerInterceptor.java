@@ -22,10 +22,13 @@ package hu.icellmobilsoft.sampler.grpc.observability.mp.opentracing.server;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.spi.CDI;
 
+import hu.icellmobilsoft.coffee.module.mp.opentracing.extension.OpenTraceInterceptor;
 import hu.icellmobilsoft.coffee.module.mp.opentracing.extension.OpenTraceResolver;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ServerOpentracingInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.observability.mp.opentracing.common.AbstractOpenTraceInterceptor;
+import io.grpc.Context;
+import io.grpc.Contexts;
 import io.grpc.Metadata;
 import io.grpc.ServerCall;
 import io.grpc.ServerCall.Listener;
@@ -63,7 +66,9 @@ public class OpenTraceServerInterceptor extends AbstractOpenTraceInterceptor imp
         Span span = spanBuilder.start();
         Scope scope = tracer.activateSpan(span);
         OpenTraceServerCall<ReqT, RespT> tracingServerCall = new OpenTraceServerCall<>(call, span, scope);
-        return new OpenTraceServerCallListener<ReqT>(next.startCall(tracingServerCall, requestMetadata));
+
+        Context context = Context.current().withValue(OpenTraceInterceptor.openTraceGrpcContextKey, span);
+        return Contexts.interceptCall(context, tracingServerCall, requestMetadata, next);
 
     }
 
