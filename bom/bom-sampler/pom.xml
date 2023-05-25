@@ -29,7 +29,7 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.api</groupId>
-                <artifactId>api-grpc-proto-gen</artifactId>
+                <artifactId>api-grpc-xsd2proto</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

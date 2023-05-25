@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>hu.icellmobilsoft.sampler.api</groupId>
-        <artifactId>api-grpc</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
-    </parent>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hu.icellmobilsoft.sampler.api</groupId>
+		<artifactId>api-grpc</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>api-grpc-proto-gen</artifactId>
+	<artifactId>api-grpc-xsd2proto</artifactId>
 
 	<properties>
 		<version.schema2proto-maven-plugin.version>1.83</version.schema2proto-maven-plugin.version>
@@ -20,13 +20,21 @@
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
 			<artifactId>api-schema</artifactId>
 		</dependency>
-				<!-- schema2proto miatt pluszba be kellett emelni mert nem tudta feloldani a google importokat -->
+		<dependency>
+			<groupId>hu.icellmobilsoft.coffee</groupId>
+			<artifactId>coffee-dto-xsd2proto</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>hu.icellmobilsoft.coffee</groupId>
+			<artifactId>coffee-dto-xsd</artifactId>
+		</dependency>
+		<!-- schema2proto miatt pluszba be kellett emelni mert nem tudta feloldani a google importokat -->
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
 			<version>${version.protoc.version}</version>
 		</dependency>
-				<!-- xsd:date and xsd:time equivalents -->
+		<!-- xsd:date and xsd:time equivalents -->
 		<dependency>
 			<groupId>com.google.api.grpc</groupId>
 			<artifactId>proto-google-common-protos</artifactId>
@@ -38,16 +46,19 @@
 		<resources>
 			<resource>
 				<directory>${project.build.directory}/generated-sources</directory>
-			</resource>
-			<resource>
-				<directory>${project.build.directory}/proto_deps</directory>
+				<excludes>
+					<!-- ez duplikalas lenne, coffee proto fajlok coffee-dto-xsd-proto csomagban vannak -->
+					<exclude>hu/icellmobilsoft/coffee/**</exclude>
+				</excludes>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
-                <excludes>
-                    <!-- xml (pl. super-proto.xml) fajlok nem tartoznak a csomagba -->
-                    <exclude>**/*.xml</exclude>
-                </excludes>
+			</resource>
+			<resource>
+				<directory>../../../etc</directory>
+				<includes>
+					<include>schema2proto/**.*</include>
+				</includes>
 			</resource>
 		</resources>
 		<extensions>
@@ -79,6 +90,7 @@
 									<includes>**/*.xsd</includes>
 									<outputDirectory>${project.build.directory}</outputDirectory>
 								</artifactItem>
+								<!-- XSD kapcsolatoknak kell a coffee sema -->
 								<artifactItem>
 									<groupId>hu.icellmobilsoft.coffee</groupId>
 									<artifactId>coffee-dto-xsd</artifactId>
@@ -88,12 +100,20 @@
 									<outputDirectory>${project.build.directory}</outputDirectory>
 								</artifactItem>
 								<artifactItem>
+									<groupId>hu.icellmobilsoft.coffee</groupId>
+									<artifactId>coffee-dto-xsd2proto</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<includes>**/*.proto</includes>
+									<outputDirectory>${project.build.directory}/proto-external</outputDirectory>
+								</artifactItem>
+								<artifactItem>
 									<groupId>com.google.protobuf</groupId>
 									<artifactId>protobuf-java</artifactId>
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<includes>**/*.proto</includes>
-									<outputDirectory>${project.build.directory}/proto_deps</outputDirectory>
+									<outputDirectory>${project.build.directory}/proto-external</outputDirectory>
 								</artifactItem>
 								<artifactItem>
 									<groupId>com.google.api.grpc</groupId>
@@ -101,7 +121,7 @@
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<includes>**/*.proto</includes>
-									<outputDirectory>${project.build.directory}/proto_deps</outputDirectory>
+									<outputDirectory>${project.build.directory}/proto-external</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
@@ -110,7 +130,7 @@
 			</plugin>
 			<plugin>
 				<!--schema2proto generáláshoz szükséges configot átmásoljuk, hogy lehessen filterelni maven variable-hoz
-				 multi module buildhez kell, mert a fájlban lehetnek import hivatkozások-->
+                 multi module buildhez kell, mert a fájlban lehetnek import hivatkozások-->
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
@@ -140,9 +160,9 @@
 				<artifactId>schema2proto-maven-plugin</artifactId>
 				<version>${version.schema2proto-maven-plugin.version}</version>
 				<configuration>
-					<!--					 ez tartalmaz minden beállítást, részletes leírásokkal -->
+					<!--                     ez tartalmaz minden beállítást, részletes leírásokkal -->
 					<configFile>${project.build.directory}/etc/schema2proto/config.yaml</configFile>
-					<!--					 root xml/xsd amit konvertálni akarunk, szükséges mindenhova megadni a schemaLocation-t -->
+					<!--                     root xml/xsd amit konvertálni akarunk, szükséges mindenhova megadni a schemaLocation-t -->
 					<xsdFile>src/main/resources/xsd/hu/icellmobilsoft/sampler/common/superProto.xml</xsdFile>
 				</configuration>
 				<executions>

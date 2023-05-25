@@ -38,7 +38,7 @@ customImports:
 # Any extra import locations to use when the linker is trying to validate the generated proto files.
 # Used in conjunction with customImports
 customImportLocations:
-  - ${project.build.directory}/proto_deps
+  - ${project.build.directory}/proto-external
 
 # Ignore computed output fields. Note that the field name is the one used before converting to lower_case
 #ignoreOutputFields:

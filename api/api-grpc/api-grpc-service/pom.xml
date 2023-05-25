@@ -10,6 +10,14 @@
 
 	<artifactId>api-grpc-service</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>hu.icellmobilsoft.sampler.api</groupId>
+            <artifactId>api-grpc-xsd2proto</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <resources>
            <resource>
@@ -35,7 +43,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>hu.icellmobilsoft.sampler.api</groupId>
-                                    <artifactId>api-grpc-proto-gen</artifactId>
+                                    <artifactId>api-grpc-xsd2proto</artifactId>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <includes>**/*.proto</includes>

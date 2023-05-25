@@ -32,8 +32,8 @@ import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.BusinessException;
 import hu.icellmobilsoft.coffee.dto.exception.DtoConversionException;
 import hu.icellmobilsoft.coffee.dto.exception.ServiceUnavailableException;
+import hu.icellmobilsoft.coffee.grpc.base.exception.ExceptionMapper;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.grpc.core.exception.ExceptionMapper;
 
 /**
  * Implementation of {@link ExceptionMapper} that maps {@link BaseException} to gRPC {@link Status}.
