@@ -16,6 +16,8 @@
         <version.com.fasterxml.jackson.core.jackson-databind>2.14.1</version.com.fasterxml.jackson.core.jackson-databind>
         <version.weld-api>5.0.Final</version.weld-api>
         <version.awaitility>4.2.0</version.awaitility>
+
+        <version.io.grpc.version>1.51.0</version.io.grpc.version>
     </properties>
 
     <dependencyManagement>
@@ -61,6 +63,12 @@
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>${version.awaitility}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty</artifactId>
+                <version>${version.io.grpc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -21,6 +21,10 @@
             <groupId>hu.icellmobilsoft.sampler.api</groupId>
             <artifactId>api-jee</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
 			<artifactId>api-grpc-stub-gen</artifactId>
