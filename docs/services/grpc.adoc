@@ -37,28 +37,7 @@ Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok depe
 common-grpc-core modul szolgál általános grpc-nél használandó osztályok gyűjtésére. pl. hibakezelés, logolás, mdc kezelés stb
 
 == Szerver
-Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio. A grpc-server-extension foglalja magába a minta managelt szervert.
-
-Implementalva vannak:
-
-* Request/Response log + MDC kezelésre minta (3 interceptor)
-* 3 gRPC service, ami automatikusan deployolodik a szerverrel
-* minta exception kezeles
-* gRPC szerver konfigurációk, NettyServerBuilder alapon
-* https://github.com/grpc/grpc-java/blob/master/netty/src/main/java/io/grpc/netty/NettyServerBuilder.java
-
-== Szerver thread pool
-Szerver saját thread pool-al dolgozik, amit lehet paraméterezni, ez a minimum implementáció ami szükséges ahhoz hogy control legyen a működésében.
-
-* simple thread pool:
-** coffee.grpc.server.threadpool.default.corePoolSize=64 -> default 32
-** coffee.grpc.server.threadpool.default.maximumPoolSize=64 -> default 32
-** coffee.grpc.server.threadpool.default.keepAliveTime=60000 -> milliseconds, default 0
-* jakarta thread pool:
-** szerver által kezelt thread pool, context propagation support
-** coffee.grpc.server.threadpool.jakarta.active=true -> default false
-
-* TODO: microprofile-context-propagation, microprofile ManagedExecutorService
+Coffee GRPC server extension kiterjesztése Observability API interceptorok bekötésével.
 
 == Kliens
 Kliens tartalmaz 2 interceptort, request/response logolásra. Aktiválva vannak, nem kell külön konfiguráció, ugyan ugy mint a szerver oldali esetben.
@@ -93,10 +72,10 @@ Két dashboard a /etc/config/grafana/provisioning/dashboards alatt érhető el.
 .common-grpc-plugin aktiválás mavenen keresztül
 [source,xml]
 ----
-						<outputTarget>
-							<type>grpc-coffee</type>
-							<pluginArtifact>hu.icellmobilsoft.sampler.common:common-grpc-protoc:${project.version}</pluginArtifact>
-						</outputTarget>
+<outputTarget>
+	<type>grpc-coffee</type>
+	<pluginArtifact>hu.icellmobilsoft.sampler.common:common-grpc-protoc:${project.version}</pluginArtifact>
+</outputTarget>
 ----
 +
 A plugin két plusz fájl generál egy interface leírót, amit full CDI környezetben tudunk implementálni.

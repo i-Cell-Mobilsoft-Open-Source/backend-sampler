@@ -11,15 +11,7 @@
     <dependencies>
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-tool</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-grpc-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-grpc-base</artifactId>
+            <artifactId>coffee-grpc-server-extension</artifactId>
         </dependency>
         <!--TODO BaseException kozpontositas -->
         <dependency>
