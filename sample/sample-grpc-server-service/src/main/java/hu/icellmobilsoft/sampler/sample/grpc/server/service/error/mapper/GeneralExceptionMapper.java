@@ -28,8 +28,8 @@ import com.google.rpc.Code;
 import com.google.rpc.Status;
 
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
+import hu.icellmobilsoft.coffee.grpc.base.exception.ExceptionMapper;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.grpc.core.exception.ExceptionMapper;
 
 /**
  * Implementation of {@link ExceptionMapper} that maps general Exceptions to gRPC {@link Status}. If the exception is not recognized, it maps it to

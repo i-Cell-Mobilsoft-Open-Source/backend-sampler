@@ -9,7 +9,7 @@
     <artifactId>api-grpc</artifactId>
 
     <modules>
-        <module>api-grpc-proto-gen</module>
+        <module>api-grpc-xsd2proto</module>
         <module>api-grpc-stub-gen</module>
         <module>api-grpc-service</module>
     </modules>

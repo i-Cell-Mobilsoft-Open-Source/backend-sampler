@@ -11,7 +11,7 @@ Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pac
 gRPC API szinten a következő részekre van bontva:
 
 * api-schema: XSD-ket tartalmazza amiből .proto fileokat tudunk generálni
-* api-grpc-proto-gen: a modul generál .proto file-okat XSD-ből
+* api-grpc-xsd2proto: a modul generál .proto file-okat XSD-ből
 * api-grpc-service: azokat a .proto file-okat tartalmazza ami definiálja az endpointot, mellette olyan objektumokat tehetünk ide, amihez nem akarunk XSD-t írni
 * api-grpc-stub-gen: összefogja az api-grpc-proto-gen és api-service-grpc modulokat, amiből java alapú stub-okat generál. Ezeket a stubokat használja fel a kliens és szerver is egységesen.
 
@@ -20,7 +20,7 @@ proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
 generalt tartalom:
 
 * api-grpc-proto-gen/target/generated-sources/src -> generalt *.proto
-* api-grpc-proto-gen/target/proto_deps -> google *.proto
+* api-grpc-proto-gen/target/proto-external -> google, coffee *.proto
 * api-grpc-stub-gen/target/generated-sources -> *.java stub-ok
 
 === XSD to proto
@@ -36,13 +36,6 @@ Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok depe
 == GRPC Core
 common-grpc-core modul szolgál általános grpc-nél használandó osztályok gyűjtésére. pl. hibakezelés, logolás, mdc kezelés stb
 
-=== ExceptionMapper és ExceptionHandler
-Készült egy generikus ExceptionMapper interface JAX-RS mintára,
-adott Exception típus grpc Status-ra konvertálását teszi lehetővé a CDI adta lehetőségeket kihasználva.
-A megfelelő Mapper implementáció megkeresésére szolgál az ExceptionHandler osztály,
-ezt interceptoron nem sikerült bekötni, sajnos még mielőtt eljutna hozzá az Exception a grpc lib előbb elkapja és lekezeli.
-Így base osztályban, vagy az Impl részen lehet aktiválni try-catch be.
-
 == Szerver
 Jakarta oldalon még nincs managelt gRPC szerver megoldas, ezért itt minta célból bevezetésre kerül egy CDI kompatibilis implementacio. A grpc-server-extension foglalja magába a minta managelt szervert.
 
@@ -56,6 +49,7 @@ Implementalva vannak:
 
 == Szerver thread pool
 Szerver saját thread pool-al dolgozik, amit lehet paraméterezni, ez a minimum implementáció ami szükséges ahhoz hogy control legyen a működésében.
+
 * simple thread pool:
 ** coffee.grpc.server.threadpool.default.corePoolSize=64 -> default 32
 ** coffee.grpc.server.threadpool.default.maximumPoolSize=64 -> default 32

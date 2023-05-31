@@ -43,8 +43,8 @@ import jakarta.inject.Inject;
 import org.apache.commons.lang3.ArrayUtils;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.grpc.api.service.IGrpcService;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.grpc.core.extension.api.IGrpcService;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ServerMetricInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;

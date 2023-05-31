@@ -19,10 +19,10 @@
  */
 package hu.icellmobilsoft.sampler.grpc.server.interceptor;
 
+import hu.icellmobilsoft.coffee.grpc.base.exception.ExceptionHandler;
+import hu.icellmobilsoft.coffee.grpc.base.exception.StatusResponse;
 import hu.icellmobilsoft.coffee.se.logging.DefaultLogger;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.grpc.core.exception.ExceptionHandler;
-import hu.icellmobilsoft.sampler.grpc.core.exception.StatusResponse;
 import io.grpc.Context;
 import io.grpc.Contexts;
 import io.grpc.ForwardingServerCallListener.SimpleForwardingServerCallListener;
