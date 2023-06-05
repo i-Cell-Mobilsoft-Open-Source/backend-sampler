@@ -19,32 +19,20 @@
  */
 package hu.icellmobilsoft.sampler.grpc.client.extension;
 
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
+import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Instance;
-import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.CDI;
-import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
 
-import org.eclipse.microprofile.config.Config;
-
+import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.utils.annotation.AnnotationUtil;
-import hu.icellmobilsoft.sampler.grpc.client.GrpcClient;
-import hu.icellmobilsoft.sampler.grpc.client.interceptor.ClientRequestInterceptor;
-import hu.icellmobilsoft.sampler.grpc.client.interceptor.ClientResponseInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ClientMetricInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ClientOpentracingInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;
 import io.grpc.ClientInterceptor;
-import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
 /**
@@ -54,69 +42,18 @@ import io.grpc.ManagedChannelBuilder;
  * @since 2.0.0
  *
  */
+@Alternative
+@Priority(1)
 @ApplicationScoped
-public class ManagedChannelProducer {
+public class ManagedChannelProducer extends hu.icellmobilsoft.coffee.grpc.client.extension.ManagedChannelProducer {
 
     @Inject
     private Logger log;
 
-    @Inject
-    private Config config;
+    @Override
+    protected void configureChannelBuilder(ManagedChannelBuilder<?> channelBuilder) throws BaseException {
+        super.configureChannelBuilder(channelBuilder);
 
-    private Map<String, ManagedChannel> managedChannelInstances = new HashMap<>();
-
-    /**
-     * produce ManagedChannel
-     * 
-     * @param injectionPoint
-     *            the injection point
-     * @return ManagedChannel
-     */
-    @Produces
-    @Dependent
-    @GrpcClient(configKey = "")
-    public ManagedChannel produceManagedChannel(InjectionPoint injectionPoint) {
-        Optional<GrpcClient> annotation = AnnotationUtil.getAnnotation(injectionPoint, GrpcClient.class);
-        String configKey = annotation.map(GrpcClient::configKey).orElse(null);
-
-        return getInstance(configKey);
-    }
-
-    private synchronized ManagedChannel getInstance(String configKey) {
-        return managedChannelInstances.computeIfAbsent(configKey, v -> createManagedChannel(configKey));
-    }
-
-    private ManagedChannel createManagedChannel(String configKey) {
-        log.info("Creating ManagedChannel for configKey:[{0}]", configKey);
-        try {
-
-            String host = config.getOptionalValue("coffee.grpc.client." + configKey + ".host", String.class)
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            "Missing configuration property by `configKey` " + configKey + ", must be set with `host` parameter"));
-
-            int port = config.getOptionalValue("coffee.grpc.client." + configKey + ".port", Integer.class)
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            "Missing configuration property by `configKey` " + configKey + ", must be set with `port` parameter"));
-
-            // TODO usePlaintext config
-            ManagedChannelBuilder<?> channelBuilder = ManagedChannelBuilder.forAddress(host, port).usePlaintext();
-
-            // metric interceptor configuration
-            configureInterceptor(channelBuilder);
-
-            return channelBuilder.build();
-        } catch (Exception e) {
-            log.error(MessageFormat.format("Exception on initializing ManagedChannel for configKey [{0}], [{1}]", configKey, e.getLocalizedMessage()),
-                    e);
-            throw new IllegalStateException(e);
-        }
-    }
-
-    private void configureInterceptor(ManagedChannelBuilder<?> channelBuilder) {
-        // request/response interceptor
-        channelBuilder.intercept(new ClientRequestInterceptor());
-        channelBuilder.intercept(new ClientResponseInterceptor());
-        
         // observability interceptors if available
         Instance<IMetricInterceptor> instanceMetric = CDI.current().select(IMetricInterceptor.class, new ClientMetricInterceptorQualifier.Literal());
         if (instanceMetric.isResolvable()) {
