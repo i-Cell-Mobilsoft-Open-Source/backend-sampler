@@ -40,7 +40,7 @@ common-grpc-core modul szolgál általános grpc-nél használandó osztályok g
 Coffee GRPC server extension kiterjesztése Observability API interceptorok bekötésével.
 
 == Kliens
-Kliens tartalmaz 2 interceptort, request/response logolásra. Aktiválva vannak, nem kell külön konfiguráció, ugyan ugy mint a szerver oldali esetben.
+Coffee GRPC kliens extension kiterjesztése Observability API interceptorok bekötésével.
 
 === Observability
 
