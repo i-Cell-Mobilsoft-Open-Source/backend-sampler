@@ -48,7 +48,6 @@ gRPC szerver és kliens aktiválhat interceptorokat metrika és trace adatok szo
 Ha nincs dependency szinten bekötve az adott observability modul akkor a működés az eredeti, csak nem szolgáltat metrika vagy trace adatot.
 
 A következő két modul a grpc-server-extension és grpc-client-extension modulokba vannak bekötve:
-* grpc-observability-mp-metrics -> microprofile-metrics alapú metrika gyűjtés
 * grpc-observability-mp-opentracing -> microprofile-opentracing alapú trace gyűjtés
 
 Elérhetők a metrikák: http://localhost:9991/metrics/application 

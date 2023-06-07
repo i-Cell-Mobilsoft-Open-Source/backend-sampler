@@ -28,8 +28,6 @@ import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ClientMetricInterceptorQualifier;
-import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ClientOpentracingInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;
 import io.grpc.ClientInterceptor;
@@ -55,12 +53,6 @@ public class ManagedChannelProducer extends hu.icellmobilsoft.coffee.grpc.client
         super.configureChannelBuilder(channelBuilder);
 
         // observability interceptors if available
-        Instance<IMetricInterceptor> instanceMetric = CDI.current().select(IMetricInterceptor.class, new ClientMetricInterceptorQualifier.Literal());
-        if (instanceMetric.isResolvable()) {
-            channelBuilder.intercept((ClientInterceptor) instanceMetric.get());
-        } else {
-            log.warn("Could not find Metric interceptor implementation for gRPC client.");
-        }
         Instance<IOpentracingInterceptor> instanceOpentracing = CDI.current().select(IOpentracingInterceptor.class,
                 new ClientOpentracingInterceptorQualifier.Literal());
         if (instanceOpentracing.isResolvable()) {

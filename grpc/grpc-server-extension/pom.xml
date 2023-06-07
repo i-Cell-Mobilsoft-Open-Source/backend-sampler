@@ -20,10 +20,6 @@
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-            <artifactId>grpc-observability-mp-metrics</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
             <artifactId>grpc-observability-mp-opentracing</artifactId>
         </dependency>
 
