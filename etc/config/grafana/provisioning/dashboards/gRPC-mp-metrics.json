@@ -124,7 +124,7 @@
           },
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "application_grpc_server_requests_received_messages_total{job=\"bs-sample-service-job\"}",
+          "expr": "application_coffee_grpc_server_requests_received_messages_total{job=\"bs-sample-service-job\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -220,7 +220,7 @@
             "uid": "fixeduid"
           },
           "editorMode": "builder",
-          "expr": "application_grpc_server_responses_sent_messages_total{job=\"bs-sample-service-job\"}",
+          "expr": "application_coffee_grpc_server_responses_sent_messages_total{job=\"bs-sample-service-job\"}",
           "legendFormat": "{{method}}-{{methodType}}-{{service}}",
           "range": true,
           "refId": "A"
@@ -312,7 +312,7 @@
             "uid": "fixeduid"
           },
           "editorMode": "builder",
-          "expr": "application_grpc_server_processing_duration_seconds_mean_seconds{job=\"bs-sample-service-job\"}",
+          "expr": "application_coffee_grpc_server_processing_duration_seconds_mean_seconds{job=\"bs-sample-service-job\"}",
           "legendFormat": "{{method}}-{{methodType}}-{{service}}-{{status}}",
           "range": true,
           "refId": "A"
@@ -417,7 +417,7 @@
             "uid": "fixeduid"
           },
           "editorMode": "builder",
-          "expr": "application_grpc_client_requests_sent_messages_total{job=\"bs-sample-service-job\"}",
+          "expr": "application_coffee_grpc_client_requests_sent_messages_total{job=\"bs-sample-service-job\"}",
           "legendFormat": "{{method}}-{{methodType}}-{{service}}",
           "range": true,
           "refId": "A"
@@ -509,7 +509,7 @@
             "uid": "fixeduid"
           },
           "editorMode": "builder",
-          "expr": "application_grpc_client_responses_received_messages_total{job=\"bs-sample-service-job\"}",
+          "expr": "application_coffee_grpc_client_responses_received_messages_total{job=\"bs-sample-service-job\"}",
           "legendFormat": "{{method}}-{{methodType}}-{{service}}",
           "range": true,
           "refId": "A"
@@ -600,7 +600,7 @@
             "uid": "fixeduid"
           },
           "editorMode": "builder",
-          "expr": "application_grpc_client_processing_duration_seconds_mean_seconds{job=\"bs-sample-service-job\"}",
+          "expr": "application_coffee_grpc_client_processing_duration_seconds_mean_seconds{job=\"bs-sample-service-job\"}",
           "legendFormat": "{{method}}-{{methodType}}-{{service}}-{{status}}",
           "range": true,
           "refId": "A"

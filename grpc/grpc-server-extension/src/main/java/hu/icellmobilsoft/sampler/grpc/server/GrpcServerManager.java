@@ -28,8 +28,6 @@ import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.IMetricInterceptor;
-import hu.icellmobilsoft.sampler.grpc.core.extension.metric.api.ServerMetricInterceptorQualifier;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.IOpentracingInterceptor;
 import hu.icellmobilsoft.sampler.grpc.core.extension.opentracing.api.ServerOpentracingInterceptorQualifier;
 import io.grpc.ServerBuilder;
@@ -64,12 +62,6 @@ public class GrpcServerManager extends hu.icellmobilsoft.coffee.grpc.server.Grpc
     protected void addInterceptor(ServerBuilder<?> serverBuilder) {
         super.addInterceptor(serverBuilder);
         // modul szintu dependency, mp-metric, micrometer, telemetry...
-        Instance<IMetricInterceptor> instanceMetric = CDI.current().select(IMetricInterceptor.class, new ServerMetricInterceptorQualifier.Literal());
-        if (instanceMetric.isResolvable()) {
-            serverBuilder.intercept((ServerInterceptor) instanceMetric.get()); // 2
-        } else {
-            log.warn("Could not find Metric interceptor implementation for gRPC server.");
-        }
         Instance<IOpentracingInterceptor> instanceOpentrace = CDI.current().select(IOpentracingInterceptor.class,
                 new ServerOpentracingInterceptorQualifier.Literal());
         if (instanceOpentrace.isResolvable()) {
