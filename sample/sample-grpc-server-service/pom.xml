@@ -18,16 +18,24 @@
             <artifactId>common-system-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-            <artifactId>grpc-server-extension</artifactId>
+            <groupId>hu.icellmobilsoft.coffee</groupId>
+            <artifactId>coffee-grpc-server-extension</artifactId>
         </dependency>
         <dependency>
-            <groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-            <artifactId>grpc-client-extension</artifactId>
+            <groupId>hu.icellmobilsoft.coffee</groupId>
+            <artifactId>coffee-grpc-client-extension</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
             <artifactId>coffee-grpc-metrics-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hu.icellmobilsoft.coffee</groupId>
+            <artifactId>coffee-grpc-opentracing-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.api</groupId>
