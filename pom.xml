@@ -219,7 +219,6 @@
     	<module>model</module>
         <module>common</module>
         <module>sample</module>
-        <module>grpc</module>
 <!--
         <module>sample-quarkus</module>
 -->

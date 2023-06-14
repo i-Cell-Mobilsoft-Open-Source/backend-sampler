@@ -3,7 +3,9 @@
 * Main: `sample/sample-grpc-server-service`
 
 A service célja a gRPC szerver használata.
-CDI alapu gRPC szerver minta implementació, tech felderítés céljából.
+CDI alapu gRPC szerver minta implementació, ami a
+https://i-cell-mobilsoft-open-source.github.io/coffee/#common_core_coffee-grpc[Coffee gRPC]
+alapon működik.
 Jakarta oldalon folyamatban van a kidolgozása: https://projects.eclipse.org/projects/ee4j.rpc/reviews/creation-review
 Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack , https://www.youtube.com/watch?v=UYSNM9Dy5M4
 
@@ -33,23 +35,7 @@ Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok depe
 * com.google.protobuf:protobuf-java (proto)
 * com.google.api.grpc:proto-google-common-protos (proto)
 
-== GRPC Core
-common-grpc-core modul szolgál általános grpc-nél használandó osztályok gyűjtésére. pl. hibakezelés, logolás, mdc kezelés stb
-
-== Szerver
-Coffee GRPC server extension kiterjesztése Observability API interceptorok bekötésével.
-
-== Kliens
-Coffee GRPC kliens extension kiterjesztése Observability API interceptorok bekötésével.
-
-=== Observability
-
-gRPC szerver és kliens aktiválhat interceptorokat metrika és trace adatok szolgáltatására.
-Ha nincs dependency szinten bekötve az adott observability modul akkor a működés az eredeti, csak nem szolgáltat metrika vagy trace adatot.
-
-A következő két modul a grpc-server-extension és grpc-client-extension modulokba vannak bekötve:
-* grpc-observability-mp-opentracing -> microprofile-opentracing alapú trace gyűjtés
-
+== gRPC Observability
 Elérhetők a metrikák: http://localhost:9991/metrics/application 
 
 * gRPC szerver fogadott request
@@ -64,24 +50,7 @@ A jaeger felé továbbítódnak a span adatok, gRPC + REST + redis stream consum
 
 Két dashboard a /etc/config/grafana/provisioning/dashboards alatt érhető el.
 
-=== Service implementálás
-
-. A proto generálásnál aktiválni kell a common-grpc-protoc plugint.
-+
-.common-grpc-plugin aktiválás mavenen keresztül
-[source,xml]
-----
-<outputTarget>
-	<type>grpc-coffee</type>
-	<pluginArtifact>hu.icellmobilsoft.sampler.common:common-grpc-protoc:${project.version}</pluginArtifact>
-</outputTarget>
-----
-+
-A plugin két plusz fájl generál egy interface leírót, amit full CDI környezetben tudunk implementálni.
-Valamint egy BindableService implementációt, ami az interface CDI implementációjának delegálja a grpc hívásokat,
-a delegálás a GRPCServerManager-en keresztül megtörténik, így fejlesztéskor ezzel nincs további dolgunk.
-
-==== Példa
+== Service példa
 
 .service.proto
 [source,protobuf]
@@ -122,14 +91,14 @@ public class DummyServiceImpl implements DummyService { //<1>
 <2> ApplicationScope szükséges
 <3> Ha nagyon muszáj lehet Request scope-ú beant is használni, ilyenkor az érintett metódusra ki kell tenni az `@ActivateRequestContext` annotációt.
 
-== Kliens
-Grpc client kezeléshez CDI extension a grpc-cliens-extension alatt található. Az extension a dependency bekötéssel aktiválódik.
+.Kliens
+Grpc client kezeléshez Coffee CDI extension alapon működik. Az extension a dependency bekötéssel aktiválódik.
 
 [source,xml]
 ----
 <dependency>
-	<groupId>hu.icellmobilsoft.sampler.grpc</groupId>
-	<artifactId>grpc-client-extension</artifactId>
+	<groupId>hu.icellmobilsoft.coffee</groupId>
+	<artifactId>coffee-grpc-client-extension</artifactId>
 </dependency>
 ----
 
