@@ -44,7 +44,6 @@ import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.exception.SamplerException;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
-import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleValue;
@@ -97,38 +96,40 @@ public class JpaSamplePostAction extends BaseAction {
         } catch (BaseException e) {
             log.info("Expected exception - no transaction: [{0}]", e.getLocalizedMessage());
         }
+        // create entity
+        SampleEntity created = transactionHelper.executeWithTransaction(this::createOneNeedTransaction);
 
-        SampleEntity created;
-        if (SampleValueEnumType.VALUE_C == sampleRequest.getSample().getColumnB()) {
-            // for BatchService insert/update testing
-            // insert entity
-            SampleEntity entityToCreate = initSampleEntity();
-            entityToCreate.setModLocalDate(LocalDate.now()); // insertable false
-            created = transactionHelper.executeWithTransaction(() -> batchInsertNative(entityToCreate));
-            if (created.getModLocalDate() != null) {
-                throw new TechnicalException("Unexpected data integrity error, insertable false field inserted!");
-            }
-
-            // update entity
-            created.setStatus(SampleStatus.DONE);
-            created.setCreatorUser(TEST_SYSTEM_USER); // updatable false
-            created.setModLocalDate(LocalDate.now());
-            SampleEntity entityToModify = created;
-            SampleEntity modified = transactionHelper.executeWithTransaction(() -> batchUpdateNative(entityToModify));
-            if (TEST_SYSTEM_USER.equals(modified.getCreatorUser())) {
-                throw new TechnicalException("Unexpected data integrity error, updatable false field updated!");
-            }
-        } else {
-            // create entity
-            created = transactionHelper.executeWithTransaction(this::createOneNeedTransaction);
-
-            // modify entity
-            created.setStatus(SampleStatus.DONE);
-            created.setModLocalDate(LocalDate.now());
-            created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
-        }
+        // modify entity
+        created.setStatus(SampleStatus.DONE);
+        created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
 
         SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
+        if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
+                || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
+                || !created.getCreatorUser().equals(readed.getCreatorUser()) || created.getStatus() != readed.getStatus()) {
+            throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
+        }
+
+        // BatchService insert/update testing
+        // insert entity
+        SampleEntity entityToCreate = initSampleEntity();
+        entityToCreate.setModLocalDate(LocalDate.now()); // insertable false
+        created = transactionHelper.executeWithTransaction(() -> batchInsertNative(entityToCreate));
+        if (created.getModLocalDate() != null) {
+            throw new TechnicalException("Unexpected data integrity error, insertable false field inserted!");
+        }
+
+        // update entity
+        created.setStatus(SampleStatus.DONE);
+        created.setCreatorUser(TEST_SYSTEM_USER); // updatable false
+        created.setModLocalDate(LocalDate.now());
+        SampleEntity entityToModify = created;
+        SampleEntity modified = transactionHelper.executeWithTransaction(() -> batchUpdateNative(entityToModify));
+        if (TEST_SYSTEM_USER.equals(modified.getCreatorUser())) {
+            throw new TechnicalException("Unexpected data integrity error, updatable false field updated!");
+        }
+
+        readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
                 || !EntityHelper.DEFAULT_SYSTEM_USER.equals(readed.getCreatorUser()) || SampleStatus.DONE != readed.getStatus()
