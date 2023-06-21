@@ -19,7 +19,12 @@
  */
 package hu.icellmobilsoft.sampler.sample.jpaservice.action;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.spi.CDI;
@@ -28,12 +33,18 @@ import jakarta.inject.Inject;
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
+import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.enums.Status;
+import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
+import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.exception.SamplerException;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
+import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleValue;
@@ -49,6 +60,8 @@ import hu.icellmobilsoft.sampler.sample.jpaservice.service.SampleEntityService;
 @Model
 public class JpaSamplePostAction extends BaseAction {
 
+    private static final String TEST_SYSTEM_USER = "55";
+
     @Inject
     private SampleEntityService sampleEntityService;
 
@@ -57,6 +70,9 @@ public class JpaSamplePostAction extends BaseAction {
 
     @Inject
     private TransactionHelper transactionHelper;
+
+    @Inject
+    private BatchService batchService;
 
     @Inject
     @ThisLogger
@@ -81,17 +97,42 @@ public class JpaSamplePostAction extends BaseAction {
         } catch (BaseException e) {
             log.info("Expected exception - no transaction: [{0}]", e.getLocalizedMessage());
         }
-        // create entity
-        SampleEntity created = transactionHelper.executeWithTransaction(this::createOneNeedTransaction);
 
-        // modify entity
-        created.setStatus(SampleStatus.DONE);
-        created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
+        SampleEntity created;
+        if (SampleValueEnumType.VALUE_C == sampleRequest.getSample().getColumnB()) {
+            // for BatchService insert/update testing
+            // insert entity
+            SampleEntity entityToCreate = initSampleEntity();
+            entityToCreate.setModLocalDate(LocalDate.now()); // insertable false
+            created = transactionHelper.executeWithTransaction(() -> batchInsertNative(entityToCreate));
+            if (created.getModLocalDate() != null) {
+                throw new TechnicalException("Unexpected data integrity error, insertable false field inserted!");
+            }
+
+            // update entity
+            created.setStatus(SampleStatus.DONE);
+            created.setCreatorUser(TEST_SYSTEM_USER); // updatable false
+            created.setModLocalDate(LocalDate.now());
+            SampleEntity entityToModify = created;
+            SampleEntity modified = transactionHelper.executeWithTransaction(() -> batchUpdateNative(entityToModify));
+            if (TEST_SYSTEM_USER.equals(modified.getCreatorUser())) {
+                throw new TechnicalException("Unexpected data integrity error, updatable false field updated!");
+            }
+        } else {
+            // create entity
+            created = transactionHelper.executeWithTransaction(this::createOneNeedTransaction);
+
+            // modify entity
+            created.setStatus(SampleStatus.DONE);
+            created.setModLocalDate(LocalDate.now());
+            created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
+        }
 
         SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
-                || !created.getCreatorUser().equals(readed.getCreatorUser())) {
+                || !EntityHelper.DEFAULT_SYSTEM_USER.equals(readed.getCreatorUser()) || SampleStatus.DONE != readed.getStatus()
+                || !created.getModLocalDate().equals(readed.getModLocalDate())) {
             throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
@@ -110,12 +151,63 @@ public class JpaSamplePostAction extends BaseAction {
      *             if error
      */
     public SampleEntity createOneNeedTransaction() throws BaseException {
+        SampleEntity entity = initSampleEntity();
+        return sampleEntityService.save(entity);
+    }
+
+    private SampleEntity initSampleEntity() {
         SampleEntity entity = new SampleEntity();
         entity.setLocalDateTime(LocalDateTime.now());
         entity.setStatus(SampleStatus.PROCESSING);
         entity.setInputValue("Generated");
         entity.setValue(SampleValue.VALUE_B);
-        return sampleEntityService.save(entity);
+        return entity;
+    }
+
+    /**
+     * Creates the given entity by {@link BatchService#batchInsertNative(Collection, Class)}. Need transaction for success.
+     * 
+     * @param sampleEntity
+     *            the entity to create
+     * @return created, persisted entity
+     * @throws BaseException
+     *             if error
+     */
+    public SampleEntity batchInsertNative(SampleEntity sampleEntity) throws BaseException {
+        if (sampleEntity == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "sampleEntity is missing");
+        }
+        Map<String, Status> resultMap = batchService.batchInsertNative(List.of(sampleEntity), SampleEntity.class);
+        Optional<String> firstKey = resultMap.keySet().stream().findFirst();
+
+        if (firstKey.isPresent()) {
+            sampleEntity = sampleEntityService.findById(firstKey.get(), SampleEntity.class);
+        }
+
+        return sampleEntity;
+    }
+
+    /**
+     * Updates one entity by {@link BatchService#batchUpdateNative(Collection, Class)}. Need transaction for success.
+     * 
+     * @param sampleEntity
+     *            the entity to update
+     * @return modified, persisted entity
+     * @throws BaseException
+     *             if error
+     */
+    public SampleEntity batchUpdateNative(SampleEntity sampleEntity) throws BaseException {
+        if (sampleEntity == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "sampleEntity is missing");
+        }
+        Map<String, Status> resultMap = batchService.batchUpdateNative(List.of(sampleEntity), SampleEntity.class);
+        Optional<String> firstKey = resultMap.keySet().stream().findFirst();
+
+        if (firstKey.isPresent()) {
+            sampleEntity = sampleEntityService.findById(firstKey.get(), SampleEntity.class);
+        }
+
+        return sampleEntity;
     }
 
 }

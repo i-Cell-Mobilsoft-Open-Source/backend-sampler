@@ -19,6 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.model.sample;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.enterprise.inject.Vetoed;
@@ -74,6 +75,9 @@ public class SampleEntity extends AbstractIdentifiedAuditEntity {
     @Column(name = "LOCAL_DATE")
     private LocalDateTime localDateTime;
 
+    @Column(name = "MOD_LOCAL_DATE", insertable = false)
+    private LocalDate modLocalDate;
+
     public SampleStatus getStatus() {
         return status;
     }
@@ -104,5 +108,13 @@ public class SampleEntity extends AbstractIdentifiedAuditEntity {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public LocalDate getModLocalDate() {
+        return modLocalDate;
+    }
+
+    public void setModLocalDate(LocalDate modLocalDate) {
+        this.modLocalDate = modLocalDate;
     }
 }
