@@ -30,7 +30,7 @@ import jakarta.annotation.Priority;
 public interface CustomPriorities {
 
     /**
-     * Authentikáció előtt futó filter/interceptor prioritás
+     * Priority of the filter/interceptor running before authentication
      */
     int PRE_AUTHENTICATION = 500;
 

@@ -24,7 +24,7 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.module.mp.restclient.provider.DefaultRestClientBuilderListener;
 
 /**
- * Projekt szintu REST client listener
+ * Project-level REST client listener
  * 
  * @see DefaultRestClientBuilderListener
  * 

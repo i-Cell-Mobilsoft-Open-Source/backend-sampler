@@ -83,7 +83,7 @@ public class DefaultExceptionMessageTranslator implements IExceptionMessageTrans
         dto.setFaultType(faultType.name());
         dto.setFuncCode(FunctionCodeType.ERROR);
 
-        // TODO nyelvesitett valasz kell a faultype szerint
+        // a localized response is needed based on the fault type
         dto.setMessage(faultType.toString());
 
         if (e instanceof RestClientResponseException) {

@@ -59,8 +59,8 @@ public class RequestContainer {
     @Produces
     @RequestScoped
     public ProjectHeader getProjectHeader() {
-        // vannak esetek, amikor a header nincs betoltve, es megis szotarhoz nyulunk
-        // ebben az esetben elszalt WELD-000052 hibaval
+        // There are cases when the header is not loaded, yet we still access the dictionary
+        // In this case, WELD-000052 error occurred
         if (projectHeader == null) {
             return defaultProjectHeader;
         }
