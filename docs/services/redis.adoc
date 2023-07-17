@@ -1,6 +1,0 @@
-= Redis service
-`sample/sample-redis-service`
-
-A service célja a redis kezelés használatának bemutatása egyszerű írás/olvasással. A service a coff:ee redis moduljára épül, erről bővebb információ itt található: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-redis
-
-A service használatához először futtatni kell a dockeres redist. pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
