@@ -1,0 +1,6 @@
+= REST service
+`sample/sample-rest-service`
+
+This is a simple basic REST implementation.
+Uses only built in tools.
+Every additional sample service is an extension of this basic implementation.

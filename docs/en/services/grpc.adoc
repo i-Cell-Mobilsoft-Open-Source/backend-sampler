@@ -1,0 +1,144 @@
+= gRPC server service
+
+* Main: `sample/sample-grpc-server-service`
+
+The purpose of the service is to utilize the gRPC server.
+A sample implementation of a CDI-based gRPC server that operates on the
+https://i-cell-mobilsoft-open-source.github.io/coffee/#common_core_coffee-grpc[Coffee gRPC]
+framework.
+The development is currently in progress on the Jakarta side https://projects.eclipse.org/projects/ee4j.rpc/reviews/creation-review
+Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack , https://www.youtube.com/watch?v=UYSNM9Dy5M4
+
+== GRPC API
+On the gRPC API level, it is divided into the following parts:
+
+* api-schema: It contains XSDs from which we can generate .proto files
+* api-grpc-xsd2proto: The module generates .proto files from XSDs.
+* api-grpc-service: It contains the .proto files that define the endpoints, along with any objects that we don not want to write an XSD for
+* api-grpc-stub-gen: It combines the api-grpc-proto-gen and api-service-grpc modules to generate Java-based stubs. These stubs are used consistently by both the client and server.
+
+proto file doc: https://developers.google.com/protocol-buffers/docs/proto3
+
+generated content:
+
+* api-grpc-proto-gen/target/generated-sources/src -> generalt *.proto
+* api-grpc-proto-gen/target/proto-external -> google, coffee *.proto
+* api-grpc-stub-gen/target/generated-sources -> *.java stub-ok
+
+=== XSD to proto
+The "common-grpc-api" module now includes an example of creating protocol buffers from an XSD.
+You can utilize the "schema2proto" Maven plugin, which has a detailed configuration file located at "etc/schema2proto/config.yaml.
+
+Currently, in order to generate the files, it is necessary to copy XSD and proto files as dependencies, which are then removed after the generation process:
+
+* hu.icellmobilsoft.coffeecoffee-dto-xsd (xsd)
+* com.google.protobuf:protobuf-java (proto)
+* com.google.api.grpc:proto-google-common-protos (proto)
+
+== gRPC Observability
+These are the available metrics: http://localhost:9991/metrics/application 
+
+* gRPC server received request
+* gRPC server answered response
+* gRPC server API process duration
+
+* gRPC kliens sent request
+* gRPC kliens answered response
+* gRPC kliens API process duration
+
+The span data is forwarded to Jaeger, and the trace flow is shared among gRPC, REST, and Redis Stream Consumer components.
+
+Two dashboards are available under /etc/config/grafana/provisioning/dashboards
+
+== Service example
+
+.service.proto
+[source,protobuf]
+----
+service DummyService {
+    rpc getDummy(DummyRequest) returns (DummyResponse);
+    rpc getDummyRequestScope(DummyRequest) returns (DummyResponse);
+}
+----
+
+.service implementation
+[source,java]
+----
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyService; //<1>
+
+@ApplicationScoped //<2>
+public class DummyServiceImpl implements DummyService { //<1>
+
+    @Inject
+    private SampleGrpcAction sampleGrpcAction;
+
+    @Inject
+    private SampleGrpcRequestScopeAction sampleGrpcRequestScopeAction; //<3>
+
+    @Override
+    public void getDummy(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        sampleGrpcAction.call(request, responseObserver);
+    }
+
+    @Override
+    @ActivateRequestContext //<3>
+    public void getDummyRequestScope(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        sampleGrpcRequestScopeAction.call(request, responseObserver);
+    }
+}
+----
+<1> Generated interface description for the service defined in the proto file.
+<2> ApplicationScope is required.
+<3> If absolutely necessary, you can use a request-scoped bean. In such cases, you need to annotate the relevant method with @ActivateRequestContext to activate the request context.
+
+.Kliens
+The Coffee CDI extension is used for handling gRPC clients. The extension is activated by wiring the necessary dependencies.
+
+[source,xml]
+----
+<dependency>
+	<groupId>hu.icellmobilsoft.coffee</groupId>
+	<artifactId>coffee-grpc-client-extension</artifactId>
+</dependency>
+----
+
+To use the clients, configuration is required, and a sample configuration can be found in the microprofile-config.properties file.
+By injecting the parameters set in the microprofile-config.properties file, the clients become immediately usable, similar to a REST client.
+
+.config DummyServiceGrpc gRPC for the client
+[source,yaml]
+----
+coffee.grpc.client.DummyServiceGrpc.port=8199
+coffee.grpc.client.DummyServiceGrpc.host=localhost
+----
+
+To use .CDI inject DummyServiceGrpc
+----
+@Inject
+@GrpcClient(configKey = "DummyServiceGrpc") //<1>
+private DummyServiceGrpc.DummyServiceBlockingStub dummyGrpcService; //<2>
+
+...
+DummyResponse helloResponse = dummyGrpcService.getDummy(dummyRequest); //<3>
+...
+----
+<1> Configuration key for connection parameters, server host, and port value.
+<2> Stub where the service call is defined.
+<3> gRPC service call
+
+== Tests
+* 3 examples of using a gRPC client.
+* Simple dummy request.
+* Multithreaded test.
+* Sample for error handling
+
+
+== REST API
+
+Automatically generated OpenAPI endpoint for retrieval:
+http://localhost:8081/openapi
+(The generated API descriptor will be connected later).
+
+== Configuration
+
+Port configuration: microprofile-config.properties -> coffee.grpc.server.port: 8199

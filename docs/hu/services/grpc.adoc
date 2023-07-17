@@ -1,0 +1,143 @@
+= gRPC server service
+
+* Main: `sample/sample-grpc-server-service`
+
+A service célja a gRPC szerver használata.
+CDI alapu gRPC szerver minta implementació, ami a
+https://i-cell-mobilsoft-open-source.github.io/coffee/#common_core_coffee-grpc[Coffee gRPC]
+alapon működik.
+Jakarta oldalon folyamatban van a kidolgozása: https://projects.eclipse.org/projects/ee4j.rpc/reviews/creation-review
+Wildfly feature-pack: https://github.com/wildfly-extras/wildfly-grpc-feature-pack , https://www.youtube.com/watch?v=UYSNM9Dy5M4
+
+== GRPC API
+gRPC API szinten a következő részekre van bontva:
+
+* api-schema: XSD-ket tartalmazza amiből .proto fileokat tudunk generálni
+* api-grpc-xsd2proto: a modul generál .proto file-okat XSD-ből
+* api-grpc-service: azokat a .proto file-okat tartalmazza ami definiálja az endpointot, mellette olyan objektumokat tehetünk ide, amihez nem akarunk XSD-t írni
+* api-grpc-stub-gen: összefogja az api-grpc-proto-gen és api-service-grpc modulokat, amiből java alapú stub-okat generál. Ezeket a stubokat használja fel a kliens és szerver is egységesen.
+
+proto file doksi: https://developers.google.com/protocol-buffers/docs/proto3
+
+generalt tartalom:
+
+* api-grpc-proto-gen/target/generated-sources/src -> generalt *.proto
+* api-grpc-proto-gen/target/proto-external -> google, coffee *.proto
+* api-grpc-stub-gen/target/generated-sources -> *.java stub-ok
+
+=== XSD to proto
+common-grpc-api modulba belekerült egy példa XSD-ből protocol-buffer létrehozásra.
+A schema2proto maven plugin felhasználásával, aminek részletes leírást tartalmazó konfig fájlja az etc/schema2proto/config.yaml helyen található.
+
+Jelenleg a generálásához még szükségesek voltak xsd és proto fájlok dependency-ket másolni, amik a generálás után eltávolításra kerülnek:
+
+* hu.icellmobilsoft.coffeecoffee-dto-xsd (xsd)
+* com.google.protobuf:protobuf-java (proto)
+* com.google.api.grpc:proto-google-common-protos (proto)
+
+== gRPC Observability
+Elérhetők a metrikák: http://localhost:9991/metrics/application 
+
+* gRPC szerver fogadott request
+* gRPC szerver válaszolt response
+* gRPC szerver API process duration
+
+* gRPC kliens elküldött request
+* gRPC kliens válaszolt response
+* gRPC kliens API process duration
+
+A jaeger felé továbbítódnak a span adatok, gRPC + REST + redis stream consumer közös trace flowba kerül.
+
+Két dashboard a /etc/config/grafana/provisioning/dashboards alatt érhető el.
+
+== Service példa
+
+.service.proto
+[source,protobuf]
+----
+service DummyService {
+    rpc getDummy(DummyRequest) returns (DummyResponse);
+    rpc getDummyRequestScope(DummyRequest) returns (DummyResponse);
+}
+----
+
+.service implementáció
+[source,java]
+----
+import hu.icellmobilsoft.sampler.common.sample.grpc.DummyService; //<1>
+
+@ApplicationScoped //<2>
+public class DummyServiceImpl implements DummyService { //<1>
+
+    @Inject
+    private SampleGrpcAction sampleGrpcAction;
+
+    @Inject
+    private SampleGrpcRequestScopeAction sampleGrpcRequestScopeAction; //<3>
+
+    @Override
+    public void getDummy(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        sampleGrpcAction.call(request, responseObserver);
+    }
+
+    @Override
+    @ActivateRequestContext //<3>
+    public void getDummyRequestScope(DummyRequest request, StreamObserver<DummyResponse> responseObserver) {
+        sampleGrpcRequestScopeAction.call(request, responseObserver);
+    }
+}
+----
+<1> Generált interface leíró a proto fájlban definiált servicehez
+<2> ApplicationScope szükséges
+<3> Ha nagyon muszáj lehet Request scope-ú beant is használni, ilyenkor az érintett metódusra ki kell tenni az `@ActivateRequestContext` annotációt.
+
+.Kliens
+Grpc client kezeléshez Coffee CDI extension alapon működik. Az extension a dependency bekötéssel aktiválódik.
+
+[source,xml]
+----
+<dependency>
+	<groupId>hu.icellmobilsoft.coffee</groupId>
+	<artifactId>coffee-grpc-client-extension</artifactId>
+</dependency>
+----
+
+A kliensek használatához konfigurációra van szükség, minta megtalálható a microprofile-config.properties file-ban.
+Az inject során az itt beállított paraméterekkel azonnal használhatóvá válik hasonlóan a rest kliens-hez.
+
+.config DummyServiceGrpc gRPC kliens számára
+[source,yaml]
+----
+coffee.grpc.client.DummyServiceGrpc.port=8199
+coffee.grpc.client.DummyServiceGrpc.host=localhost
+----
+
+.CDI inject DummyServiceGrpc haszálatához
+----
+@Inject
+@GrpcClient(configKey = "DummyServiceGrpc") //<1>
+private DummyServiceGrpc.DummyServiceBlockingStub dummyGrpcService; //<2>
+
+...
+DummyResponse helloResponse = dummyGrpcService.getDummy(dummyRequest); //<3>
+...
+----
+<1> Konfigurációs kulcs a csatlakozási paraméterekről, szerver host és port értéke
+<2> Stub amin definiálva van a service hívás
+<3> gRPC service hívás
+
+== Tesztek
+* 3 teszt gRPC kliens haszálat
+* egyszerű dummy kérés
+* többszálas teszt
+* minta hibakezelésre
+
+== REST API
+
+Automatikusan lekéréskor generált openapi végpont:
+http://localhost:8081/openapi
+(generált API leíró később lessz bekötve).
+
+== Konfiguráció
+
+Port beállítás: microprofile-config.properties -> coffee.grpc.server.port: 8199

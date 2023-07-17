@@ -1,0 +1,6 @@
+= Mongo service
+`sample/sample-mongo-service`
+
+A service célja a mongo adatbáziskezelés használatának bemutatása egyszerű írás/olvasással. A service a coff:ee mongo moduljára épül, erről bővebb információ itt található: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-mongodb
+
+A service használatához először futtatni kell a dockeres mongo adatbázist.

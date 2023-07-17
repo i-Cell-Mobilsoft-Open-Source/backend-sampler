@@ -1,0 +1,31 @@
+= Quarkus REST service
+`sample/sample-quarkus-rest-service`
+
+This is a simple basic REST implementation.
+It is based on the Quarkus technology.
+Some of the REST handler classes are adapted from the "coffee" project and can be found in a separate package: hu.icellmobilsoft.sampler.sample.quarkus.coffee
+They include some modifications related to logging. Due to a dependency issue with the Coffee logger, it is currently not usable.
+To achieve this, the coffee-cdi module needs to be cleaned up to make it completely independent of DeltaSpike.
+The module is built on the classic RESTEasy framework rather than Quarkus Reactive. In the classic RESTEasy scenario, Coffee's REST filters and interceptors can be used.
+
+
+Missing features:
+
+- JSON/XML validation (implementing LSResourceResolver or finding an alternative approach for XSD resolution).
+- Applying the Coffee logger (which is also not usable in this mode, requires CDI producers)
+- Handling localization (Deltaspike dependency).
+- Log size management (exploring how to incorporate LogSpecifier).
+- rest exception mapping (connecting the coffee DefaultGeneralExceptionMapper
+- Jandex index for generated DTOs.
+- default dashboars, grafana, jaeger
+
+Contains:
+
+- microprofile implementation
+- coffee based rest log (they are duplicated, and there are dependency conflicts with DeltaSpike.)
+- openapi
+- metrics
+- Arc CDI
+- classic resteasy
+- classic RESTEasy client with basic exception mapping based on the coffee-module-mp-restclient.
+- jvm docker image
