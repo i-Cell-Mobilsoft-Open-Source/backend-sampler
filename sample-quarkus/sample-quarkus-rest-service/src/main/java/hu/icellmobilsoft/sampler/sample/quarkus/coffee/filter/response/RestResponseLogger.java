@@ -86,11 +86,11 @@ public class RestResponseLogger implements WriterInterceptor {
             byte[] entityCopy = new byte[0];
             OutputStreamCopier osc = new OutputStreamCopier(originalStream);
             context.setOutputStream(osc);
-            // elegessuk a stream-et, kozben masoljuk a tartalmat
+            // closing the stream while copying its content
             try {
                 context.proceed();
             } finally {
-                // IS: kerdeses erdemes-e vissza irni az eredeti stream-et...
+                // IS: It is questionable whether it is worth writing back to the original stream...
                 context.setOutputStream(originalStream);
             }
             entityCopy = osc.getCopy();

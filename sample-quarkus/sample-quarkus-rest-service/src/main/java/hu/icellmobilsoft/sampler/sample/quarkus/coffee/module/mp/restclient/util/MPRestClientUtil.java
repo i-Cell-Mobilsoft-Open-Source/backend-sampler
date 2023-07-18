@@ -31,7 +31,7 @@ import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 
 /**
- * Microprofile REST Client hasznalatnal hasznot util gyujto
+ * Useful utility collection when using MicroProfile REST Client.
  *
  * @author imre.scheffer
  * @since 1.0.0
@@ -40,11 +40,11 @@ import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 public class MPRestClientUtil {
 
     /**
-     * Altalanos REST Client exception konverter framework szinture
+     * General REST Client exception converter at the framework level
      *
      * @param e
      *            exception
-     * @return BaseException leszarmazott
+     * @return BaseException derived
      */
     public static BaseException toBaseException(Exception e) {
         if (e instanceof WebApplicationException) {
@@ -57,11 +57,11 @@ public class MPRestClientUtil {
     }
 
     /**
-     * A lekezelt {@link ResponseExceptionMapper} altal nyujtott hibak ebben vannak nativan csomgolva
+     * The errors provided by the handled ResponseExceptionMapper are natively wrapped in this
      *
      * @param e
      *            WebApplicationException
-     * @return BaseException leszarmazott
+     * @return BaseException derived
      */
     public static BaseException toBaseException(WebApplicationException e) {
         if (e.getCause() instanceof BaseException) {
@@ -72,8 +72,8 @@ public class MPRestClientUtil {
     }
 
     /**
-     * A REST cliens hasznala alatt elofordulo hibak, peldaul {@link RestClientBuilder#readTimeout(long, java.util.concurrent.TimeUnit)} eltelte soran
-     * dobodik
+     * Errors that occur during the use of the REST client, such as when the readTimeout of RestClientBuilder expires, are thrown
+     * 
      *
      * @param e
      *            ProcessingException

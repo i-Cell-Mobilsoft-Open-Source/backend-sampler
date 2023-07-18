@@ -91,7 +91,7 @@ public class RedisPubSubSamplePostAction extends BaseAction {
         //publish and wait
         waitForPublish(emitterWithoutSubscriber.send(PubSubMessage.of(dummy.getSampleId(), Map.of(LogConstants.LOG_SESSION_ID, "customSID"))));
 
-        //sleep 1 mp, PostInListenernek addig le kell venni az üzenetet és application cache-be tárolja
+        //sleep 1 second, meanwhile the PostInListener must get the message and store it in application cache.
         sleep();
         SampleType sampleType = readDummy();
 
@@ -115,8 +115,8 @@ public class RedisPubSubSamplePostAction extends BaseAction {
 
     private void sleep() {
         try {
-            // fontos a szuneteltetes hogy peldaul a connection szakadasa ne floodolja a logot
-            // es ne menjen felesleges korlatlan vegtelen probalkosba
+            // It is important to pause so that, for example, the disconnection of the connection does not flood the log
+            // And don't engage in unnecessary unlimited infinite attempts
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException ex) {
             handleInterrupt(ex);

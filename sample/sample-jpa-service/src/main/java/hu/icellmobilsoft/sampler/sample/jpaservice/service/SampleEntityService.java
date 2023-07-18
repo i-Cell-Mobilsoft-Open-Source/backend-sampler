@@ -45,7 +45,7 @@ public class SampleEntityService extends BaseService<SampleEntity> {
     private SampleEntityRepository sampleEntityRepository;
 
     // /**
-    // * Csomagszámhoz tartozó elemek
+    // * Elements associated with package number
     // *
     // * @param packageNumber
     // * @return

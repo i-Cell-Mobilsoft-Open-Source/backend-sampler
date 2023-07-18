@@ -75,7 +75,7 @@ public class RedisSamplePostAction extends BaseAction {
         SampleType dummy = createDummy();
         String redisKey = RandomUtil.generateId();
 
-        // dummy mentés redisbe
+        // dummy save into redis
         saveDummy(redisKey, dummy);
 
         SampleType sampleType = readDummy(redisKey);
@@ -97,7 +97,7 @@ public class RedisSamplePostAction extends BaseAction {
     }
 
     private void saveDummy(String redisKey, SampleType dummy) throws BaseException {
-        // lehetne setex is, de így tesztelve van a több művelet azonos connection-nel
+        // It could be setex as well, but this way multiple operations are tested with the same connection.
         try (var con = redisManager.initConnection()) {
             redisManager.run(Jedis::set, "set", redisKey, JsonUtil.toJson(dummy));
             redisManager.run(Jedis::expire, "expire", redisKey, EXPIRE_MINUTES);

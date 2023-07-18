@@ -66,11 +66,11 @@ public class DefaultBaseExceptionMapper implements ExceptionMapper<BaseException
     }
 
     /**
-     * Kivétel kezelése
+     * Exception handling
      *
      * @param e
-     *            a kivétel
-     * @return összeállított válasz
+     *            exception
+     * @return assembled response
      */
     protected Response handleException(BaseException e) {
         if (e instanceof AccessDeniedException) {
@@ -94,30 +94,30 @@ public class DefaultBaseExceptionMapper implements ExceptionMapper<BaseException
     }
 
     /**
-     * Válasz létrehozása
+     * Creating response
      *
      * @param e
-     *            a kivétel
+     *            the exception
      * @param status
-     *            a válasznak átadni kívánt {@link Response.Status}
+     *            the desired {@link Response.Status} to be passed in the response
      * @param dto
-     *            {@link BaseExceptionResultType} leszármazott, mely átadásra kerül a válaszban
-     * @return összeállított válasz
+     *            {@link BaseExceptionResultType} derived, included in the response
+     * @return assembled response
      */
     protected Response createResponse(BaseException e, Response.Status status, BaseExceptionResultType dto) {
         return createResponse(e, status.getStatusCode(), dto);
     }
 
     /**
-     * Válasz létrehozása
+     * Creating response
      *
      * @param e
-     *            a kivétel
+     *            the exception
      * @param statusCode
-     *            a válasznak átadni kívánt státusz kódja (pl.: 418)
+     *            the desired status code to be passed in the response (pl.: 418)
      * @param dto
-     *            {@link BaseExceptionResultType} leszármazott, mely átadásra kerül a válaszban
-     * @return összeállított válasz
+     *            {@link BaseExceptionResultType} derived, included in the response
+     * @return assembled response
      */
     protected Response createResponse(BaseException e, int statusCode, BaseExceptionResultType dto) {
         exceptionMessageTranslator.addCommonInfo(dto, e, e.getFaultTypeEnum());

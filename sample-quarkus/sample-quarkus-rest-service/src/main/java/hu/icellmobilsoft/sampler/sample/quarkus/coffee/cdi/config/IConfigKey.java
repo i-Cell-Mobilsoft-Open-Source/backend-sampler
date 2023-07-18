@@ -22,7 +22,7 @@ package hu.icellmobilsoft.sampler.sample.quarkus.coffee.cdi.config;
 import hu.icellmobilsoft.coffee.module.configdoc.ConfigDoc;
 
 /**
- * Coffee szintű konfigurációs kulcsok gyűjtője
+ * Collector of coffee-level configuration keys.
  *
  * @author imre.scheffer
  * @since 1.0.0
@@ -31,24 +31,24 @@ import hu.icellmobilsoft.coffee.module.configdoc.ConfigDoc;
 public interface IConfigKey {
 
     /**
-     * Coffee konfigurációk prefix-e
+     * Coffee configuration prefixes
      */
     @ConfigDoc(exclude = true)
     String COFFEE_CONFIG_PREFIX = "coffee.config";
 
     /**
-     * Nyelvesítés szótárak elérési útvonalak (java class package formátum).<br>
-     * Pl. "i18n.messages,i18n.validators,i18n.enums" - space-k nelkul
+     * Localization dictionaries access paths (in Java class package format).<br>
+     * E.g., "i18n.messages,i18n.validators,i18n.enums" - without spaces
      */
     String RESOURCE_BUNDLES = COFFEE_CONFIG_PREFIX + ".resource.bundles";
 
     /**
-     * XML Catalog fájl elérési helye. Pl. "xsd/hu/icellmobilsoft/project/dto/super.catalog.xml"
+     * Location of the XML Catalog file. E.g., "xsd/hu/icellmobilsoft/project/dto/super.catalog.xml"
      */
     String CATALOG_XML_PATH = COFFEE_CONFIG_PREFIX + ".xml.catalog.path";
 
     /**
-     * Reguláris kifejezés a request logolásnál, etcd lekérdezésnél maszkolandó kulcsokra. Pl. "[\\w\\s]*?secret[\\w\\s]*?",
+     * Regular expression used for request logging and masking keys during etcd queries. E.g.. Pl. "[\\w\\s]*?secret[\\w\\s]*?",
      * "[\\w\\s]*?pass[\\w\\s]*?"
      */
     String LOG_SENSITIVE_KEY_PATTERN = COFFEE_CONFIG_PREFIX + ".log.sensitive.key.pattern";

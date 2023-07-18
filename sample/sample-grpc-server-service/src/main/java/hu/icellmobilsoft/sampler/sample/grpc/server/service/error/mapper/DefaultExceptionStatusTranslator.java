@@ -52,7 +52,7 @@ public class DefaultExceptionStatusTranslator implements IExceptionStatusTransla
         }
         Enum<?> faultTypeToReturn = faultType != null ? faultType : CoffeeFaultType.OPERATION_FAILED;
         ErrorInfo.Builder errorInfoBuilder = ErrorInfo.newBuilder() //
-                // TODO aktív request scope + ProjectHeader produce
+                // TODO active request scope + ProjectHeader produce
                 // .setReason(localizedMessage.message(faultTypeToReturn)) //
                 .setReason(faultTypeToReturn.name())//
                 .setDomain("sample-service");

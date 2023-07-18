@@ -95,10 +95,10 @@ public class RestRequestLogger implements ContainerRequestFilter {
     }
 
     /**
-     * HTTP headerben szereplo session kulcs neve. Ezt a kulcsot fogja a logger keresni a http headerekből, aminek az értékét fel használja a
+     * Name of the session key present in the HTTP header. The logger will search for this key in the HTTP headers and use its value in the
      * <code>MDC.put(LogConstants.LOG_SESSION_ID, ertek)</code> részben.<br>
      * <br>
-     * Folyamat azonosítás, Graylog loggolásban van nagy értelme
+     * It is meaningful for process identification and logging in Graylog
      * 
      * @return session key
      */

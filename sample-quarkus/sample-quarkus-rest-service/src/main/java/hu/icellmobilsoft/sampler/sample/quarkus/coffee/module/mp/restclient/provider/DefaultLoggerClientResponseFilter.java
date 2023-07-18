@@ -42,9 +42,9 @@ import hu.icellmobilsoft.sampler.sample.quarkus.coffee.filter.RequestResponseLog
 import hu.icellmobilsoft.sampler.sample.quarkus.coffee.module.mp.restclient.RestClientPriority;
 
 /**
- * Default REST client response log filter. A response filterek kozul ennek kell lennie az elsonek, hogy erintetlen adatokat tudjunk loggolni.<br>
+ * Default REST client response log filter. This should be the first among the response filters in order to log untouched data.<br>
  * <br>
- * A priority mindenkeppen a io.smallrye.restclient.ExceptionMapping bekotesnel magasabb kell hogy legyen, jelenleg "1" az erteke
+ * The priority should be higher than the io.smallrye.restclient.ExceptionMapping binding, currently set to "1"
  *
  * @author imre.scheffer
  * @since 1.0.0
@@ -151,7 +151,7 @@ public class DefaultLoggerClientResponseFilter implements ClientResponseFilter {
             }
 
             byte[] responseEntity = IOUtils.toByteArray(in);
-            // vissza irjuk a kiolvasott streamet
+            // We write back the read stream
             responseContext.setEntityStream(new ByteArrayInputStream(responseEntity));
 
             return requestResponseLogger.printEntity(responseEntity, maxResponseEntityLogSize, RequestResponseLogger.RESPONSE_PREFIX);
