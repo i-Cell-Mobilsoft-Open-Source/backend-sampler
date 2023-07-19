@@ -1,7 +1,7 @@
 # $ {jbossHomeName}/bin/jboss-cli.sh --connect --file=configure-logging.cli
-# minimum beallítások
-# - icellmobilsoft legyen logolva trace-en
-# - SID legalább legyen a logban
+# minimum settings
+# - icellmobilsoft must be loggend on trace 
+# - SID should at least be in log
 
 set huIcellmobilsoftLoggerLoglevel=\${env.LOGGING_HU_ICELLMOBILSOFT_LOGGER_LOGLEVEL,logging.hu.icellmobilsoft.logger.loglevel:ALL}
 set rootLoggerLoglevel=\${env.LOGGING_ROOT_LOGGER_LOGLEVEL,logging.root.logger.loglevel:INFO}
@@ -11,14 +11,14 @@ set rootLoggerLoglevel=\${env.LOGGING_ROOT_LOGGER_LOGLEVEL,logging.root.logger.l
 /subsystem=logging/pattern-formatter=PATTERN:write-attribute(name=pattern,value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [thread:%t] [%c{10}] [sid:%X{extSessionId}] [k8s_namespace:${env.LOGGING_K8S_NAMESPACE:}] - %s%E%n")
 /subsystem=logging/pattern-formatter=COLOR-PATTERN:write-attribute(name=pattern,value="%K{level}%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [thread:%t] [%c{10}] [sid:%X{extSessionId}] [k8s_namespace:${env.LOGGING_K8S_NAMESPACE:}] - %s%E%n")
 
-# a fejlesztesnel a konzolra mindent loggoljunk (root logger szerint)
+#at development we should log everything to console (according to root logger)
 /subsystem=logging/console-handler=CONSOLE:undefine-attribute(name=level)
 
 
 # root logging level
 /subsystem=logging/root-logger=ROOT:write-attribute(name=level,value=$rootLoggerLoglevel)
 
-# sajat csomagjainkon mindent loggolunk (legalabb a fejlesztoi kornyezeten)
+#on our packages log everything  (at least on the development environment)
 /subsystem=logging/logger=hu.icell:add(level=$huIcellmobilsoftLoggerLoglevel)
 /subsystem=logging/logger=hu.icellmobilsoft:add(level=$huIcellmobilsoftLoggerLoglevel)
 
