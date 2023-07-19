@@ -4,7 +4,7 @@ The page collects experiences related to the migration to Jakarta EE 10.
 
 == NEW
 
-The `bom-wf-27 alprojekt` has been created, which tracks the components of WildFly version 27.0.1.Final.
+The `bom-wf-27 subproject` has been created, which tracks the components of WildFly version 27.0.1.Final.
 
 JPA modelgen has been simplified,
 now only the org.hibernate:hibernate-jpamodelgen dependency is sufficient,
@@ -86,7 +86,6 @@ which is works but is not a permanent solution.
 
 [source,xml]
 ----
-include::../dto/pom.xml[lines=34..42]
 include::../../dto/pom.xml[lines=34..42]
 ----
 
