@@ -21,9 +21,9 @@ proto file doc: https://developers.google.com/protocol-buffers/docs/proto3
 
 generated content:
 
-* api-grpc-proto-gen/target/generated-sources/src -> generalt *.proto
+* api-grpc-proto-gen/target/generated-sources/src -> generated *.proto
 * api-grpc-proto-gen/target/proto-external -> google, coffee *.proto
-* api-grpc-stub-gen/target/generated-sources -> *.java stub-ok
+* api-grpc-stub-gen/target/generated-sources -> *.java stubs
 
 === XSD to proto
 The "common-grpc-api" module now includes an example of creating protocol buffers from an XSD.
