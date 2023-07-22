@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="manage-wildfly">
+
+    <import file="${basedir}/../../etc/ant/setenv.xml" as="setenv"/>
+
+	<target name="enable-jdbc-spy" description="Enable jdbc-spy and logging in wildfly">
+		<echo>docker exec -i bs-sample-service ./bin/jboss-cli.sh --connect --command... </echo>
+		<exec executable="docker" taskname="jdbc-spy-log" failonerror="false">
+			<arg value="exec" />
+			<arg value="-i" />
+			<arg value="bs-sample-service" />
+			<arg value="./wildfly/bin/jboss-cli.sh" />
+			<arg value="--connect" />
+			<arg value="--command=/subsystem=logging/logger=jboss.jdbc.spy/:add(level=TRACE)" />
+		</exec>
+		<exec executable="docker" taskname="jdbc-spy-ds" failonerror="false">
+			<arg value="exec" />
+			<arg value="-i" />
+			<arg value="bs-sample-service" />
+			<arg value="./wildfly/bin/jboss-cli.sh" />
+			<arg value="--connect" />
+			<arg value="--command=/subsystem=datasources/data-source=ExampleDS/:write-attribute(name=spy,value=true)" />
+		</exec>
+		<exec executable="docker" taskname="reload" failonerror="false">
+			<arg value="exec" />
+			<arg value="-i" />
+			<arg value="bs-sample-service" />
+			<arg value="./wildfly/bin/jboss-cli.sh" />
+			<arg value="--connect" />
+			<arg value="--command=reload" />
+		</exec>
+		<antcall target="setenv.print-properties" />
+	</target>
+
+</project>
