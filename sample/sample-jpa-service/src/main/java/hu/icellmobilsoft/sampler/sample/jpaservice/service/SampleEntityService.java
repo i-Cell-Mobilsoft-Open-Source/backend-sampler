@@ -55,6 +55,7 @@ public class SampleEntityService extends BaseService<SampleEntity> {
      *            sample status
      * @return entity
      * @throws BaseException
+     *             on error
      */
     public List<SampleEntity> findAllByStatus(SampleStatus status) throws BaseException {
         return wrapListValidated(sampleEntityRepository::findAllByStatus, status, "findAllByStatus", "status");

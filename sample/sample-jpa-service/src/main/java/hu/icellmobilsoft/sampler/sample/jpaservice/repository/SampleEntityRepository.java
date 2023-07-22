@@ -62,6 +62,13 @@ public interface SampleEntityRepository extends EntityRepository<SampleEntity, S
      */
     String DB_DRIVER = "db_driver='h2' ";
 
+    /**
+     * selecting entity by status
+     * 
+     * @param status
+     *            to select
+     * @return list of sample entities
+     */
     @Query(value = "SELECT s FROM SampleEntity s WHERE s.status = ?1", hints = @QueryHint(name = HibernateHints.HINT_COMMENT,
             value = APPLICATION + CONTROLLER + ACTION + "route='findAllByStatus', " + FRAMEWORK + DB_DRIVER))
     // @Query(value = "SELECT s FROM SampleEntity s WHERE s.status = ?1")
