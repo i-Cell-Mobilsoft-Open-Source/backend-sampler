@@ -19,11 +19,18 @@
  */
 package hu.icellmobilsoft.sampler.sample.jpaservice.repository;
 
+import java.util.List;
+
+import jakarta.persistence.QueryHint;
+
 import org.apache.deltaspike.data.api.EntityRepository;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
+import org.hibernate.jpa.HibernateHints;
 
 import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
+import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
 
 /**
  * SQL select collector for {@link SampleEntity} table.
@@ -33,5 +40,38 @@ import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
  */
 @Repository
 public interface SampleEntityRepository extends EntityRepository<SampleEntity, String>, CriteriaSupport<SampleEntity> {
+
+    /**
+     * hint for application
+     */
+    String APPLICATION = "application='sample-jpa-service', ";
+    /**
+     * hint for CONTROLLER
+     */
+    String CONTROLLER = "controller='', ";
+    /**
+     * hint for ACTION
+     */
+    String ACTION = "action=SampleEntityRepository, ";
+    /**
+     * hint for FRAMEWORK
+     */
+    String FRAMEWORK = "framework='coffee', ";
+    /**
+     * hint for DB_DRIVER
+     */
+    String DB_DRIVER = "db_driver='h2' ";
+
+    /**
+     * selecting entity by status
+     * 
+     * @param status
+     *            to select
+     * @return list of sample entities
+     */
+    @Query(value = "SELECT s FROM SampleEntity s WHERE s.status = ?1", hints = @QueryHint(name = HibernateHints.HINT_COMMENT,
+            value = APPLICATION + CONTROLLER + ACTION + "route='findAllByStatus', " + FRAMEWORK + DB_DRIVER))
+    // @Query(value = "SELECT s FROM SampleEntity s WHERE s.status = ?1")
+    List<SampleEntity> findAllByStatus(SampleStatus status);
 
 }

@@ -19,13 +19,17 @@
  */
 package hu.icellmobilsoft.sampler.sample.jpaservice.service;
 
+import java.util.List;
+
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
+import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.jpa.service.BaseService;
 import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
+import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
 import hu.icellmobilsoft.sampler.sample.jpaservice.repository.SampleEntityRepository;
 
 /**
@@ -44,14 +48,16 @@ public class SampleEntityService extends BaseService<SampleEntity> {
     @Inject
     private SampleEntityRepository sampleEntityRepository;
 
-    // /**
-    // * Elements associated with package number
-    // *
-    // * @param packageNumber
-    // * @return
-    // * @throws BaseException
-    // */
-    // public List<SampleEntity> findByPackageNumber(long packageNumber) throws BaseException {
-    // return wrapListValidated(sampleEntityRepository::findByPackageNumber, packageNumber, "findByPackageNumber", "packageNumber");
-    // }
+    /**
+     * Elements associated with status
+     *
+     * @param status
+     *            sample status
+     * @return entity
+     * @throws BaseException
+     *             on error
+     */
+    public List<SampleEntity> findAllByStatus(SampleStatus status) throws BaseException {
+        return wrapListValidated(sampleEntityRepository::findAllByStatus, status, "findAllByStatus", "status");
+    }
 }

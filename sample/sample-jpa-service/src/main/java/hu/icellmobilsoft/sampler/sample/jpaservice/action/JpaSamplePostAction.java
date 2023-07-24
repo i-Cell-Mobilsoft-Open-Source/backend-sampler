@@ -30,6 +30,8 @@ import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Inject;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
@@ -102,6 +104,12 @@ public class JpaSamplePostAction extends BaseAction {
         // modify entity
         created.setStatus(SampleStatus.DONE);
         created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
+
+        // use repository
+        List<SampleEntity> samples = sampleEntityService.findAllByStatus(SampleStatus.DONE);
+        if (CollectionUtils.isEmpty(samples)) {
+            throw new TechnicalException("Unexpected data integrity error, cant find sample entity with DONE status!");
+        }
 
         SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
