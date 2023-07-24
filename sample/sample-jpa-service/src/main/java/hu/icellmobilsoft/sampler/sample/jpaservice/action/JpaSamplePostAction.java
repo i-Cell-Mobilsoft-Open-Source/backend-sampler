@@ -108,7 +108,7 @@ public class JpaSamplePostAction extends BaseAction {
         // use repository
         List<SampleEntity> samples = sampleEntityService.findAllByStatus(SampleStatus.DONE);
         if (CollectionUtils.isEmpty(samples)) {
-            throw new TechnicalException("Unexpected data integrity error, cant find sample entity witj DONE status!");
+            throw new TechnicalException("Unexpected data integrity error, cant find sample entity with DONE status!");
         }
 
         SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
