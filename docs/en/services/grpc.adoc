@@ -42,9 +42,9 @@ These are the available metrics: http://localhost:9991/metrics/application
 * gRPC server answered response
 * gRPC server API process duration
 
-* gRPC kliens sent request
-* gRPC kliens answered response
-* gRPC kliens API process duration
+* gRPC client sent request
+* gRPC client answered response
+* gRPC client API process duration
 
 The span data is forwarded to Jaeger, and the trace flow is shared among gRPC, REST, and Redis Stream Consumer components.
 
@@ -91,7 +91,7 @@ public class DummyServiceImpl implements DummyService { //<1>
 <2> ApplicationScope is required.
 <3> If absolutely necessary, you can use a request-scoped bean. In such cases, you need to annotate the relevant method with @ActivateRequestContext to activate the request context.
 
-.Kliens
+.Client
 The Coffee CDI extension is used for handling gRPC clients. The extension is activated by wiring the necessary dependencies.
 
 [source,xml]
