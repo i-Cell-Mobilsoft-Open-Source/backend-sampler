@@ -10,4 +10,4 @@ The technologies on which it is based
 .Environment
 - Docker
 - Docker compose
-- Ant (opcionális)
+- Ant (optional)
