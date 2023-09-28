@@ -1,0 +1,22 @@
+mp:
+  messaging:
+    connector:
+      smallrye-kafka:
+        bootstrap:
+          servers: bs-kafka:9092
+    outgoing:
+      to-kafka:
+        connector: smallrye-kafka
+        topic: testing
+        key:
+          serializer: org.apache.kafka.common.serialization.IntegerSerializer
+        value:
+          serializer: org.apache.kafka.common.serialization.StringSerializer
+    incoming:
+      from-kafka:
+        connector: smallrye-kafka
+        topic: testing
+        value:
+          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        key:
+          deserializer: org.apache.kafka.common.serialization.IntegerDeserializer

@@ -10,11 +10,11 @@
   <packaging>pom</packaging>
 
     <properties>
-        <version.hu.icellmobilsoft.coffee>1.13.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
+        <version.hu.icellmobilsoft.coffee>1.13.0</version.hu.icellmobilsoft.coffee>
         <version.apache.deltaspike>1.9.6</version.apache.deltaspike>
         <version.org.eclipse.microprofile>4.1</version.org.eclipse.microprofile>
         <version.hu.icellmobilsoft.roaster>0.8.0</version.hu.icellmobilsoft.roaster>
-
+        <version.io.smallrye.config.source.yaml>3.0.0</version.io.smallrye.config.source.yaml>
         <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
     </properties>
 
@@ -110,6 +110,11 @@
                         <artifactId>jaxb-runtime</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>io.smallrye.config</groupId>
+                <artifactId>smallrye-config-source-yaml</artifactId>
+                <version>${version.io.smallrye.config.source.yaml}</version>
             </dependency>
 
             <!--Test dependecies -->

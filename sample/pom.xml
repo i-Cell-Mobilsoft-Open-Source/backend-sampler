@@ -16,6 +16,7 @@
         <module>sample-mongo-service</module>
         <module>sample-redis-service</module>
         <module>sample-redispubsub-service</module>
+        <module>sample-kafka-service</module>
     </modules>
 
     <dependencyManagement>
