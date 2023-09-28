@@ -1,0 +1,6 @@
+= Redis service
+`sample/sample-redis-service`
+
+The purpose of the service is to demonstrate the usage of redis for simple read/write operations. The service is built on the coff:ee redis module. More detailed information about this module can be found here: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-redis
+
+To use the service, you need to first run the Docker redis database. for example.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`

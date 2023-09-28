@@ -1,0 +1,61 @@
+= Redis pub-sub service
+`sample/sample-redispubsub-service`
+
+The purpose of the service is to demonstrate the usage of Redis Pub/Sub for handling simple publish/subscribe patterns.
+The service is built on the coff:ee redispubsub module, and you can find more detailed information about it here: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-redispubsub
+
+Using the service.
+
+. need to run the Dockerized Redis.
++
+e.g.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
+. docker-compose.local.wildfly.yml must executed by pub-sub ready widlfly modules
+* you can achieve this in the compose file by setting the SERVICE_CLI_DIR build arg to `wildfly/cli/mp-reactive`
++
+[source,yaml]
+----
+services:
+  sample-service:
+    container_name: bs-sample-service
+    build:
+      context: .
+      dockerfile: develop.dockerfile
+      args:
+        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:26.1.1.Final'
+#        running a custom CLI script if it is required for the deployment.
+        SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
+----
+
+== Endpoints
+
+=== GET `/rest/sample`
+
+The response returns the last read value from the `sample-get` redis channel in the `columnA` field.
+(The `GetListener` reads and stores the value, and the REST API retrieves the value from the `ApplicationContainer`).
+
+You can send messages to the channel using redis-cli, e.g.:
+
+[source, shell]
+----
+docker exec -it bs-sample-redis redis-cli
+127.0.0.1:6379> PUBLISH sample-get test-dummy
+----
+
+
+=== POST `/rest/sample`
+
+. sending a message to the `sample-post` and `no-sub` redis channels.
+. the `PostInListener` reads from the `sample-post` channel, caches the received message in the `ApplicationContainer`
+and forwards (again) the message to the `no-sub` redis channel.
+. the REST waits for 1 sec and then reads the message from the `ApplicationContainer`- If the message is found, it retrieves it; otherwise, it throws a BONotFound exception
+
+If you want to subscribe to the `no-sub` redis channel using redis-cli, you can do so.
+[source, shell]
+----
+docker exec -it bs-sample-redis redis-cli
+127.0.0.1:6379> SUBSCRIBE no-sub
+----
+
+
+
+

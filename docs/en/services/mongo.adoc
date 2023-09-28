@@ -1,0 +1,6 @@
+= Mongo service
+`sample/sample-mongo-service`
+
+The purpose of the service is to demonstrate the usage of MongoDB for simple read/write operations. The service is built on the coff:ee MongoDB module. More detailed information about this module can be found here: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-mongodb
+
+To use the service, you need to first run the Docker MongoDB database.

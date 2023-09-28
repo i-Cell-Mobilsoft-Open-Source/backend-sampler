@@ -1,0 +1,111 @@
+= V2 migration experiences
+
+The page collects experiences related to the migration to Jakarta EE 10.
+
+== NEW
+
+The `bom-wf-27 subproject` has been created, which tracks the components of WildFly version 27.0.1.Final.
+
+JPA modelgen has been simplified,
+now only the org.hibernate:hibernate-jpamodelgen dependency is sufficient,
+no additional compiler configuration is required.
+
+RequestResponseMetricsProvider - can the context annotation be replaced?
+
+.persistence.xml
+[source,xml]
+----
+...
+<!-- hibernate in v6 is no longer supported
+<property name="hibernate.id.new_generator_mappings" value="false" />
+-->
+...
+----
+The `hibernate.id.new_generator_mappings` 
+parameter of persistance.xml has been removed in hibernate version 6,
+an alternative solution needs to be found. 
+
+
+.beans.xml bean-discovery-mode="all" -> "annotated"
+In multiple implementing projects, the beans.xml file was configured with bean-discovery-mode="all".
+Due to future features, it is necessary to transition from the current configuration of bean-discovery-mode="all" to the "annotated" (default) value.
+This change might require adding scope annotations to Coffee classes in certain places.
+For example:
+
+* hu.icellmobilsoft.coffee.module.mongodb.service.MongoService
+* hu.icellmobilsoft.coffee.rest.validation.catalog.PublicCatalogResolver
+* hu.icellmobilsoft.coffee.rest.validation.xml.error.XsdValidationErrorCollector
+* hu.icellmobilsoft.coffee.rest.validation.xml.utils.XsdHelper
+* ...
+
+== BUG
+
+.SCD "x-schema::tns" didnt match any schema component
+[source,java]
+----
+[ERROR] Error while parsing schema(s).Location [ jar:file:/home/ss/.m2/repository/hu/icellmobilsoft/coffee/coffee-dto-gen/2.0.0-SNAPSHOT/coffee-dto-gen-2.0.0-SNAPSHOT.jar!/META-INF/sun-jaxb.episode{201,105}].
+com.sun.istack.SAXParseException2: SCD "x-schema::tns" didnt match any schema component
+    at com.sun.tools.xjc.reader.internalizer.SCDBasedBindingSet.reportError (SCDBasedBindingSet.java:227)
+    at com.sun.tools.xjc.reader.internalizer.SCDBasedBindingSet.reportError (SCDBasedBindingSet.java:220)
+----
+
+This error is likely because not all items from
+`jar:file:/home/ss/.m2/repository/hu/icellmobilsoft/coffee/coffee-dto-gen/2.0.0-SNAPSHOT/coffee-dto-gen-2.0.0-SNAPSHOT.jar!/META-INF/sun-jaxb.episode{201,105}`
+file are being used in this project...
+It is a weird issue, as a workaround for now, we can try integrating it somewhere in the code
+
+."x-schema::tns" workaround
+[source,xml]
+----
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://dto.sampler.icellmobilsoft.hu/sample/rest/post"
+    xmlns:coffeeCommon="http://common.dto.coffee.icellmobilsoft.hu/common" xmlns:coffeeCommonservice="http://common.dto.coffee.icellmobilsoft.hu/commonservice"
+    targetNamespace="http://dto.sampler.icellmobilsoft.hu/sample/rest/post" elementFormDefault="qualified" attributeFormDefault="unqualified" >
+
+    <xsd:import namespace="http://common.dto.coffee.icellmobilsoft.hu/common" />
+    <xsd:import namespace="http://common.dto.coffee.icellmobilsoft.hu/commonservice" />
+    <xsd:import namespace="http://common.dto.coffee.icellmobilsoft.hu/commonsecurity" /> <1>
+...
+----
+<1> You need to include this import somewhere in your code (and also add it on to the catalog),
+to resolve the "x-schema::tns" error that occurs during generation.
+
+== WARNING
+
+=== Dependency
+The dependencies of WF have changed, and overridden many APIs with their own implementations.
+It is necessary to "pin" these dependencies to fixed versions at the bom-jee dependency level
+
+
+=== sample-quarkus
+After the Jakarta EE10 quarkus release, this modul can be updated,
+until then, it is disabled cia the pom.xml configuration.
+
+=== DTO generation issue
+Currently, there is no jaxb 4 generator available, only forked version of jaxb 3 is available,
+which is works but is not a permanent solution.
+
+[source,xml]
+----
+include::../../dto/pom.xml[lines=34..42]
+----
+
+=== ProjectStage
+Removing Deltaspike has an impact on the `org.apache.deltaspike.core.api.projectstage.ProjectStage` class,
+In Coffee, there is an alternative solution available: `hu.icellmobilsoft.coffee.rest.projectstage.ProjectStage`.
+
+=== @Repository annotation
+Currently, the coffee-deltaspike-data module does not support the automatic creation of beans
+from an interface class annotated with `@Repository`.
+Therefore, it is necessary to manually create a default bean,
+as demonstrated in the case of `SampleEntityRepository` -> `DefaultSampleEntityRepository`
+
+
+=== BatchService
+Since the `hu.icellmobilsoft.coffee.jpa.sql.batch.BatchService`
+is temporarily disabled,
+the `hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService` follows.
+
+
+
+
+

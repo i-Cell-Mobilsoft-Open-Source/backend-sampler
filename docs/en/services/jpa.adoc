@@ -1,0 +1,7 @@
+= JPA service
+`sample/sample-jpa-service`
+
+The purpose of the service is to utilize JPA.
+
+Since it is designed to be universal, it uses the H2 database. 
+However, the management of each entity is handled as if it were a regular database underneath.

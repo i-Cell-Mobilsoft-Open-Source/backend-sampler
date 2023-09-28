@@ -1,0 +1,13 @@
+= Technological bases
+The technologies on which it is based 
+
+.War
+- Java 11
+- Maven 3.3.0+
+- Jakarta EE 10
+- Wildfly 27.0.0.Final
+
+.Environment
+- Docker
+- Docker compose
+- Ant (optional)
