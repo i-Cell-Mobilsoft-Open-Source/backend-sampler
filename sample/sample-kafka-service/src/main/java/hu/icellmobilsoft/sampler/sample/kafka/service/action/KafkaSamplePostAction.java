@@ -34,7 +34,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
  * <a href="https://smallrye.io/smallrye-reactive-messaging/4.0.0/kafka/kafka/">smallrye.io/smallrye-reactive-messaging</a>
  * 
  * @author Imre Scheffer
- * @since 1.0.0
+ * @since 2.0.0
  */
 @Model
 public class KafkaSamplePostAction extends BaseAction {

@@ -33,7 +33,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
  * Service for Kafka read
  * 
  * @author Imre Scheffer
- * @since 1.0.0
+ * @since 2.0.0
  */
 @Model
 public class KafkaSampleGetAction extends BaseAction {
