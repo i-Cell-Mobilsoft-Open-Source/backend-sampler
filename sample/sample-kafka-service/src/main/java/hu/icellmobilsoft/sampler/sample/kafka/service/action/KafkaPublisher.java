@@ -52,6 +52,9 @@ public class KafkaPublisher extends BaseAction {
     /**
      * Kafka Stream producer
      * 
+     * We can use the {@code @Outgoing} annotation to automatically produce messages to Kafka. Keep in mind that if multiple upstreams are needed,
+     * mp.messaging.outgoing.to-kafka.merge=true must be set; otherwise, a deployment error will occur."
+     * 
      * @return message payload to send
      */
     // @Outgoing("to-kafka")

@@ -4,7 +4,7 @@
    xsi:schemaLocation="
       https://jakarta.ee/xml/ns/jakartaee 
       https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd">
-	<!-- Ez a file a unit testek miatt szükséges, a weld defualt a src/main/resource
+	<!-- Ez a file a unit testek miatt szükséges, a weld default a src/main/resource
 		alatt keresi, auto scanning-hez szükséges -->
 
 </beans>
