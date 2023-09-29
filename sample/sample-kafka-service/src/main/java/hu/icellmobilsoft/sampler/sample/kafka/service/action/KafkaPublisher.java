@@ -54,6 +54,7 @@ public class KafkaPublisher extends BaseAction {
      * 
      * @return message payload to send
      */
+    // Ebben a formaban vegtelen uzenet keletkezik
     // @Outgoing("to-kafka")
     public String toKafkaOutgoing() {
         String message = "sample";
