@@ -18,6 +18,9 @@
         <version.commons-io>2.11.0</version.commons-io>
         <version.org.jboss.resteasy>4.7.6.Final</version.org.jboss.resteasy>
         <version.org.hibernate.hibernate-core>5.3.24.Final</version.org.hibernate.hibernate-core>
+        <version.org.eclipse.microprofile.reactive.messaging>2.0.1</version.org.eclipse.microprofile.reactive.messaging>
+        <version.org.eclipse.microprofile.reactive-streams-operators>2.0</version.org.eclipse.microprofile.reactive-streams-operators>
+        <version.org.apache.kafka>3.2.2</version.org.apache.kafka>
 
         <!-- from wildfly-microprofile import-->
         <version.org.eclipse.microprofile.config>2.0</version.org.eclipse.microprofile.config>
@@ -29,6 +32,8 @@
 
         <!-- from org.wildfly.bom:wildfly-jakartaee8-with-tools -->
         <version.com.h2database>1.4.197</version.com.h2database>
+        <version.io.smallrye.config>3.0.0</version.io.smallrye.config>
+        <version.io.smallrye.common.smallrye-common-constraint>2.0.0</version.io.smallrye.common.smallrye-common-constraint>
 
         <!-- benne van, de nem a bom-ban -->
         <version.commons-lang3>3.11</version.commons-lang3>
@@ -36,6 +41,7 @@
         <version.commons-collections>3.2.2</version.commons-collections>
         <version.com.google.guava.guava>31.1-jre</version.com.google.guava.guava>
         <version.com.google.code.gson>2.8.9</version.com.google.code.gson>
+        <version.org.yaml.snakeyaml>1.33</version.org.yaml.snakeyaml>
     </properties>
 
     <dependencyManagement>
@@ -145,7 +151,24 @@
                 <scope>provided</scope>
                 <version>${version.org.eclipse.microprofile.metrics}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.eclipse.microprofile.reactive.messaging</groupId>
+                <artifactId>microprofile-reactive-messaging-api</artifactId>
+                <scope>provided</scope>
+                <version>${version.org.eclipse.microprofile.reactive.messaging}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.microprofile.reactive-streams-operators</groupId>
+                <artifactId>microprofile-reactive-streams-operators-api</artifactId>
+                <scope>provided</scope>
+                <version>${version.org.eclipse.microprofile.reactive-streams-operators}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <scope>provided</scope>
+                <version>${version.org.apache.kafka}</version>
+            </dependency>
             <!-- from wildfly-jakartaee8-with-tools -->
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -183,6 +206,30 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${version.com.google.code.gson}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.smallrye.config</groupId>
+                <artifactId>smallrye-config</artifactId>
+                <version>${version.io.smallrye.config}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.smallrye.config</groupId>
+                <artifactId>smallrye-config-common</artifactId>
+                <version>${version.io.smallrye.config}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.smallrye.common</groupId>
+                <artifactId>smallrye-common-constraint</artifactId>
+                <version>${version.io.smallrye.common.smallrye-common-constraint}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${version.org.yaml.snakeyaml}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>

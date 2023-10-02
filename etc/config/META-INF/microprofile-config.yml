@@ -1,0 +1,19 @@
+coffee:
+  mongodb:
+    sample:
+      database: sample_db
+      uri: mongodb://sample_user:sample_pass@sample-mongodb:27017/sample_db?ssl=false
+  redis:
+    sample:
+      host: bs-sample-redis
+      port: 6379
+      database: 0
+      pool:
+        default:
+          maxidle: 32
+          maxtotal: 128
+sampler:
+  service:
+    sample: 
+      host: ""
+      port: ""
