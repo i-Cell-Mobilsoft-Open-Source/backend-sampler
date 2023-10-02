@@ -28,7 +28,8 @@ services:
     environment:
       OPENTRACING_JAEGER_AGENT_HOST: jaeger
       JAEGER_SERVICE_NAME: bs-sample-service
-#      MP_CONFIG_PROFILE: local
+#      MP_CONFIG_PROFILE: redispubsub
+      MP_CONFIG_PROFILE: kafka
     deploy:
       resources:
         limits:

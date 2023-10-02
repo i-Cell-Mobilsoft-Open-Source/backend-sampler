@@ -1,0 +1,50 @@
+coffee:
+  mongodb:
+    sample:
+      database: sample_db
+      uri: mongodb://sample_user:sample_pass@sample-mongodb:27017/sample_db?ssl=false
+  redis:
+    sample:
+      host: bs-sample-redis
+      port: 6379
+      database: 0
+      pool:
+        default:
+          maxidle: 32
+          maxtotal: 128
+  grpc:
+    server:
+      #gRPC connection properties
+      maxConnectionAge: 60
+      maxConnectionAgeGrace: 60
+      #maxInboundMessageSize: 9999
+      #maxInboundMetadataSize: 9999
+      #keepAliveTime: 60
+      #keepAliveTimout: 60
+      #permitKeepAliveTime: 60
+      permitKeepAliveWithoutCalls: false
+      port: 8199
+      #gRPC server thread pool properties
+      threadpool:
+        #simple executor
+        #default:
+        #  corePoolSize: 64
+        #  maximumPoolSize: 64
+        #  keepAliveTime: 60000
+        #managed executor
+        jakarta:
+          active: true
+    #gRPC client
+    client:
+      DummyServiceGrpc:
+        port: 8199
+        host: localhost
+      ErrorServiceGrpc:
+        port: 8199
+        host: errorServiceHostName
+
+sampler:
+  service:
+    sample: 
+      host: ""
+      port: ""
