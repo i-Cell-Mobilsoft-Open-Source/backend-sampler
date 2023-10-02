@@ -7,7 +7,7 @@ A service használata
 
 . futtatni kell a dockeres kafka-t.
 +
-pl.: `docker compose up -f etcd/docker-compose/docker-compose.local.kafka.yml up -d`
+pl.: `docker compose up -f etc/docker-compose/docker-compose.local.kafka.yml up -d`
 . docker-compose.local.wildfly.yml-t microprofile reactive widlfly modulokkal kell elindítani
 * ezt a compose fájlban a SERVICE_CLI_DIR build arg `wildfly/cli/mp-reactive`-ra állításával tehetjük meg
 +
@@ -33,17 +33,7 @@ mert a konfiguráció összeakadhat a másik mintákkal
 
 === GET `/rest/sample`
 
-A válasz `columnA` mezőjében visszaadja `sample-get` redis channelről utoljára olvasott értéket
-(`GetListener` olvas és `ApplicationContainer`-be ment, innen veszi a REST az értéket).
-
-A channelre beküldeni redis-cli-vel tudunk pl.:
-
-[source, shell]
-----
-docker exec -it bs-sample-redis redis-cli
-127.0.0.1:6379> PUBLISH sample-get test-dummy
-----
-
+Nincs egyenlőre Kafka funkcióra kötve.
 
 === POST `/rest/sample`
 
