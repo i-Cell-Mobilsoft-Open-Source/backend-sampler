@@ -20,6 +20,7 @@
 package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -31,12 +32,14 @@ import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Message;
+import org.eclipse.microprofile.reactive.messaging.Metadata;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import io.smallrye.reactive.messaging.kafka.api.KafkaMetadataUtil;
 import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
 /**
@@ -54,9 +57,9 @@ public class KafkaPublisher extends BaseAction {
     @Channel("to-kafka")
     private Emitter<String> emitterString;
 
-    @Inject
-    @Channel("to-kafka")
-    private Emitter<String> emitterMessage;
+    // @Inject
+    // @Channel("to-kafka")
+    // private Emitter<String> emitterMessage;
 
     /**
      * Kafka Stream producer
@@ -80,16 +83,23 @@ public class KafkaPublisher extends BaseAction {
      *             error
      */
     public void toKafka(String message) throws BaseException {
-        log.info("Sample Outgoing: [{0}]", message);
-        waitForPublish(emitterString.send(message));
+        String payloadString = message + "|okr";
+        log.info("Sample Outgoing: [{0}]", payloadString);
+        waitForPublish(emitterString.send(payloadString));
+
         Headers headers = new RecordHeaders();
-        headers.add("header-1", "value-1".getBytes(StandardCharsets.UTF_8));
-        OutgoingKafkaRecordMetadata metadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
-        // Message<String> m = Message.of(message, metadata);
-        Message<String> m = Message.of(message + "2");
-        m.addMetadata(metadata);
-        // waitForPublish(emitterMessage.send(m));
-        emitterMessage.send(m);
+        headers.add("header-1-okr", "value-1-okr".getBytes(StandardCharsets.UTF_8));
+        OutgoingKafkaRecordMetadata okrMetadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
+        String payloadOkr = message + "|okr";
+        // Message okrMessage = Message.of(payloadOkr);
+        // okrMessage = okrMessage.addMetadata(okrMetadata);
+        Message okrMessage = KafkaMetadataUtil.writeOutgoingKafkaMetadata(Message.of(payloadOkr), okrMetadata);
+        emitterString.send(okrMessage);
+
+        Metadata metadata = Metadata.of(Map.of("header-2-meta", "value-2-meta"));
+        String payloadMeta = message + "|meta";
+        Message<String> metaMessage = Message.of(payloadMeta, metadata);
+        emitterString.send(metaMessage);
     }
 
     private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {

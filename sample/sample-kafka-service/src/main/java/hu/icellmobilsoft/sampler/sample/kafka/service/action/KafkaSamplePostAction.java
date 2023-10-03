@@ -23,6 +23,7 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
@@ -53,7 +54,7 @@ public class KafkaSamplePostAction extends BaseAction {
      */
     public SampleResponse sample(SampleRequest sampleRequest) throws BaseException {
         SampleResponse response = new SampleResponse();
-        kafkaPublisher.toKafka("sample");
+        kafkaPublisher.toKafka("sample-" + DateUtil.nowUTC());
         handleSuccessResultType(response, sampleRequest);
         return response;
     }

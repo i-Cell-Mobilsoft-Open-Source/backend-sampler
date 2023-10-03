@@ -19,10 +19,13 @@
  */
 package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
+import java.util.concurrent.CompletionStage;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Message;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
@@ -38,14 +41,30 @@ public class KafkaConsumer extends BaseAction {
     @Inject
     private Logger log;
 
+    @Inject
+    private KafkaMessageLogger kafkaMessageLogger;
+
     /**
      * Kafka Stream consumer
      * 
      * @param message
      *            message payload
      */
-    @Incoming("from-kafka")
+    // @Incoming("from-kafka")
     public void fromKafka(String message) {
         log.info("Sample Incoming: [{0}]", message);
+    }
+
+    /**
+     * Kafka Stream consumer
+     * 
+     * @param message
+     *            incoming reactive message
+     * @return computation stage
+     */
+    @Incoming("from-kafka")
+    public CompletionStage<Void> fromKafka(Message<String> message) {
+        kafkaMessageLogger.printIncomingMessage(message);
+        return message.ack();
     }
 }
