@@ -19,20 +19,25 @@
  */
 package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.apache.kafka.common.header.Headers;
+import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Message;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
 /**
  * Sample Kafka Publisher
@@ -47,7 +52,11 @@ public class KafkaPublisher extends BaseAction {
 
     @Inject
     @Channel("to-kafka")
-    private Emitter<String> emitter;
+    private Emitter<String> emitterString;
+
+    @Inject
+    @Channel("to-kafka")
+    private Emitter<String> emitterMessage;
 
     /**
      * Kafka Stream producer
@@ -72,7 +81,15 @@ public class KafkaPublisher extends BaseAction {
      */
     public void toKafka(String message) throws BaseException {
         log.info("Sample Outgoing: [{0}]", message);
-        waitForPublish(emitter.send(message));
+        waitForPublish(emitterString.send(message));
+        Headers headers = new RecordHeaders();
+        headers.add("header-1", "value-1".getBytes(StandardCharsets.UTF_8));
+        OutgoingKafkaRecordMetadata metadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
+        // Message<String> m = Message.of(message, metadata);
+        Message<String> m = Message.of(message + "2");
+        m.addMetadata(metadata);
+        // waitForPublish(emitterMessage.send(m));
+        emitterMessage.send(m);
     }
 
     private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
