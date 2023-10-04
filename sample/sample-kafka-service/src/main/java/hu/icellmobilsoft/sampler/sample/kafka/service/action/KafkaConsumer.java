@@ -44,6 +44,9 @@ public class KafkaConsumer extends BaseAction {
     @Inject
     private KafkaMessageLogger kafkaMessageLogger;
 
+    @Inject
+    private KafkaMessageHandler kafkaMessageHandler;
+
     /**
      * Kafka Stream consumer
      * 
@@ -64,6 +67,7 @@ public class KafkaConsumer extends BaseAction {
      */
     @Incoming("from-kafka")
     public CompletionStage<Void> fromKafka(Message<String> message) {
+        kafkaMessageHandler.handleIncomingMdc(message);
         kafkaMessageLogger.printIncomingMessage(message);
         return message.ack();
     }

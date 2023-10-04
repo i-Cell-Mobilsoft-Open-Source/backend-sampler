@@ -39,6 +39,10 @@
 			<groupId>io.smallrye.reactive</groupId>
 			<artifactId>smallrye-reactive-messaging-kafka-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+		</dependency>
 
 		<!--Test dependecies -->
 		<dependency>
