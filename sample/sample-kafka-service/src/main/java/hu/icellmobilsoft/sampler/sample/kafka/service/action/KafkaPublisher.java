@@ -19,20 +19,28 @@
  */
 package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.apache.kafka.common.header.Headers;
+import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Message;
+import org.eclipse.microprofile.reactive.messaging.Metadata;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import io.smallrye.reactive.messaging.kafka.api.KafkaMetadataUtil;
+import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
 /**
  * Sample Kafka Publisher
@@ -46,15 +54,21 @@ public class KafkaPublisher extends BaseAction {
     private Logger log;
 
     @Inject
+    private KafkaMessageLogger kafkaMessageLogger;
+
+    @Inject
+    private KafkaMessageHandler kafkaMessageHandler;
+
+    @Inject
     @Channel("to-kafka")
-    private Emitter<String> emitter;
+    private Emitter<String> emitterString;
 
     /**
      * Kafka Stream producer
      * 
      * @return message payload to send
      */
-    // Ebben a formaban vegtelen uzenet keletkezik
+    // Endless message loop
     // @Outgoing("to-kafka")
     public String toKafkaOutgoing() {
         String message = "sample";
@@ -71,8 +85,32 @@ public class KafkaPublisher extends BaseAction {
      *             error
      */
     public void toKafka(String message) throws BaseException {
-        log.info("Sample Outgoing: [{0}]", message);
-        waitForPublish(emitter.send(message));
+        // Send message by system handled feature (not recommended)
+        String payloadString = message + "|String";
+        log.info("Sample Outgoing: [{0}]", payloadString);
+        waitForPublish(emitterString.send(payloadString));
+
+        // Send message by smallrye specific header handling (working, experimental feature)
+        Headers headers = new RecordHeaders();
+        headers.add("header-1-okr", "value-1-okr".getBytes(StandardCharsets.UTF_8));
+        OutgoingKafkaRecordMetadata<Object> okrMetadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
+        String payloadOkr = message + "|okr";
+        // Message okrMessage = Message.of(payloadOkr);
+        // okrMessage = okrMessage.addMetadata(okrMetadata);
+        Message<String> okrMessage = KafkaMetadataUtil.writeOutgoingKafkaMetadata(Message.of(payloadOkr), okrMetadata);
+        okrMessage = 
+                kafkaMessageHandler.handleOutgoingMdc(okrMessage);
+        kafkaMessageLogger.printOutgoingMessage(okrMessage);
+        emitterString.send(okrMessage);
+
+        // Send message by smallrye specific metadata handling (not working, experimental feature)
+        Metadata metadata = Metadata.of(Map.of("header-2-meta", "value-2-meta"));
+        String payloadMeta = message + "|meta";
+        Message<String> metaMessage = Message.of(payloadMeta, metadata);
+        metaMessage = 
+                kafkaMessageHandler.handleOutgoingMdc(metaMessage);
+        kafkaMessageLogger.printOutgoingMessage(metaMessage);
+        emitterString.send(metaMessage);
     }
 
     private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
