@@ -22,9 +22,8 @@ package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
@@ -33,6 +32,9 @@ import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * Sample Kafka Publisher
@@ -42,12 +44,13 @@ import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 @ApplicationScoped
 public class KafkaPublisher extends BaseAction {
 
+    private static final String CHANNEL_NAME = "to-kafka";
     @Inject
     private Logger log;
 
     @Inject
-    @Channel("to-kafka")
-    private Emitter<String> emitter;
+    @Channel(CHANNEL_NAME)
+    private Emitter<ProducerRecord<Integer, SampleKafkaDto>> emitter;
 
     /**
      * Kafka Stream producer
@@ -70,9 +73,14 @@ public class KafkaPublisher extends BaseAction {
      * @throws BaseException
      *             error
      */
-    public void toKafka(String message) throws BaseException {
+    public void toKafka(SampleKafkaDto message) throws BaseException {
         log.info("Sample Outgoing: [{0}]", message);
-        waitForPublish(emitter.send(message));
+        String topic = getTopic();
+        waitForPublish(emitter.send(new ProducerRecord<>(topic, message)));
+    }
+
+    private String getTopic() {
+        return ConfigProvider.getConfig().getConfigValue("mp.messaging.outgoing." + CHANNEL_NAME + ".topic").getValue();
     }
 
     private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {

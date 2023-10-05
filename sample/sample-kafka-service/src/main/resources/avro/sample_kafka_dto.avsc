@@ -1,0 +1,44 @@
+{
+  "namespace": "hu.icellmobilsoft.sampler.dto",
+  "type": "record",
+  "name": "SampleKafkaDto",
+  "doc": "Dto for sample kafka topic",
+  "fields": [
+    {
+      "name": "columnA",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Sample string column",
+      "default": null
+    },
+    {
+      "name": "columnB",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "ValuesKafkaDto",
+          "symbols": [
+            "VALUE_A",
+            "VALUE_B",
+            "VALUE_C"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "columnC",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    }
+  ]
+}

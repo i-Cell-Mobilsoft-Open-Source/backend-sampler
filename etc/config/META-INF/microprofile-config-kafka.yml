@@ -11,12 +11,21 @@ mp:
         key:
           serializer: org.apache.kafka.common.serialization.IntegerSerializer
         value:
-          serializer: org.apache.kafka.common.serialization.StringSerializer
+          serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+        schema:
+          registry:
+            url: http://bs-schema-registry:8085
     incoming:
       from-kafka:
         connector: smallrye-kafka
         topic: testing
         value:
-          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
         key:
           deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+        schema:
+          registry:
+            url: http://bs-schema-registry:8085
+        specific:
+          avro:
+            reader: true

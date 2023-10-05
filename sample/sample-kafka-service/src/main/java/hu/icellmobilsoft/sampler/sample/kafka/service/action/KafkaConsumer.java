@@ -19,9 +19,11 @@
  */
 package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
+import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
@@ -45,7 +47,7 @@ public class KafkaConsumer extends BaseAction {
      *            message payload
      */
     @Incoming("from-kafka")
-    public void fromKafka(String message) {
-        log.info("Sample Incoming: [{0}]", message);
+    public void fromKafka(ConsumerRecord<Integer, SampleKafkaDto> message) {
+        log.info("Sample Incoming: [{0}], [{1}], [{2}]", message.value().getColumnA(), message.value().getColumnB(), message.value().getColumnC());
     }
 }
