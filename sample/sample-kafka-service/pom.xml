@@ -16,10 +16,17 @@
 			<artifactId>common-system-rest</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- https://github.com/eclipse/microprofile-reactive-messaging/issues/10 -->
+		<!-- FYI: wildfly-27.0.1.Final https://github.com/wildfly/wildfly/blob/27.x/microprofile/galleon-common/src/main/resources/modules/system/layers/base/org/eclipse/microprofile/reactive-messaging/api/main/module.xml#L27 -->
+		<!-- dependency>
 			<groupId>org.eclipse.microprofile.reactive.messaging</groupId>
 			<artifactId>microprofile-reactive-messaging-api</artifactId>
+		</dependency -->
+		<dependency>
+			<groupId>io.smallrye.reactive</groupId>
+			<artifactId>smallrye-reactive-messaging-api</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.microprofile.reactive-streams-operators</groupId>
 			<artifactId>microprofile-reactive-streams-operators-api</artifactId>
@@ -27,6 +34,14 @@
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-clients</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.smallrye.reactive</groupId>
+			<artifactId>smallrye-reactive-messaging-kafka-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.avro</groupId>

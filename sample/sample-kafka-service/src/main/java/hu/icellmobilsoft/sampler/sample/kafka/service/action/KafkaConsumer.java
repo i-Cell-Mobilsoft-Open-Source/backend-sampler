@@ -19,15 +19,18 @@
  */
 package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
-import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
+import java.util.concurrent.CompletionStage;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Message;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
 
 /**
  * Sample Kafka Consumer
@@ -40,14 +43,34 @@ public class KafkaConsumer extends BaseAction {
     @Inject
     private Logger log;
 
+    @Inject
+    private KafkaMessageLogger kafkaMessageLogger;
+
+    @Inject
+    private KafkaMessageHandler kafkaMessageHandler;
+
     /**
      * Kafka Stream consumer
      * 
      * @param message
      *            message payload
      */
-    @Incoming("from-kafka")
+    // @Incoming("from-kafka")
     public void fromKafka(ConsumerRecord<Integer, SampleKafkaDto> message) {
         log.info("Sample Incoming: [{0}], [{1}], [{2}]", message.value().getColumnA(), message.value().getColumnB(), message.value().getColumnC());
+    }
+
+    /**
+     * Kafka Stream consumer
+     *
+     * @param message
+     *            incoming reactive message
+     * @return computation stage
+     */
+    @Incoming("from-kafka")
+    public CompletionStage<Void> fromKafka(Message<String> message) {
+        kafkaMessageHandler.handleIncomingMdc(message);
+        kafkaMessageLogger.printIncomingMessage(message);
+        return message.ack();
     }
 }
