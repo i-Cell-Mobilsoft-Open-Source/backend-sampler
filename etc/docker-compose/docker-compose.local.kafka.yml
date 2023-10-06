@@ -33,6 +33,7 @@ services:
       # https://docs.kafka-ui.provectus.io/configuration/configuration-file
       KAFKA_CLUSTERS_0_NAME: bs-kafka
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: bs-kafka:9092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://bs-schema-registry:8085
   schema-registry:
     container_name: bs-schema-registry
     image: confluentinc/cp-schema-registry:7.4.2

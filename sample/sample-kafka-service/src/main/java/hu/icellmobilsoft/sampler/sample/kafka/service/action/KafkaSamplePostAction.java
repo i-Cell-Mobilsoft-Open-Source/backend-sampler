@@ -57,7 +57,8 @@ public class KafkaSamplePostAction extends BaseAction {
      */
     public SampleResponse sample(SampleRequest sampleRequest) throws BaseException {
         SampleResponse response = new SampleResponse();
-        kafkaPublisher.toKafka(convertToDto(sampleRequest));
+        kafkaPublisher.toKafkaString("sample-" + DateUtil.nowUTC());
+        kafkaPublisher.toKafkaAvro(convertToDto(sampleRequest));
         handleSuccessResultType(response, sampleRequest);
         return response;
     }

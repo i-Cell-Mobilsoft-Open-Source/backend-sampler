@@ -94,22 +94,23 @@ public class KafkaPublisher extends BaseAction {
     }
 
     /**
-     * Send message to kafka
+     * Send string message to kafka
      * 
      * @param message
-     *            message payload to publis
+     *            message payload to publish
      * @throws BaseException
      *             error
      */
-    public void toKafka(SampleKafkaDto message) throws BaseException {
-        log.info("Sample Outgoing: [{0}] [{1}] [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
+    public void toKafkaString(String message) throws BaseException {
+        String payloadString = message + "|String";
+        log.info("Sample Outgoing: [{0}]", payloadString);
         // Send message by system handled feature (not recommended)
         // waitForPublish(emitterString.send(payloadString));
 
         // By setting the producer timeout and using the imperative client, we can handle the case where if Kafka is not available, a message from the
         // buffer should not be sent in the case of a REST timeout
         try {
-            messageEmitter.sendAndAwait(message);
+            mutinyEmitterString.sendAndAwait(payloadString);
         } catch (org.apache.kafka.common.errors.TimeoutException e) {
             throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
         } catch (Throwable e) {
@@ -120,7 +121,7 @@ public class KafkaPublisher extends BaseAction {
         Headers headers = new RecordHeaders();
         headers.add("header-1-okr", "value-1-okr".getBytes(StandardCharsets.UTF_8));
         OutgoingKafkaRecordMetadata<Object> okrMetadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
-        String payloadOkr = message.getColumnA() + "|okr";
+        String payloadOkr = message + "|okr";
         // Message okrMessage = Message.of(payloadOkr);
         // okrMessage = okrMessage.addMetadata(okrMetadata);
         Message<String> okrMessage = KafkaMetadataUtil.writeOutgoingKafkaMetadata(Message.of(payloadOkr), okrMetadata);
@@ -131,12 +132,31 @@ public class KafkaPublisher extends BaseAction {
 
         // Send message by smallrye specific metadata handling (not working, experimental feature)
         Metadata metadata = Metadata.of(Map.of("header-2-meta", "value-2-meta"));
-        String payloadMeta = message.getColumnA() + "|meta";
+        String payloadMeta = message + "|meta";
         Message<String> metaMessage = Message.of(payloadMeta, metadata);
         metaMessage =
                 kafkaMessageHandler.handleOutgoingMdc(metaMessage);
         kafkaMessageLogger.printOutgoingMessage(metaMessage);
         mutinyEmitterString.sendMessageAndAwait(metaMessage);
+    }
+
+    /**
+     * Send avro message to kafka
+     *
+     * @param message
+     *            message payload to publish
+     * @throws BaseException
+     *             error
+     */
+    public void toKafkaAvro(SampleKafkaDto message) throws BaseException {
+        log.info("Sample Outgoing: [{0}] [{1}] [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
+        try {
+            messageEmitter.sendAndAwait(message);
+        } catch (org.apache.kafka.common.errors.TimeoutException e) {
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
+        } catch (Throwable e) {
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
+        }
     }
 
     // private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
