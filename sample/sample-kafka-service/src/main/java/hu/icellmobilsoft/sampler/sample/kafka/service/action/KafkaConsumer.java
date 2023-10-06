@@ -24,7 +24,6 @@ import java.util.concurrent.CompletionStage;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
 
@@ -56,8 +55,8 @@ public class KafkaConsumer extends BaseAction {
      *            message payload
      */
     @Incoming("from-kafka-avro")
-    public void fromKafka(ConsumerRecord<Integer, SampleKafkaDto> message) {
-        log.info("Sample Incoming: [{0}], [{1}], [{2}]", message.value().getColumnA(), message.value().getColumnB(), message.value().getColumnC());
+    public void fromKafka(SampleKafkaDto message) {
+        log.info("Sample Incoming: [{0}], [{1}], [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
     }
 
     /**
@@ -68,7 +67,7 @@ public class KafkaConsumer extends BaseAction {
      * @return computation stage
      */
     @Incoming("from-kafka-string")
-    public CompletionStage<Void> fromKafka(Message<String> message) {
+    public CompletionStage<Void> fromKafkaString(Message<String> message) {
         kafkaMessageHandler.handleIncomingMdc(message);
         kafkaMessageLogger.printIncomingMessage(message);
         return message.ack();

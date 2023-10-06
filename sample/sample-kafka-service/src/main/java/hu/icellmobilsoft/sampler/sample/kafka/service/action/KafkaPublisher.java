@@ -30,8 +30,6 @@ import jakarta.inject.Inject;
 
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeaders;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Message;
@@ -68,7 +66,7 @@ public class KafkaPublisher extends BaseAction {
 
     @Inject
     @Channel(AVRO_CHANNEL_NAME)
-    private Emitter<ProducerRecord<Integer, SampleKafkaDto>> messageEmitter;
+    private Emitter<SampleKafkaDto> messageEmitter;
 
     @Inject
     @Channel(STRING_CHANNEL_NAME)
@@ -98,7 +96,7 @@ public class KafkaPublisher extends BaseAction {
     public void toKafka(SampleKafkaDto message) throws BaseException {
         // Send message by system handled feature (not recommended)
         log.info("Sample Outgoing: [{0}] [{1}] [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
-        waitForPublish(messageEmitter.send(new ProducerRecord<>(getTopic(), message)));
+        waitForPublish(messageEmitter.send(message));
 
         // Send message by smallrye specific header handling (working, experimental feature)
         Headers headers = new RecordHeaders();
@@ -121,10 +119,6 @@ public class KafkaPublisher extends BaseAction {
                 kafkaMessageHandler.handleOutgoingMdc(metaMessage);
         kafkaMessageLogger.printOutgoingMessage(metaMessage);
         emitterString.send(metaMessage);
-    }
-
-    private String getTopic() {
-        return ConfigProvider.getConfig().getConfigValue("mp.messaging.outgoing." + AVRO_CHANNEL_NAME + ".topic").getValue();
     }
 
     private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
