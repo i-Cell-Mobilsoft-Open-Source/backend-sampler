@@ -22,4 +22,6 @@ set rootLoggerLoglevel=\${env.LOGGING_ROOT_LOGGER_LOGLEVEL,logging.root.logger.l
 /subsystem=logging/logger=hu.icell:add(level=$huIcellmobilsoftLoggerLoglevel)
 /subsystem=logging/logger=hu.icellmobilsoft:add(level=$huIcellmobilsoftLoggerLoglevel)
 
+# Reactive message system logging (for developing)
+/subsystem=logging/logger=io.smallrye.reactive.messaging:add(level=TRACE)
 

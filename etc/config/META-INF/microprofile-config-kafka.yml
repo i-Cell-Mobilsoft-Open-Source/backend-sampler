@@ -28,6 +28,10 @@ mp:
           serializer: org.apache.kafka.common.serialization.IntegerSerializer
         value:
           serializer: org.apache.kafka.common.serialization.StringSerializer
+        interceptor:
+          classes:
+            - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingHeaderInterceptor
+            - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingLoggingInterceptor
     incoming:
       from-kafka:
         connector: smallrye-kafka
@@ -36,3 +40,7 @@ mp:
           deserializer: org.apache.kafka.common.serialization.StringDeserializer
         key:
           deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+        interceptor:
+          classes:
+            - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.IncomingHeaderInterceptor
+            - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.IncomingLoggingInterceptor
