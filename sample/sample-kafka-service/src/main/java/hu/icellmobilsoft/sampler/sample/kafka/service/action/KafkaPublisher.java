@@ -21,8 +21,6 @@ package hu.icellmobilsoft.sampler.sample.kafka.service.action;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -30,7 +28,6 @@ import jakarta.inject.Inject;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Metadata;
 
@@ -39,6 +36,7 @@ import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import io.smallrye.reactive.messaging.MutinyEmitter;
 import io.smallrye.reactive.messaging.kafka.api.KafkaMetadataUtil;
 import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
@@ -59,9 +57,19 @@ public class KafkaPublisher extends BaseAction {
     @Inject
     private KafkaMessageHandler kafkaMessageHandler;
 
+    // /**
+    // * use {@code MutinyEmitter}
+    // */
+    // @Inject
+    // @Channel("to-kafka")
+    // private Emitter<String> emitterString;
+
+    /**
+     * send message imperative mode
+     */
     @Inject
     @Channel("to-kafka")
-    private Emitter<String> emitterString;
+    private MutinyEmitter<String> mutinyEmitterString;
 
     /**
      * Kafka Stream producer
@@ -85,10 +93,20 @@ public class KafkaPublisher extends BaseAction {
      *             error
      */
     public void toKafka(String message) throws BaseException {
-        // Send message by system handled feature (not recommended)
         String payloadString = message + "|String";
         log.info("Sample Outgoing: [{0}]", payloadString);
-        waitForPublish(emitterString.send(payloadString));
+        // Send message by system handled feature (not recommended)
+        // waitForPublish(emitterString.send(payloadString));
+
+        // By setting the producer timeout and using the imperative client, we can handle the case where if Kafka is not available, a message from the
+        // buffer should not be sent in the case of a REST timeout
+        try {
+            mutinyEmitterString.sendAndAwait(message);
+        } catch (org.apache.kafka.common.errors.TimeoutException e) {
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
+        } catch (Throwable e) {
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
+        }
 
         // Send message by smallrye specific header handling (working, experimental feature)
         Headers headers = new RecordHeaders();
@@ -98,38 +116,36 @@ public class KafkaPublisher extends BaseAction {
         // Message okrMessage = Message.of(payloadOkr);
         // okrMessage = okrMessage.addMetadata(okrMetadata);
         Message<String> okrMessage = KafkaMetadataUtil.writeOutgoingKafkaMetadata(Message.of(payloadOkr), okrMetadata);
-        okrMessage = 
-                kafkaMessageHandler.handleOutgoingMdc(okrMessage);
+        okrMessage = kafkaMessageHandler.handleOutgoingMdc(okrMessage);
         kafkaMessageLogger.printOutgoingMessage(okrMessage);
-        emitterString.send(okrMessage);
+        mutinyEmitterString.sendMessageAndAwait(okrMessage);
 
         // Send message by smallrye specific metadata handling (not working, experimental feature)
         Metadata metadata = Metadata.of(Map.of("header-2-meta", "value-2-meta"));
         String payloadMeta = message + "|meta";
         Message<String> metaMessage = Message.of(payloadMeta, metadata);
-        metaMessage = 
-                kafkaMessageHandler.handleOutgoingMdc(metaMessage);
+        metaMessage = kafkaMessageHandler.handleOutgoingMdc(metaMessage);
         kafkaMessageLogger.printOutgoingMessage(metaMessage);
-        emitterString.send(metaMessage);
+        mutinyEmitterString.sendMessageAndAwait(metaMessage);
     }
 
-    private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
-        try {
-            publishStage.toCompletableFuture().get();
-        } catch (InterruptedException ex) {
-            handleInterrupt(ex);
-        } catch (ExecutionException e) {
-            log.error("Exception occured", e);
-            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unkown Kafka publish error", e);
-        }
-    }
+    // private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
+    // try {
+    // publishStage.toCompletableFuture().get();
+    // } catch (InterruptedException ex) {
+    // handleInterrupt(ex);
+    // } catch (ExecutionException e) {
+    // log.error("Exception occured", e);
+    // throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unkown Kafka publish error", e);
+    // }
+    // }
 
-    private void handleInterrupt(InterruptedException ex) {
-        log.warn("Interrupted sleep.", ex);
-        try {
-            Thread.currentThread().interrupt();
-        } catch (Exception e) {
-            log.warn("Exception during interrupt.", ex);
-        }
-    }
+    // private void handleInterrupt(InterruptedException ex) {
+    // log.warn("Interrupted sleep.", ex);
+    // try {
+    // Thread.currentThread().interrupt();
+    // } catch (Exception e) {
+    // log.warn("Exception during interrupt.", ex);
+    // }
+    // }
 }
