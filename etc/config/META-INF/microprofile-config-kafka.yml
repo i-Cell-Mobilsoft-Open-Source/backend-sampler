@@ -17,6 +17,22 @@ mp:
             url: http://bs-schema-registry:8085
       to-kafka-string:
         connector: smallrye-kafka
+        # The following parameters have effect for each other so we need to take into consideration of theirs settings to avoid the next error message:
+        # delivery.timeout.ms should be equal to or larger than linger.ms + request.timeout.ms
+        # the connector will try to resend those records that was not delivered successfully
+        retries: 0
+        # https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/ProducerConfig.java#L158
+        # this should be correlated with the REST timeout (e.g. 1 min)
+        delivery:
+          timeout:
+            ms: 5000
+        # https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/ProducerConfig.java#L139
+        linger:
+          ms: 1000
+        # https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/ProducerConfig.java#L152
+        request:
+          timeout:
+            ms: 500
         topic: testing-string
         key:
           serializer: org.apache.kafka.common.serialization.IntegerSerializer
