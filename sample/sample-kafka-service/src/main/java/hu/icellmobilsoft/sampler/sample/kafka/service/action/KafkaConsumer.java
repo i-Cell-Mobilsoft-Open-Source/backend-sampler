@@ -55,7 +55,7 @@ public class KafkaConsumer extends BaseAction {
      * @param message
      *            message payload
      */
-    // @Incoming("from-kafka")
+    @Incoming("from-kafka-avro")
     public void fromKafka(ConsumerRecord<Integer, SampleKafkaDto> message) {
         log.info("Sample Incoming: [{0}], [{1}], [{2}]", message.value().getColumnA(), message.value().getColumnB(), message.value().getColumnC());
     }
@@ -67,7 +67,7 @@ public class KafkaConsumer extends BaseAction {
      *            incoming reactive message
      * @return computation stage
      */
-    @Incoming("from-kafka")
+    @Incoming("from-kafka-string")
     public CompletionStage<Void> fromKafka(Message<String> message) {
         kafkaMessageHandler.handleIncomingMdc(message);
         kafkaMessageLogger.printIncomingMessage(message);

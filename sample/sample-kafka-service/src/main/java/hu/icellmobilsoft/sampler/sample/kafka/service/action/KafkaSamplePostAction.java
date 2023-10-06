@@ -63,7 +63,7 @@ public class KafkaSamplePostAction extends BaseAction {
     }
 
     private SampleKafkaDto convertToDto(SampleRequest sampleRequest) {
-        return SampleKafkaDto.newBuilder().setColumnA(sampleRequest.getSample().getColumnA())
+        return SampleKafkaDto.newBuilder().setColumnA(sampleRequest.getSample().getColumnA() + "-" + DateUtil.nowUTC())
                 .setColumnB(EnumUtil.convert(sampleRequest.getSample().getColumnB(), ValuesKafkaDto.class))
                 .setColumnC(sampleRequest.getContext().getTimestamp().toLocalDate()).build();
     }

@@ -53,7 +53,9 @@ import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 @ApplicationScoped
 public class KafkaPublisher extends BaseAction {
 
-    private static final String CHANNEL_NAME = "to-kafka";
+    private static final String AVRO_CHANNEL_NAME = "to-kafka-avro";
+
+    private static final String STRING_CHANNEL_NAME = "to-kafka-string";
 
     @Inject
     private Logger log;
@@ -65,8 +67,12 @@ public class KafkaPublisher extends BaseAction {
     private KafkaMessageHandler kafkaMessageHandler;
 
     @Inject
-    @Channel(CHANNEL_NAME)
+    @Channel(AVRO_CHANNEL_NAME)
     private Emitter<ProducerRecord<Integer, SampleKafkaDto>> messageEmitter;
+
+    @Inject
+    @Channel(STRING_CHANNEL_NAME)
+    private Emitter<String> emitterString;
 
     /**
      * Kafka Stream producer
@@ -91,15 +97,14 @@ public class KafkaPublisher extends BaseAction {
      */
     public void toKafka(SampleKafkaDto message) throws BaseException {
         // Send message by system handled feature (not recommended)
-        String payloadString = message + "|String";
-        log.info("Sample Outgoing: [{0}]", payloadString);
-        waitForPublish(emitterString.send(payloadString));
+        log.info("Sample Outgoing: [{0}] [{1}] [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
+        waitForPublish(messageEmitter.send(new ProducerRecord<>(getTopic(), message)));
 
         // Send message by smallrye specific header handling (working, experimental feature)
         Headers headers = new RecordHeaders();
         headers.add("header-1-okr", "value-1-okr".getBytes(StandardCharsets.UTF_8));
         OutgoingKafkaRecordMetadata<Object> okrMetadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
-        String payloadOkr = message + "|okr";
+        String payloadOkr = message.getColumnA() + "|okr";
         // Message okrMessage = Message.of(payloadOkr);
         // okrMessage = okrMessage.addMetadata(okrMetadata);
         Message<String> okrMessage = KafkaMetadataUtil.writeOutgoingKafkaMetadata(Message.of(payloadOkr), okrMetadata);
@@ -110,7 +115,7 @@ public class KafkaPublisher extends BaseAction {
 
         // Send message by smallrye specific metadata handling (not working, experimental feature)
         Metadata metadata = Metadata.of(Map.of("header-2-meta", "value-2-meta"));
-        String payloadMeta = message + "|meta";
+        String payloadMeta = message.getColumnA() + "|meta";
         Message<String> metaMessage = Message.of(payloadMeta, metadata);
         metaMessage =
                 kafkaMessageHandler.handleOutgoingMdc(metaMessage);
@@ -119,7 +124,7 @@ public class KafkaPublisher extends BaseAction {
     }
 
     private String getTopic() {
-        return ConfigProvider.getConfig().getConfigValue("mp.messaging.outgoing." + CHANNEL_NAME + ".topic").getValue();
+        return ConfigProvider.getConfig().getConfigValue("mp.messaging.outgoing." + AVRO_CHANNEL_NAME + ".topic").getValue();
     }
 
     private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {
