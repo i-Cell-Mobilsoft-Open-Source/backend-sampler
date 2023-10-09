@@ -29,6 +29,8 @@ import org.eclipse.microprofile.reactive.messaging.Message;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageHandler;
+import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageLogger;
 
 /**
  * Sample Kafka Consumer
@@ -67,8 +69,9 @@ public class KafkaConsumer extends BaseAction {
      */
     @Incoming("from-kafka")
     public CompletionStage<Void> fromKafka(Message<String> message) {
-        kafkaMessageHandler.handleIncomingMdc(message);
-        kafkaMessageLogger.printIncomingMessage(message);
+        // for debug
+        // kafkaMessageHandler.handleIncomingMdc(message);
+        // kafkaMessageLogger.printIncomingMessage(message);
         return message.ack();
     }
 }

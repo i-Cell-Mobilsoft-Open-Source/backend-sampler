@@ -36,12 +36,16 @@ import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageHandler;
+import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageLogger;
 import io.smallrye.reactive.messaging.MutinyEmitter;
 import io.smallrye.reactive.messaging.kafka.api.KafkaMetadataUtil;
 import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
 /**
- * Sample Kafka Publisher
+ * Sample kafka publisher <br>
+ * <a href= "https://github.com/eclipse/microprofile-context-propagation">microprofile-context-propagation</a><br>
+ * <a href= "https://smallrye.io/smallrye-reactive-messaging/smallrye-reactive-messaging/3.3/emitter/emitter.html">Emitter documentation</a>
  * 
  * @author Imre Scheffer
  */
@@ -93,39 +97,51 @@ public class KafkaPublisher extends BaseAction {
      *             error
      */
     public void toKafka(String message) throws BaseException {
-        String payloadString = message + "|String";
-        log.info("Sample Outgoing: [{0}]", payloadString);
         // Send message by system handled feature (not recommended)
+        sendString(message);
+
+        // Send message by smallrye specific header handling (working, experimental feature)
+        sendMessageWithSmallryeMetadata(message);
+
+        // Send message by smallrye specific metadata handling (not working, experimental feature)
+        sendMessageWithMetadata(message);
+    }
+
+    private void sendString(String message) throws BaseException {
+        String payloadString = message + "|String";
+        // log.info("Sample Outgoing: [{0}]", payloadString);
         // waitForPublish(emitterString.send(payloadString));
 
         // By setting the producer timeout and using the imperative client, we can handle the case where if Kafka is not available, a message from the
         // buffer should not be sent in the case of a REST timeout
         try {
-            mutinyEmitterString.sendAndAwait(message);
+            mutinyEmitterString.sendAndAwait(payloadString);
         } catch (org.apache.kafka.common.errors.TimeoutException e) {
             throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
         } catch (Throwable e) {
             throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
         }
+    }
 
-        // Send message by smallrye specific header handling (working, experimental feature)
+    private void sendMessageWithSmallryeMetadata(String message) {
         Headers headers = new RecordHeaders();
         headers.add("header-1-okr", "value-1-okr".getBytes(StandardCharsets.UTF_8));
         OutgoingKafkaRecordMetadata<Object> okrMetadata = OutgoingKafkaRecordMetadata.builder().withHeaders(headers).build();
         String payloadOkr = message + "|okr";
-        // Message okrMessage = Message.of(payloadOkr);
-        // okrMessage = okrMessage.addMetadata(okrMetadata);
         Message<String> okrMessage = KafkaMetadataUtil.writeOutgoingKafkaMetadata(Message.of(payloadOkr), okrMetadata);
-        okrMessage = kafkaMessageHandler.handleOutgoingMdc(okrMessage);
-        kafkaMessageLogger.printOutgoingMessage(okrMessage);
+        // for debug
+        // okrMessage = kafkaMessageHandler.handleOutgoingMdc(okrMessage);
+        // kafkaMessageLogger.printOutgoingMessage(okrMessage);
         mutinyEmitterString.sendMessageAndAwait(okrMessage);
+    }
 
-        // Send message by smallrye specific metadata handling (not working, experimental feature)
+    private void sendMessageWithMetadata(String message) {
         Metadata metadata = Metadata.of(Map.of("header-2-meta", "value-2-meta"));
         String payloadMeta = message + "|meta";
         Message<String> metaMessage = Message.of(payloadMeta, metadata);
-        metaMessage = kafkaMessageHandler.handleOutgoingMdc(metaMessage);
-        kafkaMessageLogger.printOutgoingMessage(metaMessage);
+        // for debug
+        // metaMessage = kafkaMessageHandler.handleOutgoingMdc(metaMessage);
+        // kafkaMessageLogger.printOutgoingMessage(metaMessage);
         mutinyEmitterString.sendMessageAndAwait(metaMessage);
     }
 

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.sample.kafka.service.action;
+package hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
@@ -29,6 +29,9 @@ import org.apache.kafka.common.header.Header;
 import org.eclipse.microprofile.reactive.messaging.Message;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
+import hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.IncomingLoggingInterceptor;
+import hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.KafkaInterceptorConstant;
+import hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingLoggingInterceptor;
 import io.smallrye.reactive.messaging.kafka.api.IncomingKafkaRecordMetadata;
 import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
@@ -39,42 +42,25 @@ import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
  * @since 2.0.0
  */
 @Dependent
-public class KafkaMessageLogger {
+public class KafkaMessageLogger implements KafkaInterceptorConstant {
 
     @Inject
     private Logger log;
 
     /**
-     * Tab space
-     */
-    public static String TAB = "  ";
-    /**
-     * Tab space
-     */
-    public static String VALUE = ": ";
-    /**
-     * New line char
-     */
-    public static char NEWLINE = '\n';
-    /**
-     * Incoming row prefix
-     */
-    public static String INCOMING = ">> ";
-    /**
-     * Outgoing row prefix
-     */
-    public static String OUTGOING = "<< ";
-
-    /**
-     * Print Incoming Reactive Kafka message and handling MDC value for logging
+     * Convert Incoming MP Reactive Kafka message into human readable String.
      * 
      * @param <T>
      *            Message Payload Type
      * @param message
      *            Incoming reactive message
+     * @return formatted String value
      */
-    public <T> void printIncomingMessage(Message<T> message) {
+    public <T> String incomingMessageToString(Message<T> message) {
         StringBuffer sb = new StringBuffer();
+        if (message == null) {
+            return sb.toString();
+        }
         sb.append("* Reactive Messaging Incoming").append(NEWLINE);
         printMetadata(INCOMING, sb, message);
         @SuppressWarnings("rawtypes")
@@ -83,19 +69,36 @@ public class KafkaMessageLogger {
             printIncomingKafkaRecordMetadata(sb, ikrmOptional.get());
         }
         printPayload(INCOMING, sb, message.getPayload());
-        log.info(sb.toString());
+        return sb.toString();
     }
 
     /**
-     * Print Outgoing Reactive Kafka message
+     * Print Incoming Reactive Kafka message to log.<br>
+     * This usage is recommended in developing, debugging and testing, in production is preferred {@link IncomingLoggingInterceptor}
+     * 
+     * @param <T>
+     *            Message Payload Type
+     * @param message
+     *            Incoming reactive message
+     */
+    public <T> void printIncomingMessage(Message<T> message) {
+        log.info(incomingMessageToString(message));
+    }
+
+    /**
+     * Convert Outgoing MP Reactive Kafka message into human readable String
      * 
      * @param <T>
      *            Message Payload Type
      * @param message
      *            Outgoing reactive message
+     * @return formatted String value
      */
-    public <T> void printOutgoingMessage(Message<T> message) {
+    public <T> String outgoingMessageToString(Message<T> message) {
         StringBuffer sb = new StringBuffer();
+        if (message == null) {
+            return sb.toString();
+        }
         sb.append("* Reactive Messaging Outgoing").append(NEWLINE);
         printMetadata(OUTGOING, sb, message);
         @SuppressWarnings("rawtypes")
@@ -104,7 +107,20 @@ public class KafkaMessageLogger {
             printOutgoingKafkaRecordMetadata(sb, okrmOptional.get());
         }
         printPayload(OUTGOING, sb, message.getPayload());
-        log.info(sb.toString());
+        return sb.toString();
+    }
+
+    /**
+     * Print Outgoing Reactive Kafka message to log.<br>
+     * This usage is recommended in developing, debugging and testing, in production is preferred {@link OutgoingLoggingInterceptor}
+     * 
+     * @param <T>
+     *            Message Payload Type
+     * @param message
+     *            Outgoing reactive message
+     */
+    public <T> void printOutgoingMessage(Message<T> message) {
+        log.info(outgoingMessageToString(message));
     }
 
     /**
