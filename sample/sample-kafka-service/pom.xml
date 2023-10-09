@@ -76,6 +76,13 @@
 				</includes>
 				<filtering>true</filtering>
 			</resource>
+			<resource>
+				<directory>../../etc/config/kafka</directory>
+				<includes>
+					<include>client.truststore.jks</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
 		</resources>
 	</build>
 </project>
