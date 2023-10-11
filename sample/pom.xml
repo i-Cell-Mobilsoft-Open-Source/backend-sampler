@@ -18,6 +18,7 @@
         <module>sample-redispubsub-service</module>
         <module>sample-grpc-server-service</module>
         <module>sample-kafka-service</module>
+        <module>sample-etcd-service</module>
     </modules>
 
     <dependencyManagement>
