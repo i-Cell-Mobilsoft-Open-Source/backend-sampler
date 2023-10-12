@@ -15,6 +15,7 @@
         <version.org.eclipse.microprofile>5.0</version.org.eclipse.microprofile>
         <version.hu.icellmobilsoft.roaster>2.0.0</version.hu.icellmobilsoft.roaster>
         <version.io.smallrye.config.source.yaml>3.0.0</version.io.smallrye.config.source.yaml>
+        <version.org.osgi.annotation>8.1.0</version.org.osgi.annotation>
 
         <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
     </properties>
@@ -116,6 +117,12 @@
                 <groupId>io.smallrye.config</groupId>
                 <artifactId>smallrye-config-source-yaml</artifactId>
                 <version>${version.io.smallrye.config.source.yaml}</version>
+            </dependency>
+            <!-- a ConfigProperty annotacio miatt szukseges-->
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>osgi.annotation</artifactId>
+                <version>${version.org.osgi.annotation}</version>
             </dependency>
 
             <!--Test dependecies -->

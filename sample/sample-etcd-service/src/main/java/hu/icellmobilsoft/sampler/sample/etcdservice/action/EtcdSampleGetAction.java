@@ -20,9 +20,9 @@
 package hu.icellmobilsoft.sampler.sample.etcdservice.action;
 
 import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
-import org.eclipse.microprofile.config.Config;
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
@@ -41,6 +41,11 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 public class EtcdSampleGetAction extends BaseAction {
 
     private static final String PRIVATE_COLUMN_A = "private.column.a";
+    private static final String PRIVATE_COLUMN_A_DEFAULT = "NONE";
+
+    @Inject
+    @ConfigProperty(name = PRIVATE_COLUMN_A, defaultValue = PRIVATE_COLUMN_A_DEFAULT)
+    private String columnAValue;
 
     /**
      * Dummy sample response
@@ -48,9 +53,6 @@ public class EtcdSampleGetAction extends BaseAction {
      * @return SampleResponse with random id
      */
     public SampleResponse sample() {
-
-        Config config = ConfigProvider.getConfig();
-        String columnAValue = config.getOptionalValue(PRIVATE_COLUMN_A, String.class).orElse("NONE");
 
         SampleResponse response = new SampleResponse();
         SampleType sampleType = new SampleType();
