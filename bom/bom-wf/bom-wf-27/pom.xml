@@ -199,6 +199,7 @@
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-core</artifactId>
                 <version>${version.io.vertx.vertx-core}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- from wildfly-jakartaee8-with-tools -->
