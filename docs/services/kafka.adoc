@@ -1,15 +1,15 @@
 = Kafka service
 `sample/sample-kafka-service`
 
-Service célja a Kafka kezelés használatának bemutatása egyszerű használati mintákkal.
+The purpose of the service is to demonstrate the usage of Kafka handling with simple usage examples.
 
-A service használata
+How to use the service
 
-. futtatni kell a dockeres kafka-t.
+. You need to run Dockerized Kafka.
 +
-pl.: `docker compose up -f etc/docker-compose/docker-compose.local.kafka.yml up -d`
-. docker-compose.local.wildfly.yml-t microprofile reactive widlfly modulokkal kell elindítani
-* ezt a compose fájlban a SERVICE_CLI_DIR build arg `wildfly/cli/mp-reactive`-ra állításával tehetjük meg
+For example.: `docker compose up -f etc/docker-compose/docker-compose.local.kafka.yml up -d`
+. Start the docker-compose.local.wildfly.yml with MicroProfile Reactive WildFly modules.
+* You can achieve this by setting the SERVICE_CLI_DIR build argument to wildfly/cli/mp-reactive in the compose file.
 +
 [source,yaml]
 ----
@@ -21,20 +21,20 @@ services:
       dockerfile: develop.dockerfile
       args:
         WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
-#        custom cli script futtatása, ha a deploymenthez kell
+#        Run custom CLI scripts if required for deployment.
         SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
     environment:
       MP_CONFIG_PROFILE: kafka
 ----
-Szükséges a "kafka" microprofile-config profile kapcsoló is,
-mert a konfiguráció összeakadhat a másik mintákkal 
+It is necessary to use the "kafka" MicroProfile Config profile switch 
+because the configuration might clash with other examples.
 
-== Végpontok
+== Endpoints
 
 === GET `/rest/sample`
 
-Nincs egyenlőre Kafka funkcióra kötve.
+Currently not bound to Kafka functionality.
 
 === POST `/rest/sample`
 
-. Üzenetet küld és olvas `testing` kafka topicra/ból.
+. Sends and reads messages to/from the testing Kafka topic.

@@ -1,16 +1,16 @@
 = Redis pub-sub service
 `sample/sample-redispubsub-service`
 
-A service célja a redis Pub/Sub kezelés használatának bemutatása egyszerű publish/subscribe mintával.
-A service a coff:ee redispubsub moduljára épül, erről bővebb információ itt található: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-redispubsub
+The purpose of the service is to demonstrate the usage of Redis Pub/Sub handling with a simple publish/subscribe pattern.
+The service is built on the coff:ee Redis Pub/Sub module. For more information, you can find details here: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-redispubsub
 
-A service használata
+How to use the service
 
-. futtatni kell a dockeres redist.
+. You need to run Dockerized Redis.
 +
-pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
-. docker-compose.local.wildfly.yml-t pub-sub ready widlfly modulokkal kell elindítani
-* ezt a compose fájlban a SERVICE_CLI_DIR build arg `wildfly/cli/mp-reactive`-ra állításával tehetjük meg
+For example.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
+. Start the docker-compose.local.wildfly.yml with Pub-Sub ready WildFly modules.
+* You can achieve this by setting the SERVICE_CLI_DIR build argument to `wildfly/cli/mp-reactive` in the compose file.
 +
 [source,yaml]
 ----
@@ -22,22 +22,22 @@ services:
       dockerfile: develop.dockerfile
       args:
         WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
-#        custom cli script futtatása, ha a deploymenthez kell
+#        Custom CLI scripts can be executed if needed for deployment.
         SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
     environment:
       MP_CONFIG_PROFILE: redispubsub
 ----
-Szükséges a "redispubsub" microprofile-config profile kapcsoló is,
-mert a konfiguráció összeakadhat a másik mintákkal 
+The "redispubsub" MicroProfile Config profile switch is necessary 
+because the configuration might conflict with other examples.
 
-== Végpontok
+== Endpoints
 
 === GET `/rest/sample`
 
-A válasz `columnA` mezőjében visszaadja `sample-get` redis channelről utoljára olvasott értéket
-(`GetListener` olvas és `ApplicationContainer`-be ment, innen veszi a REST az értéket).
+The response returns the last read value from the `sample-get` Redis channel in the `columnA` field.
+(`GetListener` reads and stores in `ApplicationContainer`, from where REST retrieves the value).
 
-A channelre beküldeni redis-cli-vel tudunk pl.:
+To publish a message to the channel using redis-cli:
 
 [source, shell]
 ----
@@ -49,11 +49,12 @@ docker exec -it bs-sample-redis redis-cli
 === POST `/rest/sample`
 
 . Üzenetet küld a `sample-post` és `no-sub` redis channelekre.
-. a `PostInListener` olvas a `sample-post` channelről, a kapott üzenetet cacheli `ApplicationContainer`-be
-és tovább küldi (mégegyszer) a `no-sub` redis channelre.
-. a REST közben vár 1 sec-et, majd kiolvassa az `ApplicationContainer`-ből az üzenetet - vagy BONotFound-ot dob, ha nem találja
+Sends a message to the `sample-post` and `no-sub` Redis channels.
+. `PostInListener` reads from the `sample-post` channel, caches the received message in 
+`ApplicationContainer`, and forwards it (again) to the `no-sub` Redis channel.
+. REST waits for 1 second during processing, then retrieves the message from `ApplicationContainer`. If not found, it throws a BONotFound error.
 
-Ha szeretnénk a `no-sub` channelre redis-cli-vel fel tudunk iratkozni.
+To subscribe to the no-sub channel using redis-cli:
 [source, shell]
 ----
 docker exec -it bs-sample-redis redis-cli
