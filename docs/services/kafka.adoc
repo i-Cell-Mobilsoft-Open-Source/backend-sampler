@@ -1,0 +1,40 @@
+= Kafka service
+`sample/sample-kafka-service`
+
+Service célja a Kafka kezelés használatának bemutatása egyszerű használati mintákkal.
+
+A service használata
+
+. futtatni kell a dockeres kafka-t.
++
+pl.: `docker compose up -f etc/docker-compose/docker-compose.local.kafka.yml up -d`
+. docker-compose.local.wildfly.yml-t microprofile reactive widlfly modulokkal kell elindítani
+* ezt a compose fájlban a SERVICE_CLI_DIR build arg `wildfly/cli/mp-reactive`-ra állításával tehetjük meg
++
+[source,yaml]
+----
+services:
+  sample-service:
+    container_name: bs-sample-service
+    build:
+      context: .
+      dockerfile: develop.dockerfile
+      args:
+        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
+#        custom cli script futtatása, ha a deploymenthez kell
+        SERVICE_CLI_DIR: 'wildfly/cli/mp-reactive'
+    environment:
+      MP_CONFIG_PROFILE: kafka
+----
+Szükséges a "kafka" microprofile-config profile kapcsoló is,
+mert a konfiguráció összeakadhat a másik mintákkal 
+
+== Végpontok
+
+=== GET `/rest/sample`
+
+Nincs egyenlőre Kafka funkcióra kötve.
+
+=== POST `/rest/sample`
+
+. Üzenetet küld és olvas `testing` kafka topicra/ból.
