@@ -20,6 +20,7 @@ services:
         SERVICE_CLI_DIR: 'wildfly/cli/mp-all'
     volumes:
       - './wildfly/sample.properties:/sampler/wildfly.properties'
+      - '../config/kafka/client.truststore.jks:/sampler/client.truststore.jks'
     ports:
       - '8081:8080'
       - '9991:9990'

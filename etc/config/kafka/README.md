@@ -15,3 +15,13 @@ Importálja a Kafka szerver tanúsítványát a saját kulcstárába:
 Ahhoz, hogy a kliens megbízzon a Kafka szerverben, szüksége van a Kafka szerver tanúsítványára a saját kulcstárában:
 
     keytool -keystore client.truststore.jks -alias kafka-server -import -file kafka-server-cert.cer -storepass client-pass -noprompt
+
+A kafka service-ben 'kafka-acls.sh'-val jogokat adunk a topic-ra 'kafka-client'-nek
+
+    kafka-acls.sh --bootstrap-server localhost:9094 --command-config /bitnami/kafka/config/client.properties --add --allow-principal User:kafka-client --operation Read --group '*'
+    kafka-acls.sh --bootstrap-server localhost:9094 --command-config /bitnami/kafka/config/client.properties --add --allow-principal User:kafka-client --operation Read --topic testing
+    kafka-acls.sh --bootstrap-server localhost:9094 --command-config /bitnami/kafka/config/client.properties --add --allow-principal User:kafka-client --operation Write --topic testing
+
+Jogosultság listàzása:
+
+    kafka-acls.sh --bootstrap-server localhost:9094 --list --command-config /bitnami/kafka/config/client.properties
