@@ -118,7 +118,8 @@
                 <artifactId>smallrye-config-source-yaml</artifactId>
                 <version>${version.io.smallrye.config.source.yaml}</version>
             </dependency>
-            <!-- a ConfigProperty annotacio miatt szukseges-->
+            <!-- a ConfigProperty annotacio miatt javadoc WARNING majd sikertelen build miatt kell-->
+            <!-- az ide vonatkozo bug: https://github.com/quarkusio/quarkus/issues/19970 -->
             <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>osgi.annotation</artifactId>
