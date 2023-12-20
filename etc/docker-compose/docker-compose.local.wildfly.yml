@@ -1,7 +1,7 @@
 version: "3.8"
 
 # futtatas
-# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --build --force-recreate
+# docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --build --force-recreate
 #
 # belemaszas
 # docker exec -it bs-sample-service /bin/bash
@@ -11,15 +11,9 @@ version: "3.8"
 services:
   sample-service:
     container_name: bs-sample-service
-    build:
-      context: .
-      dockerfile: develop.dockerfile
-      args:
-        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
-#        custom cli script futtatása, ha a deploymenthez kell
-        SERVICE_CLI_DIR: 'wildfly/cli/mp-all'
+    image: icellmobilsoft/wildfly-mp-full:2.0.0-SNAPSHOT
     volumes:
-      - './wildfly/sample.properties:/sampler/wildfly.properties'
+      - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
     ports:
       - '8081:8080'
       - '9991:9990'

@@ -1,5 +1,7 @@
 version: '2'
 
+# run from project directory
+# docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.etcd.yml up --build --force-recreate
 services:
   etcd:
     container_name: bs-sample-etcd
