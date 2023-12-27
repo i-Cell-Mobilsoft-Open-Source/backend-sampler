@@ -5,11 +5,11 @@
 
     <target name="deploy-war-docker" description="Deploys war to running container via mvn">
         <echo>Deploying service:[${service.name}] to wildfly with copy...</echo>
-        <echo>docker cp ${basedir}/target/${service.name}-${service.version}.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war</echo>
+        <echo>docker cp ${basedir}/target/${service.name}-${service.version}.war bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war</echo>
         <exec executable="docker" taskname="docker cp" failonerror="true">
             <arg value="cp"/>
             <arg value="${basedir}/target/${service.name}-${service.version}.war"/>
-            <arg value="bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war"/>
+            <arg value="bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war"/>
         </exec>
         <echo>Service:[${service.name}] was copied to wildfly!</echo>
         <antcall target="setenv.print-properties"/>
