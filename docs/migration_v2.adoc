@@ -75,10 +75,6 @@ különben jön a generálásnál a "x-schema::tns" hiba.
 A WF dependency-je megváltozott, és csomó API-t felülírtak sajátukra.
 Ezeket a bom-jee dependency szinten le kell "szögelni" fix verziókra.
 
-=== sample-quarkus
-Jakarta EE10 quarkus release után ez a modul is frissíthető,
-addig inaktiválva van a pom.xml-en keresztül.
-
 === DTO generálás probléma
 Nincs jelenleg jaxb 4 generátor csak forkolt jaxb 3,
 ami működik, de nem végleges megoldás.
