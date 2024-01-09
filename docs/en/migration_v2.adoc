@@ -76,10 +76,6 @@ The dependencies of WF have changed, and overridden many APIs with their own imp
 It is necessary to "pin" these dependencies to fixed versions at the bom-jee dependency level
 
 
-=== sample-quarkus
-After the Jakarta EE10 quarkus release, this modul can be updated,
-until then, it is disabled cia the pom.xml configuration.
-
 === DTO generation issue
 Currently, there is no jaxb 4 generator available, only forked version of jaxb 3 is available,
 which is works but is not a permanent solution.

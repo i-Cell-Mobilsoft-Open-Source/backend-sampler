@@ -13,7 +13,6 @@
     <modules>
         <module>bom-jee</module>
         <module>bom-wf</module>
-        <module>bom-quarkus</module>
         <module>bom-sampler</module>
         <module>bom-all</module>
     </modules>
