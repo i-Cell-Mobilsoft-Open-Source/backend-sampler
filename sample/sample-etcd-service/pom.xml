@@ -23,6 +23,15 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>
+
+        <!-- workaround for javadoc generation warning:
+          warning: unknown enum constant Resolution.OPTIONAL
+          reason: class file for org.osgi.annotation.bundle.Requirement$Resolution not found -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.annotation</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

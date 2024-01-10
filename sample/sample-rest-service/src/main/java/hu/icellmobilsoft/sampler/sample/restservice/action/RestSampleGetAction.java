@@ -20,6 +20,7 @@
 package hu.icellmobilsoft.sampler.sample.restservice.action;
 
 import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
@@ -28,6 +29,10 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
+import io.opentelemetry.api.common.AttributeKey;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
 
 /**
  * Sample action
@@ -38,6 +43,9 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 @Model
 public class RestSampleGetAction extends BaseAction {
 
+    @Inject
+    private Tracer tracer;
+
     /**
      * Dummy sample reponse
      * 
@@ -46,6 +54,8 @@ public class RestSampleGetAction extends BaseAction {
      *             if error
      */
     public SampleResponse sample() throws BaseException {
+        Span span = tracer.spanBuilder("Sample GET action span").startSpan();
+
         SampleResponse response = new SampleResponse();
 
         SampleType sampleType = new SampleType();
@@ -54,8 +64,10 @@ public class RestSampleGetAction extends BaseAction {
         sampleType.setColumnA("A");
         sampleType.setColumnB(SampleValueEnumType.VALUE_A);
         response.setSample(sampleType);
+        span.addEvent("construct response type", Attributes.of(AttributeKey.stringKey("sample.id"), sampleType.getSampleId()));
 
         handleSuccessResultType(response);
+        span.end();
         return response;
     }
 }
