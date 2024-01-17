@@ -24,6 +24,8 @@ services:
 #      JAEGER_SERVICE_NAME: bs-sample-service
       # bug, nem veszi a beallitast https://issues.redhat.com/browse/WFLY-18631
       OPENTELEMETRY_SERVICE_NAME: bs-sample-service
+      # athidalo megoldas a service nevere
+      OTEL_SERVICE_NAME: bs-sample-service
       OPENTELEMETRY_SAMPLER_TYPE: on # default is ratio with 0.01
       # 1. -> jaeger, hagyomanyos
       #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:14250

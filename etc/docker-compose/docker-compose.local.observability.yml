@@ -35,10 +35,17 @@ services:
             #- '14250:14250' # Collector |14250 |sampling.proto |gRPC |For SDKs that want to use gRPC (e.g. OpenTelemetry Java SDK)
     opentelemetry-collector:
         container_name: opentelemetry-collector
-        image: otel/opentelemetry-collector:0.91.0
+        image: otel/opentelemetry-collector:0.92.0
+        # contrib collector repo e.g. tail_sampling processor
+        # https://github.com/open-telemetry/opentelemetry-collector-contrib
+        # image: otel/opentelemetry-collector-contrib:0.92.0
         command: [--config=/etc/otel-collector-config.yaml]
         volumes:
             - ../config/opentelemetry/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+#            - ../config/opentelemetry/otel-collector-probabilistic-sampling-config.yaml:/etc/otel-collector-config.yaml
+#            - ../config/opentelemetry/otel-collector-tail-sampling-config.yaml:/etc/otel-collector-config.yaml
+            # example sampling strategies to otelcol 
+            - ../config/jaeger/sampling_strategies.json:/etc/otelcol/sampling_strategies.json
         ports:
             - 1888:1888 # pprof extension
             - 8888:8888 # Prometheus metrics exposed by the collector
