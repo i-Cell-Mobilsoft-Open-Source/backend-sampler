@@ -38,6 +38,8 @@ services:
       MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
 #      MP_CONFIG_PROFILE: redispubsub
       MP_CONFIG_PROFILE: kafka
+      HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
+      DEBUG: "true"
     deploy:
       resources:
         limits:
