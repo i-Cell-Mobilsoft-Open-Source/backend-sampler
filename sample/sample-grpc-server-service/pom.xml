@@ -29,14 +29,22 @@
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty</artifactId>
         </dependency>
+<!--
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
             <artifactId>coffee-grpc-metrics-impl</artifactId>
         </dependency>
+-->
+        <dependency>
+            <groupId>hu.icellmobilsoft.coffee</groupId>
+            <artifactId>coffee-grpc-metrics-micrometer</artifactId>
+        </dependency>
+<!--
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
             <artifactId>coffee-grpc-opentracing-impl</artifactId>
         </dependency>
+-->
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.api</groupId>
             <artifactId>api-grpc-stub-gen</artifactId>

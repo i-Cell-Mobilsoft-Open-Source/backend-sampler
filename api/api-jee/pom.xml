@@ -26,7 +26,7 @@
 
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-rest</artifactId>
+            <artifactId>coffee-cdi</artifactId>
         </dependency>
 
         <!--Test dependecies -->
