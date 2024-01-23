@@ -32,7 +32,7 @@
 <!--
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-grpc-metrics-impl</artifactId>
+            <artifactId>coffee-grpc-metrics-mpmetrics</artifactId>
         </dependency>
 -->
         <dependency>

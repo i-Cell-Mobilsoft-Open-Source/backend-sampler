@@ -19,6 +19,10 @@
             <groupId>hu.icellmobilsoft.coffee</groupId>
             <artifactId>coffee-module-mp-opentracing</artifactId>
         </dependency>
+        <dependency>
+            <groupId>hu.icellmobilsoft.coffee</groupId>
+            <artifactId>coffee-module-mp-mpmetrics</artifactId>
+        </dependency>
 -->
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
