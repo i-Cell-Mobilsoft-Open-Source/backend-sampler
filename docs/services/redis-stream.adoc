@@ -1,0 +1,6 @@
+= Redis stream service
+`sample/sample-redisstream-service`
+
+A service célja a redis stream kezelés használatának bemutatása egyszerű üzenet küldéssel. A service a coff:ee redisstream moduljára épül, erről bővebb információ itt található: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-redisstream
+
+A service használatához először futtatni kell a dockeres redist. pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
