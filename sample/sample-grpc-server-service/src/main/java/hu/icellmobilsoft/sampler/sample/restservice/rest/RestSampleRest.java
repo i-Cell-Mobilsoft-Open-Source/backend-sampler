@@ -22,8 +22,6 @@ package hu.icellmobilsoft.sampler.sample.restservice.rest;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
 import hu.icellmobilsoft.sampler.common.system.rest.rest.BaseRestService;
@@ -41,16 +39,19 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 public class RestSampleRest extends BaseRestService implements ISampleRest {
 
     @Inject
-    private RestSampleGetAction action;
+    private RestSampleGetAction restSampleGetAction;
+
+    @Inject
+    private RestSamplePostAction restSamplePostAction;
 
     @Override
     public SampleResponse getSample() throws BaseException {
-        return wrapNoParam(action::sample, "getSample");
+        return wrapNoParam(restSampleGetAction::sample, "getSample");
     }
 
     @Override
     public SampleResponse postSample(SampleRequest sampleRequest) throws BaseException {
-        throw new NotImplementedException();
+        return wrapPathParam1(restSamplePostAction::postSample, sampleRequest, "getSample", "sampleRequest");
     }
 
 }

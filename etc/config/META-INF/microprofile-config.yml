@@ -1,4 +1,8 @@
 coffee:
+  config:
+    datasource:
+      default:
+        name: ExampleDS
   mongodb:
     sample:
       database: sample_db

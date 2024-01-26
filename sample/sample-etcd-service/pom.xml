@@ -23,6 +23,22 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>
+
+        <!-- workaround for javadoc generation warning:
+          warning: unknown enum constant Resolution.OPTIONAL
+          reason: class file for org.osgi.annotation.bundle.Requirement$Resolution not found -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.annotation</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- frisebb vertx-core van a WF30-ban mint ami a coffee-bol jon (jetcd-core 0.7.5) -->
+        <dependency>
+            <groupId>io.etcd</groupId>
+            <artifactId>jetcd-core</artifactId>
+            <version>0.7.7</version>
+        </dependency>
     </dependencies>
 
     <build>
