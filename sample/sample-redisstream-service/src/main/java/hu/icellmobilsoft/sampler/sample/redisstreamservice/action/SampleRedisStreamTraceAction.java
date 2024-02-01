@@ -19,12 +19,13 @@
  */
 package hu.icellmobilsoft.sampler.sample.redisstreamservice.action;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
 import hu.icellmobilsoft.coffee.cdi.trace.annotation.Traced;
 import hu.icellmobilsoft.coffee.cdi.trace.constants.SpanAttribute;
 import hu.icellmobilsoft.coffee.cdi.trace.spi.ITraceHandler;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 /**
  * Sample trace

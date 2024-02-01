@@ -19,7 +19,11 @@
  */
 package hu.icellmobilsoft.sampler.sample.redisstreamservice.action;
 
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
+
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.module.redisstream.annotation.RedisStreamProducer;
 import hu.icellmobilsoft.coffee.module.redisstream.publisher.RedisStreamPublisher;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
@@ -31,8 +35,6 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.redisstreamservice.config.RedisStreamConfig;
-import jakarta.enterprise.inject.Model;
-import jakarta.inject.Inject;
 
 /**
  * Sample post action to publish message
@@ -48,7 +50,7 @@ public class RedisStreamSamplePostAction extends BaseAction {
 
     @Inject
     @RedisStreamProducer(configKey = RedisStreamConfig.REDIS_KEY, group = RedisStreamConfig.REDIS_KEY)
-    private RedisStreamPublisher publusher;
+    private RedisStreamPublisher publisher;
 
     /**
      * Dummy sample to publish message
@@ -59,12 +61,14 @@ public class RedisStreamSamplePostAction extends BaseAction {
      * @throws BaseException
      *             if error
      */
-    public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
-
+    public SampleResponse samplePublish(SampleRequest sampleRequest) throws BaseException {
+        if (sampleRequest == null) {
+            throw new InvalidParameterException("sampleRequest cannot be null");
+        }
         // create dummy
         SampleType dummy = createDummy();
 
-        publusher.publish("dummy");
+        publisher.publish("dummy");
 
         SampleResponse response = new SampleResponse();
         response.setSample(dummy);

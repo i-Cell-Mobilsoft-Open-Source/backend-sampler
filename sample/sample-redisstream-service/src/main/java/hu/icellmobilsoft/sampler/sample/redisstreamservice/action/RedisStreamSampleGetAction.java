@@ -19,6 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.sample.redisstreamservice.action;
 
+import jakarta.enterprise.inject.Model;
+
 import hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
@@ -30,7 +32,6 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
-import jakarta.enterprise.inject.Model;
 
 /**
  * Service for rest

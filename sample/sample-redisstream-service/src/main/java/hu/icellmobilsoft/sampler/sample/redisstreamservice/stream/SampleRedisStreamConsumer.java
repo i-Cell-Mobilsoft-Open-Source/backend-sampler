@@ -19,6 +19,9 @@
  */
 package hu.icellmobilsoft.sampler.sample.redisstreamservice.stream;
 
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
+
 import org.apache.commons.lang3.StringUtils;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
@@ -28,8 +31,6 @@ import hu.icellmobilsoft.coffee.module.redisstream.consumer.AbstractStreamConsum
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.sample.redisstreamservice.action.SampleRedisStreamTraceAction;
 import hu.icellmobilsoft.sampler.sample.redisstreamservice.config.RedisStreamConfig;
-import jakarta.enterprise.inject.Model;
-import jakarta.inject.Inject;
 
 /**
  * Sample consumer

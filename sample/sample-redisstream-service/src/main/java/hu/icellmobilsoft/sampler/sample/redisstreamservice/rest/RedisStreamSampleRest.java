@@ -52,6 +52,6 @@ public class RedisStreamSampleRest extends BaseRestService implements ISampleRes
 
     @Override
     public SampleResponse postSample(SampleRequest sampleRequest) throws BaseException {
-        return wrapPathParam1(redisStreamSamplePostAction::sampleWriteRead, sampleRequest, "postSample", "sampleRequest");
+        return wrapPathParam1(redisStreamSamplePostAction::samplePublish, sampleRequest, "postSample", "sampleRequest");
     }
 }
