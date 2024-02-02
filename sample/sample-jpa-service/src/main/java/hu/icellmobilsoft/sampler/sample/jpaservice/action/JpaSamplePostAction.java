@@ -145,6 +145,10 @@ public class JpaSamplePostAction extends BaseAction {
             throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
+        transactionHelper.executeWithTransaction(() -> {
+            sampleEntityService.updateAllStatusAndInputValue(SampleStatus.DONE, "done");
+        });
+
         SampleResponse response = new SampleResponse();
         response.setSample(sampleTypeConverter.convert(readed));
 

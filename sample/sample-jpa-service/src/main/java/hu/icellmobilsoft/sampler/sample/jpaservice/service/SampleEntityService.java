@@ -29,6 +29,7 @@ import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.jpa.service.BaseService;
 import hu.icellmobilsoft.sampler.model.sample.SampleEntity;
+import hu.icellmobilsoft.sampler.model.sample.SampleEntity_;
 import hu.icellmobilsoft.sampler.model.sample.enums.SampleStatus;
 import hu.icellmobilsoft.sampler.sample.jpaservice.repository.SampleEntityRepository;
 
@@ -59,5 +60,25 @@ public class SampleEntityService extends BaseService<SampleEntity> {
      */
     public List<SampleEntity> findAllByStatus(SampleStatus status) throws BaseException {
         return wrapListValidated(sampleEntityRepository::findAllByStatus, status, "findAllByStatus", "status");
+    }
+
+    /**
+     * Updates all SampleEntity entity with the given params
+     *
+     * @param sampleStatus new sampleStatus
+     * @param inputValue   new inputValue
+     * @return status of update
+     * @throws BaseException on error
+     */
+    public int updateAllStatusAndInputValue(SampleStatus sampleStatus, String inputValue) throws BaseException {
+
+        return wrapValidated(
+                sampleEntityRepository::updateAllSampleStatusAndInputValue,
+                sampleStatus,
+                inputValue,
+                "updateAllSampleStatusAndInputValue",
+                SampleEntity_.STATUS,
+                SampleEntity_.INPUT_VALUE
+        );
     }
 }
