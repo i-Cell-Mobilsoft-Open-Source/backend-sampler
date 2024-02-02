@@ -36,14 +36,10 @@ import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
 
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.microprofile.metrics.Metadata;
-import org.eclipse.microprofile.metrics.MetricRegistry;
-import org.eclipse.microprofile.metrics.MetricType;
-import org.eclipse.microprofile.metrics.MetricUnits;
-import org.eclipse.microprofile.metrics.Tag;
-import org.eclipse.microprofile.metrics.Timer;
 
 import hu.icellmobilsoft.sampler.dto.path.SamplePath;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 
 /**
  * JAXRS provider for handling request/response metrics
@@ -57,8 +53,10 @@ public class RequestResponseMetricsProvider implements ContainerRequestFilter, W
     @Inject
     private MetricsContainer metricsContainer;
 
+    // @Inject
+    // private MetricRegistry metricRegistry;
     @Inject
-    private MetricRegistry metricRegistry;
+    private MeterRegistry meterRegistry;
 
     @Context
     private HttpServletResponse httpServletResponse;
@@ -92,12 +90,16 @@ public class RequestResponseMetricsProvider implements ContainerRequestFilter, W
      *            http request url
      */
     private void updateResponseTimer(String url) {
-        Metadata metadata = Metadata.builder() //
-                .withName("sample_http_response_time").withDescription("Input HTTP sample request count and response times.")
-                .withType(MetricType.TIMER).withUnit(MetricUnits.MILLISECONDS).build();
-        Tag responseCodeTag = new Tag("url", url);
 
-        Timer timer = metricRegistry.timer(metadata, responseCodeTag);
-        timer.update(Duration.between(metricsContainer.getStartTime(), LocalDateTime.now()));
+        // Metadata metadata = Metadata.builder() //
+        // .withName("sample_http_response_time").withDescription("Input HTTP sample request count and response times.")
+        // .withType(MetricType.TIMER).withUnit(MetricUnits.MILLISECONDS).build();
+        // Tag responseCodeTag = new Tag("url", url);
+
+        // Timer timer = metricRegistry.timer(metadata, responseCodeTag);
+        // timer.update(Duration.between(metricsContainer.getStartTime(), LocalDateTime.now()));
+        Timer timer = Timer.builder("sample_http_response_time").description("Input HTTP sample request count and response times.").tag("url", url)
+                .register(meterRegistry);
+        timer.record(Duration.between(metricsContainer.getStartTime(), LocalDateTime.now()));
     }
 }

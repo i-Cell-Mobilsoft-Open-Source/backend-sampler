@@ -11,11 +11,11 @@
 			<module name="org.apache.httpcomponents" />
 			<module name="com.google.guava" />
 			<module name="com.google.code.gson"/>
-			<!-- io.smallrye.config:smallrye-config-source-yaml miatt kell -->
+			<!-- Needed because of io.smallrye.config:smallrye-config-source-yaml. -->
 			<module name="io.smallrye.common.classloader" />
 			<module name="org.yaml.snakeyaml" />
 			<module name="io.smallrye.common.constraint" />
-			<!-- Kafka reactive message MDC miatt kell -->
+			<!-- Needed for Kafka reactive message MDC. -->
 			<module name="io.vertx.core"/>
 		</dependencies>
 	</deployment>

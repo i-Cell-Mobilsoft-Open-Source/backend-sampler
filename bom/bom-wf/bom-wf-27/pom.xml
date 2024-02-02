@@ -25,7 +25,7 @@
 -->
 
         <!-- from wildfly-microprofile import-->
-        <version.org.eclipse.microprofile.config>3.0.1</version.org.eclipse.microprofile.config>
+        <version.org.eclipse.microprofile.config>3.0.3</version.org.eclipse.microprofile.config>
         <version.org.eclipse.microprofile.health>4.0</version.org.eclipse.microprofile.health>
         <version.org.eclipse.microprofile.metrics>4.0</version.org.eclipse.microprofile.metrics>
         <version.org.eclipse.microprofile.openapi>3.0</version.org.eclipse.microprofile.openapi>
@@ -53,6 +53,8 @@
         <version.com.google.guava.guava>31.1-jre</version.com.google.guava.guava>
         <version.com.google.code.gson>2.8.9</version.com.google.code.gson>
         <version.org.yaml.snakeyaml>1.33</version.org.yaml.snakeyaml>
+
+        <version.io.netty>4.1.76.Final</version.io.netty>
     </properties>
 
     <dependencyManagement>
@@ -263,6 +265,56 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${version.org.yaml.snakeyaml}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- vertx kapcsan erintett fuggosegek-->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-buffer</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http2</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-common</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-socks</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler</artifactId>
+                <version>${version.io.netty}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler-proxy</artifactId>
+                <version>${version.io.netty}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>

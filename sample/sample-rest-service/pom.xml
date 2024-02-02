@@ -19,6 +19,11 @@
             <artifactId>common-system-rest</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>hu.icellmobilsoft.roaster</groupId>
             <artifactId>roaster-weldunit</artifactId>
         </dependency>

@@ -1,5 +1,6 @@
 version: "3.8"
 
+# docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.redis.yml up --build --force-recreate
 services:
   sample-redis:
     container_name: bs-sample-redis

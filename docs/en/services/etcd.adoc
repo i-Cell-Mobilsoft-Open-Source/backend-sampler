@@ -1,0 +1,6 @@
+= Etcd service
+`sample/sample-etcd-service`
+
+The purpose of the service is to demonstrate the usage of etcd for simple read/write operations. The service is built on the coff:ee etcd module. More detailed information about this module can be found here: https://i-cell-mobilsoft-open-source.github.io/coffee/#common_module_coffee-module-etcd
+
+To use the service, you need to first run the Docker etcd database. for example.: `docker-compose up -f etc/docker-compose/docker-compose.local.etcd.yml up -d`

@@ -17,6 +17,7 @@
         <module>common-system-rest</module>
         <module>common-jpa</module>
         <module>common-system-jpa</module>
+        <module>common-etcd</module>
     </modules>
 
     <dependencyManagement>

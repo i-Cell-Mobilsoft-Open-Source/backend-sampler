@@ -21,10 +21,14 @@ package hu.icellmobilsoft.sampler.sample.restservice.test.action;
 
 import jakarta.inject.Inject;
 
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.junit.MockBean;
+import org.jboss.weld.junit5.WeldInitiator.Builder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
@@ -32,6 +36,7 @@ import hu.icellmobilsoft.roaster.weldunit.BaseWeldUnitType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.sample.restservice.action.RestSampleGetAction;
+import io.micrometer.core.instrument.MeterRegistry;
 
 /**
  * Weld unit test for SampleAction
@@ -45,6 +50,17 @@ class SampleActionTest extends BaseWeldUnitType {
 
     @Inject
     private RestSampleGetAction underTest;
+
+    @Override
+    protected void configureWeld(Weld weld) {
+        weld.addBeanClass(TracerProducer.class);
+    }
+
+    @Override
+    protected void configureWeldInitiatorBuilder(Builder weldInitiatorBuilder) {
+        weldInitiatorBuilder.addBeans(MockBean.of(Mockito.mock(MeterRegistry.class), MeterRegistry.class));
+        super.configureWeldInitiatorBuilder(weldInitiatorBuilder);
+    }
 
     @Test
     void getSample() throws Exception {

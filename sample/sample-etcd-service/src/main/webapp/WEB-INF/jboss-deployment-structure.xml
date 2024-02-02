@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+	<deployment>
+		<dependencies>
+			<module name="org.apache.commons.io" />
+			<module name="org.apache.commons.codec" />
+			<module name="org.apache.commons.beanutils" />
+			<module name="org.apache.commons.collections" />
+			<module name="org.apache.commons.lang3" />
+			<module name="org.apache.httpcomponents" />
+			<module name="com.google.guava" />
+			<module name="com.google.code.gson" />
+			<!-- io.smallrye.config:smallrye-config-source-yaml miatt kell -->
+			<module name="io.smallrye.common.classloader" />
+			<module name="org.yaml.snakeyaml" />
+			<module name="io.smallrye.common.constraint" />
+			<module name="io.vertx.core" />
+			<module name="org.apache.commons.lang3" />
+			<module name="io.netty.netty-buffer" />
+			<module name="io.netty.netty-codec" />
+			<module name="io.netty.netty-codec-http" />
+			<module name="io.netty.netty-codec-http2" />
+			<module name="io.netty.netty-common" />
+			<module name="io.netty.netty-codec-socks" />
+			<module name="io.netty.netty-handler" />
+			<module name="io.netty.netty-handler-proxy" />
+			<module name="io.netty.netty-transport"/>
+		</dependencies>
+	</deployment>
+</jboss-deployment-structure>

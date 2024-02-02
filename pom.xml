@@ -260,9 +260,6 @@
     	<module>model</module>
         <module>common</module>
         <module>sample</module>
-<!--
-        <module>sample-quarkus</module>
--->
         <module>testsuite</module>
     </modules>
 

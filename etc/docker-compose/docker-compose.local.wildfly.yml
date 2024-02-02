@@ -1,7 +1,7 @@
 version: "3.8"
 
 # futtatas
-# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --build --force-recreate
+# docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --build --force-recreate
 #
 # belemaszas
 # docker exec -it bs-sample-service /bin/bash
@@ -11,25 +11,35 @@ version: "3.8"
 services:
   sample-service:
     container_name: bs-sample-service
-    build:
-      context: .
-      dockerfile: develop.dockerfile
-      args:
-        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
-#        custom cli script futtatása, ha a deploymenthez kell
-        SERVICE_CLI_DIR: 'wildfly/cli/mp-all'
+    image: icellmobilsoft/wildfly-mp-full:3.0.0-SNAPSHOT
     volumes:
-      - './wildfly/sample.properties:/sampler/wildfly.properties'
+      - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
     ports:
       - '8081:8080'
       - '9991:9990'
       - '8788:8787'
       - '8199:8199' #GRPC
     environment:
-      OPENTRACING_JAEGER_AGENT_HOST: jaeger
-      JAEGER_SERVICE_NAME: bs-sample-service
+#      OPENTRACING_JAEGER_AGENT_HOST: jaeger
+#      JAEGER_SERVICE_NAME: bs-sample-service
+      # bug, nem veszi a beallitast https://issues.redhat.com/browse/WFLY-18631
+      OPENTELEMETRY_SERVICE_NAME: bs-sample-service
+      # athidalo megoldas a service nevere
+      OTEL_SERVICE_NAME: bs-sample-service
+      OPENTELEMETRY_SAMPLER_TYPE: on # default is ratio with 0.01
+      # 1. -> jaeger, hagyomanyos
+      #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:14250
+      # 2. -> jaeger otlp
+      #OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
+      #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:4317
+      # 3. -> otlp-collector -> jaeger otlp
+      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
+      OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
+      MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
 #      MP_CONFIG_PROFILE: redispubsub
       MP_CONFIG_PROFILE: kafka
+      HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
+      DEBUG: "true"
     deploy:
       resources:
         limits:
