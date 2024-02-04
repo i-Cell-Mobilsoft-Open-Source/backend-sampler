@@ -1,0 +1,45 @@
+version: "3.8"
+
+name: backend-sampler
+
+# futtatas
+# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly-oracle.yml up --build --force-recreate
+#
+# belemaszas
+# docker exec -it bs-sample-service /bin/bash
+#
+# uresbe inditas
+# docker run --rm -it docker-compose_sample-service /bin/bash
+services:
+  sample-service:
+    container_name: bs-sample-service
+    image: icellmobilsoft/wildfly-mp-full-oracle-jdbc:3.0.0-SNAPSHOT
+    ports:
+      - '8081:8080'
+      - '9991:9990'
+      - '8788:8787'
+    environment:
+      # ORACLE - db/scripts/oracle-bs-sample-service.sql
+      ORACLE_DS_CONNECTION_URL: jdbc:oracle:thin:@bs-oracle19c:1521:xe
+      ORACLE_DS_USERNAME: bs_sample_service
+      ORACLE_DS_PASSWORD: bs_sample_service
+      HIBERNATE_DIALECT: org.hibernate.dialect.OracleDialect
+      # OPEN TELEMETRY
+      OTEL_SERVICE_NAME: bs-sample-service
+      OPENTELEMETRY_SERVICE_NAME: bs-sample-service
+      OPENTELEMETRY_SAMPLER_TYPE: on
+      OPENTELEMETRY_EXPORTER_TYPE: otlp
+      OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
+      MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
+      # OTHER
+      DEBUG: true
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+networks:
+  default:
+    external:
+      name: bs-local-network

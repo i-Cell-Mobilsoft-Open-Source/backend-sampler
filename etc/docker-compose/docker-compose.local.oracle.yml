@@ -1,0 +1,19 @@
+version: "3.8"
+
+name: backend-sampler
+
+services:
+  oracle:
+    container_name: bs-oracle19c
+    image: doctorkirk/oracle-19c
+    ports:
+      - "1521:1521"
+      - "1522:1522"
+    environment:
+      - ORACLE_SID=xe
+      - ORACLE_PWD=oracle
+
+networks:
+  default:
+    external:
+      name: bs-local-network

@@ -27,6 +27,11 @@
                 <artifactId>ts-common-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.testsuite</groupId>
+                <artifactId>ts-sample-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>hu.icellmobilsoft.roaster</groupId>

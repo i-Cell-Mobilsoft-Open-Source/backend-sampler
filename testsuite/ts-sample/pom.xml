@@ -12,6 +12,8 @@
     <modules>
         <module>ts-sample-rest</module>
         <module>ts-sample-grpc-server</module>
+        <module>ts-sample-jpa-batch-service</module>
+        <module>ts-sample-common</module>
     </modules>
 
     <dependencyManagement>

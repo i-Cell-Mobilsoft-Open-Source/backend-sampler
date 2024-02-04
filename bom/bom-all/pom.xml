@@ -17,6 +17,9 @@
         <!-- io.etcd:jetcd-core:0.7.7 vorking with this version -->
         <version.io.grpc>1.60.0</version.io.grpc>
 
+        <version.com.oracle.ojdbc>19.17.0.0</version.com.oracle.ojdbc>
+        <version.org.postgresql>42.5.1</version.org.postgresql>
+
         <version.org.junit.jupiter>5.10.1</version.org.junit.jupiter>
     </properties>
 
@@ -110,6 +113,25 @@
                 <groupId>io.smallrye.config</groupId>
                 <artifactId>smallrye-config-source-yaml</artifactId>
                 <version>${version.io.smallrye.config.source.yaml}</version>
+            </dependency>
+
+            <!-- oracle -->
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc10</artifactId>
+                <version>${version.com.oracle.ojdbc}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.database.nls</groupId>
+                <artifactId>orai18n</artifactId>
+                <version>${version.com.oracle.ojdbc}</version>
+            </dependency>
+
+            <!-- postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.org.postgresql}</version>
             </dependency>
 
             <!--Test dependecies -->

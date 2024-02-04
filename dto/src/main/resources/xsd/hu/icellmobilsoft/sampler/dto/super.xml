@@ -4,4 +4,13 @@
 
     <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/rest/post" />
 
+    <!-- batch -->
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/emptyentity"/>
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/jpaassociation"/>
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/javadata"/>
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/javaenumtypes"/>
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/javabasetypes"/>
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/javadateandtime"/>
+    <xs:import namespace="http://dto.sampler.icellmobilsoft.hu/sample/batch/jpaconverterentity"/>
+
 </xs:schema>

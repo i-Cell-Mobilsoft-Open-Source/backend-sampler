@@ -1,0 +1,4 @@
+ALTER SESSION SET "_ORACLE_SCRIPT"= TRUE;
+CREATE USER bs_sample_service IDENTIFIED BY bs_sample_service;
+GRANT CONNECT, RESOURCE, DBA TO bs_sample_service;
+GRANT CREATE SESSION TO bs_sample_service WITH ADMIN OPTION;
