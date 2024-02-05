@@ -25,6 +25,7 @@ import java.util.Map;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -32,6 +33,7 @@ import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Metadata;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
@@ -106,6 +108,9 @@ public class KafkaPublisher extends BaseAction {
      *             error
      */
     public void toKafkaString(String message) throws BaseException {
+        if (StringUtils.isEmpty(message)) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "message is missing");
+        }
         // Send message by system handled feature (not recommended)
         sendString(message);
 
@@ -163,6 +168,10 @@ public class KafkaPublisher extends BaseAction {
      *             error
      */
     public void toKafkaAvro(SampleKafkaDto message) throws BaseException {
+        if (message == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "message is missing");
+        }
+
         log.info("Sample Outgoing: [{0}] [{1}] [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
         try {
             messageEmitter.sendAndAwait(message);

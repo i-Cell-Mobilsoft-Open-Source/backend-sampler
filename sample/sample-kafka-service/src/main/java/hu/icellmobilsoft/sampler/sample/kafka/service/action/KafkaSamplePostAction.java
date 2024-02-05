@@ -23,6 +23,8 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
+import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
 import hu.icellmobilsoft.coffee.tool.utils.enums.EnumUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
@@ -56,6 +58,10 @@ public class KafkaSamplePostAction extends BaseAction {
      *             error
      */
     public SampleResponse sample(SampleRequest sampleRequest) throws BaseException {
+        if (sampleRequest == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "sampleRequest is missing");
+        }
+
         SampleResponse response = new SampleResponse();
         kafkaPublisher.toKafkaString("sample-" + DateUtil.nowUTC());
         kafkaPublisher.toKafkaAvro(convertToDto(sampleRequest));
