@@ -14,6 +14,8 @@
         <version.org.eclipse.microprofile>6.0</version.org.eclipse.microprofile>
         <version.hu.icellmobilsoft.roaster>2.1.0</version.hu.icellmobilsoft.roaster>
         <version.io.smallrye.config.source.yaml>3.3.4</version.io.smallrye.config.source.yaml>
+        <!-- io.etcd:jetcd-core:0.7.7 vorking with this version -->
+        <version.io.grpc>1.60.0</version.io.grpc>
 
         <version.org.junit.jupiter>5.10.1</version.org.junit.jupiter>
     </properties>
@@ -133,7 +135,27 @@
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-netty</artifactId>
-                <version>1.56.1</version>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-api</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-context</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${version.io.grpc}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
