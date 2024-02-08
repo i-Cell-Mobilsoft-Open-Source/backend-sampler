@@ -8,6 +8,7 @@
     <alternatives>
         <class>hu.icellmobilsoft.sampler.common.rest.locale.ProjectLocaleResolver</class>
         <class>hu.icellmobilsoft.sampler.common.rest.locale.ProjectMessageResolver</class>
+        <class>hu.icellmobilsoft.sampler.common.rest.restclient.provider.ProjectBaseExceptionResponseExceptionMapper</class>
         <class>hu.icellmobilsoft.sampler.common.rest.exception.ExceptionMessageTranslator</class>
     </alternatives>
 </beans>
