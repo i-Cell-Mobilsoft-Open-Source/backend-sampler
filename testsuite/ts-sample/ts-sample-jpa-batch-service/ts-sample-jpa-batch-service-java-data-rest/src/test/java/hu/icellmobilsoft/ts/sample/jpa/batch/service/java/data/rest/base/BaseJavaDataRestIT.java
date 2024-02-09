@@ -20,7 +20,7 @@
 package hu.icellmobilsoft.ts.sample.jpa.batch.service.java.data.rest.base;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaDataRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaDataRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataResponse;

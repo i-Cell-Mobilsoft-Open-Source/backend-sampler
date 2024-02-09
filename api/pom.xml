@@ -14,6 +14,7 @@
         <module>api-jee</module>
         <module>api-grpc</module>
         <module>api-schema</module>
+        <module>api-jee-batch</module>
     </modules>
 
     <dependencyManagement>

@@ -24,7 +24,7 @@ import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaDataRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaDataRest;
 import hu.icellmobilsoft.sampler.common.system.rest.rest.BaseRestService;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataResponse;

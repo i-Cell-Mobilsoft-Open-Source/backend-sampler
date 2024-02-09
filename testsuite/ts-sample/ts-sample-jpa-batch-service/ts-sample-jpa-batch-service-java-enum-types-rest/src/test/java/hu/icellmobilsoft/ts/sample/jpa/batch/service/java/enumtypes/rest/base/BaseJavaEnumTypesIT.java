@@ -20,7 +20,7 @@
 package hu.icellmobilsoft.ts.sample.jpa.batch.service.java.enumtypes.rest.base;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaEnumTypesRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaEnumTypesRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.BaseJavaEnumTypesType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.BatchOperationTypeType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesInsertRequest;

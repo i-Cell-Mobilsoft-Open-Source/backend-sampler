@@ -17,6 +17,10 @@
             <groupId>hu.icellmobilsoft.sampler.testsuite</groupId>
             <artifactId>ts-sample-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>hu.icellmobilsoft.sampler.api</groupId>
+            <artifactId>api-jee-batch</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.api.jee.rest.batch;
+package hu.icellmobilsoft.sampler.api.jee.batch.rest;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;

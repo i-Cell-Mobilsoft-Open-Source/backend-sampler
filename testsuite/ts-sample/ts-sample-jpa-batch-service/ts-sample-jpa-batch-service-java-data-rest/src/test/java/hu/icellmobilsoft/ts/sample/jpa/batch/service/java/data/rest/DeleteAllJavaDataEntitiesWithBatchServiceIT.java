@@ -31,7 +31,7 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaDataRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaDataRest;
 import hu.icellmobilsoft.ts.sample.jpa.batch.service.java.data.rest.base.BaseJavaDataRestIT;
 
 /**

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.api.jee.rest.batch;
+package hu.icellmobilsoft.sampler.api.jee.batch.rest;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -37,70 +37,71 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.dto.constant.XsdConstants;
 import hu.icellmobilsoft.sampler.dto.path.JpaBatchServicePath;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertRequest;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataResponse;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataUpdateRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesInsertRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesResponse;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesUpdateRequest;
 
 /**
- * REST endpoints for JavaData entities.
+ * REST endpoints for JavaEnumTypes entities.
  *
  * @author csaba.balogh
  * @since 2.0.0
  */
-@Tag(name = "REST endpoints for JavaData entities", description = "REST endpoints for JavaData entities")
-@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JAVA_DATA)
-public interface IJavaDataRest {
+@Tag(name = "REST endpoints for JavaEnumTypes entities", description = "REST endpoints for JavaEnumTypes entities")
+@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JAVA_ENUM_TYPES)
+public interface IJavaEnumTypesRest {
 
     /**
-     * Creates and inserts a JavaData entity with BatchService.
+     * Creates and inserts a JavaEnumTypes entity with BatchService.
      *
-     * @param javaDataInsertRequest
-     *            {@link JavaDataInsertRequest}.
-     * @return {@link JavaDataResponse}.
+     * @param javaEnumTypesInsertRequest
+     *            {@link JavaEnumTypesInsertRequest}.
+     * @return {@link JavaEnumTypesResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Creates and inserts a JavaData entity with BatchService.",
-            description = "Creates and inserts a JavaData entity with BatchService.")
+    @Operation(summary = "Creates and inserts a JavaEnumTypes entity with BatchService.",
+            description = "Creates and inserts a JavaEnumTypes entity with BatchService.")
     @POST
     @Path(JpaBatchServicePath.INSERT)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JavaDataResponse postInsertJavaDataEntityWithBatchService(
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaDataInsertRequest javaDataInsertRequest) throws BaseException;
+    JavaEnumTypesResponse postInsertJavaEnumTypesEntityWithBatchService(
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaEnumTypesInsertRequest javaEnumTypesInsertRequest) throws BaseException;
 
     /**
-     * Updates a JavaData entity with BatchService.
+     * Updates a JavaEnumTypes entity with BatchService.
      *
-     * @param javaDataId
-     *            ID of JavaData.
-     * @param javaDataUpdateRequest
-     *            {@link JavaDataUpdateRequest}.
-     * @return {@link JavaDataResponse}.
+     * @param javaEnumTypesId
+     *            ID of JavaEnumTypes.
+     * @param javaEnumTypesUpdateRequest
+     *            {@link JavaEnumTypesUpdateRequest}.
+     * @return {@link JavaEnumTypesResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Updates a JavaData entity with BatchService.", description = "Updates a JavaData entity with BatchService.")
+    @Operation(summary = "Updates a JavaEnumTypes entity with BatchService.", description = "Updates a JavaEnumTypes entity with BatchService.")
     @PUT
-    @Path(JpaBatchServicePath.UPDATE_JAVA_DATA_ID)
+    @Path(JpaBatchServicePath.UPDATE_JAVA_ENUM_TYPES_ID)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JavaDataResponse putUpdateJavaDataEntityWithBatchService(
-            @PathParam(JpaBatchServicePath.PARAM_JAVA_DATA_ID) @Parameter(name = JpaBatchServicePath.PARAM_JAVA_DATA_ID,
-                    description = "JAVA_DATA.X__ID", required = true) String javaDataId,
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaDataUpdateRequest javaDataUpdateRequest) throws BaseException;
+    JavaEnumTypesResponse putUpdateJavaEnumTypesEntityWithBatchService(
+            @PathParam(JpaBatchServicePath.PARAM_JAVA_ENUM_TYPES_ID) @Parameter(name = JpaBatchServicePath.PARAM_JAVA_ENUM_TYPES_ID,
+                    description = "JAVA_ENUM_TYPES.X__ID", required = true) String javaEnumTypesId,
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaEnumTypesUpdateRequest javaEnumTypesUpdateRequest) throws BaseException;
 
     /**
-     * Deletes all JavaData entities with BatchService.
+     * Deletes all JavaEnumTypes entities with BatchService.
      *
      * @return {@link BaseResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Deletes all JavaData entities with BatchService.", description = "Deletes all JavaData entities with BatchService.")
+    @Operation(summary = "Deletes all JavaEnumTypes entities with BatchService.",
+            description = "Deletes all JavaEnumTypes entities with BatchService.")
     @DELETE
     @Path(JpaBatchServicePath.DELETE)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    BaseResponse deleteAllJavaDataEntitiesWithBatchService() throws BaseException;
+    BaseResponse deleteAllJavaEnumTypesEntitiesWithBatchService() throws BaseException;
 }

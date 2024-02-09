@@ -33,7 +33,7 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaDateAndTimeRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaDateAndTimeRest;
 import hu.icellmobilsoft.ts.sample.jpa.batch.service.java.date.and.time.rest.base.BaseJavaDateAndTimeRestIT;
 
 /**

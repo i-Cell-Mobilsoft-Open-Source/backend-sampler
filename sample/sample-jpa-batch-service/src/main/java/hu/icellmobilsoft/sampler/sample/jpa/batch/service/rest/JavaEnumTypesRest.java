@@ -24,7 +24,7 @@ import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaEnumTypesRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaEnumTypesRest;
 import hu.icellmobilsoft.sampler.common.system.rest.rest.BaseRestService;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesResponse;

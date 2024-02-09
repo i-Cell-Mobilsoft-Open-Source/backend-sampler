@@ -21,8 +21,8 @@ package hu.icellmobilsoft.ts.sample.jpa.batch.service.jpa.association.rest.base;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequest;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IEmptyEntityRest;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJpaAssociationRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IEmptyEntityRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJpaAssociationRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.emptyentity.EmptyEntityType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationInsertType;

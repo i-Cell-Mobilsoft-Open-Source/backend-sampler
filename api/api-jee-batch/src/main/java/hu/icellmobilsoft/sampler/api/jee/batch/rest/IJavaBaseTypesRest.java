@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.api.jee.rest.batch;
+package hu.icellmobilsoft.sampler.api.jee.batch.rest;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -37,71 +37,71 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.dto.constant.XsdConstants;
 import hu.icellmobilsoft.sampler.dto.path.JpaBatchServicePath;
-import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationInsertRequest;
-import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationResponse;
-import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationUpdateRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesInsertRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesResponse;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesUpdateRequest;
 
 /**
- * REST endpoints for JpaAssociation entities.
+ * REST endpoints for JavaBaseTypes entities.
  *
  * @author csaba.balogh
  * @since 2.0.0
  */
-@Tag(name = "REST endpoints for JpaAssociation entities", description = "REST endpoints for JpaAssociation entities")
-@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JPA_ASSOCIATION)
-public interface IJpaAssociationRest {
+@Tag(name = "REST endpoints for JavaBaseTypes entities", description = "REST endpoints for JavaBaseTypes entities")
+@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JAVA_BASE_TYPES)
+public interface IJavaBaseTypesRest {
 
     /**
-     * Creates and inserts a JpaAssociation entity with BatchService.
+     * Creates and inserts a JavaBaseTypes entity with BatchService.
      *
-     * @param jpaAssociationInsertRequest
-     *            {@link JpaAssociationInsertRequest}.
-     * @return {@link JpaAssociationResponse}.
+     * @param javaBaseTypesInsertRequest
+     *            {@link JavaBaseTypesInsertRequest}.
+     * @return {@link JavaBaseTypesResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Creates and inserts a JpaAssociation entity with BatchService.",
-            description = "Creates and inserts a JpaAssociation entity with BatchService.")
+    @Operation(summary = "Creates and inserts a JavaBaseTypes entity with BatchService.",
+            description = "Creates and inserts a JavaBaseTypes entity with BatchService.")
     @POST
     @Path(JpaBatchServicePath.INSERT)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JpaAssociationResponse postInsertJpaAssociationEntityWithBatchService(
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JpaAssociationInsertRequest jpaAssociationInsertRequest) throws BaseException;
+    JavaBaseTypesResponse postInsertJavaBaseTypesEntityWithBatchService(
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaBaseTypesInsertRequest javaBaseTypesInsertRequest) throws BaseException;
 
     /**
-     * Updates a JpaAssociation entity with BatchService.
+     * Updates a JavaBaseTypes entity with BatchService.
      *
-     * @param jpaAssociationId
-     *            ID of JpaAssociation.
-     * @param jpaAssociationUpdateRequest
-     *            {@link JpaAssociationUpdateRequest}.
-     * @return {@link JpaAssociationResponse}.
+     * @param javaBaseTypesId
+     *            ID of JavaBaseTypes.
+     * @param javaBaseTypesUpdateRequest
+     *            {@link JavaBaseTypesUpdateRequest}.
+     * @return {@link JavaBaseTypesResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Updates a JpaAssociation entity with BatchService.", description = "Updates a JpaAssociation entity with BatchService.")
+    @Operation(summary = "Updates a JavaBaseTypes entity with BatchService.", description = "Updates a JavaBaseTypes entity with BatchService.")
     @PUT
-    @Path(JpaBatchServicePath.UPDATE_JPA_ASSOCIATION_ID)
+    @Path(JpaBatchServicePath.UPDATE_JAVA_BASE_TYPES_ID)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JpaAssociationResponse putUpdateJpaAssociationEntityWithBatchService(
-            @PathParam(JpaBatchServicePath.PARAM_JPA_ASSOCIATION_ID) @Parameter(name = JpaBatchServicePath.PARAM_JPA_ASSOCIATION_ID,
-                    description = "JPA_ASSOCIATION.X__ID", required = true) String jpaAssociationId,
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JpaAssociationUpdateRequest jpaAssociationUpdateRequest) throws BaseException;
+    JavaBaseTypesResponse putUpdateJavaBaseTypesEntityWithBatchService(
+            @PathParam(JpaBatchServicePath.PARAM_JAVA_BASE_TYPES_ID) @Parameter(name = JpaBatchServicePath.PARAM_JAVA_BASE_TYPES_ID,
+                    description = "JAVA_BASE_TYPES.X__ID", required = true) String javaBaseTypesId,
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaBaseTypesUpdateRequest javaBaseTypesUpdateRequest) throws BaseException;
 
     /**
-     * Deletes all JpaAssociation entities with BatchService.
-     * 
+     * Deletes all JavaBaseTypes entities with BatchService.
+     *
      * @return {@link BaseResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Deletes all JpaAssociation entities with BatchService.",
-            description = "Deletes all JpaAssociation entities with BatchService.")
+    @Operation(summary = "Deletes all JavaBaseTypes entities with BatchService.",
+            description = "Deletes all JavaBaseTypes entities with BatchService.")
     @DELETE
     @Path(JpaBatchServicePath.DELETE)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    BaseResponse deleteAllJpaAssociationEntitiesWithBatchService() throws BaseException;
+    BaseResponse deleteAllJavaBaseTypesEntitiesWithBatchService() throws BaseException;
 }

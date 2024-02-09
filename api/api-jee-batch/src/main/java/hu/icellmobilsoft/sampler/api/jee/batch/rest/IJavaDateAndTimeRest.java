@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.api.jee.rest.batch;
+package hu.icellmobilsoft.sampler.api.jee.batch.rest;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -37,71 +37,71 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.dto.constant.XsdConstants;
 import hu.icellmobilsoft.sampler.dto.path.JpaBatchServicePath;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesInsertRequest;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesResponse;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesUpdateRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeInsertRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeResponse;
+import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeUpdateRequest;
 
 /**
- * REST endpoints for JavaBaseTypes entities.
+ * REST endpoints for JavaDateAndTime entities.
  *
  * @author csaba.balogh
  * @since 2.0.0
  */
-@Tag(name = "REST endpoints for JavaBaseTypes entities", description = "REST endpoints for JavaBaseTypes entities")
-@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JAVA_BASE_TYPES)
-public interface IJavaBaseTypesRest {
+@Tag(name = "REST endpoints for JavaDateAndTime entities", description = "REST endpoints for JavaDateAndTime entities")
+@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JAVA_DATE_AND_TIME)
+public interface IJavaDateAndTimeRest {
 
     /**
-     * Creates and inserts a JavaBaseTypes entity with BatchService.
+     * Creates and inserts a JavaDateAndTime entity with BatchService.
      *
-     * @param javaBaseTypesInsertRequest
-     *            {@link JavaBaseTypesInsertRequest}.
-     * @return {@link JavaBaseTypesResponse}.
+     * @param javaDateAndTimeInsertRequest
+     *            {@link JavaDateAndTimeInsertRequest}.
+     * @return {@link JavaDateAndTimeResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Creates and inserts a JavaBaseTypes entity with BatchService.",
-            description = "Creates and inserts a JavaBaseTypes entity with BatchService.")
+    @Operation(summary = "Creates and inserts a JavaDateAndTime entity with BatchService.",
+            description = "Creates and inserts a JavaDateAndTime entity with BatchService.")
     @POST
     @Path(JpaBatchServicePath.INSERT)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JavaBaseTypesResponse postInsertJavaBaseTypesEntityWithBatchService(
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaBaseTypesInsertRequest javaBaseTypesInsertRequest) throws BaseException;
+    JavaDateAndTimeResponse postInsertJavaDateAndTimeEntityWithBatchService(
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaDateAndTimeInsertRequest javaDateAndTimeInsertRequest) throws BaseException;
 
     /**
-     * Updates a JavaBaseTypes entity with BatchService.
+     * Updates a JavaDateAndTime entity with BatchService.
      *
-     * @param javaBaseTypesId
-     *            ID of JavaBaseTypes.
-     * @param javaBaseTypesUpdateRequest
-     *            {@link JavaBaseTypesUpdateRequest}.
-     * @return {@link JavaBaseTypesResponse}.
+     * @param javaDateAndTimeId
+     *            ID of JavaDateAndTime.
+     * @param javaDateAndTimeUpdateRequest
+     *            {@link JavaDateAndTimeUpdateRequest}.
+     * @return {@link JavaDateAndTimeResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Updates a JavaBaseTypes entity with BatchService.", description = "Updates a JavaBaseTypes entity with BatchService.")
+    @Operation(summary = "Updates a JavaDateAndTime entity with BatchService.", description = "Updates a JavaDateAndTime entity with BatchService.")
     @PUT
-    @Path(JpaBatchServicePath.UPDATE_JAVA_BASE_TYPES_ID)
+    @Path(JpaBatchServicePath.UPDATE_JAVA_DATE_AND_TIME_ID)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JavaBaseTypesResponse putUpdateJavaBaseTypesEntityWithBatchService(
-            @PathParam(JpaBatchServicePath.PARAM_JAVA_BASE_TYPES_ID) @Parameter(name = JpaBatchServicePath.PARAM_JAVA_BASE_TYPES_ID,
-                    description = "JAVA_BASE_TYPES.X__ID", required = true) String javaBaseTypesId,
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaBaseTypesUpdateRequest javaBaseTypesUpdateRequest) throws BaseException;
+    JavaDateAndTimeResponse putUpdateJavaDateAndTimeEntityWithBatchService(
+            @PathParam(JpaBatchServicePath.PARAM_JAVA_DATE_AND_TIME_ID) @Parameter(name = JpaBatchServicePath.PARAM_JAVA_DATE_AND_TIME_ID,
+                    description = "JAVA_DATE_AND_TIME.X__ID", required = true) String javaDateAndTimeId,
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaDateAndTimeUpdateRequest javaDateAndTimeUpdateRequest) throws BaseException;
 
     /**
-     * Deletes all JavaBaseTypes entities with BatchService.
+     * Deletes all JavaDateAndTime entities with BatchService.
      *
      * @return {@link BaseResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Deletes all JavaBaseTypes entities with BatchService.",
-            description = "Deletes all JavaBaseTypes entities with BatchService.")
+    @Operation(summary = "Deletes all JavaDateAndTime entities with BatchService.",
+            description = "Deletes all JavaDateAndTime entities with BatchService.")
     @DELETE
     @Path(JpaBatchServicePath.DELETE)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    BaseResponse deleteAllJavaBaseTypesEntitiesWithBatchService() throws BaseException;
+    BaseResponse deleteAllJavaDateAndTimeEntitiesWithBatchService() throws BaseException;
 }

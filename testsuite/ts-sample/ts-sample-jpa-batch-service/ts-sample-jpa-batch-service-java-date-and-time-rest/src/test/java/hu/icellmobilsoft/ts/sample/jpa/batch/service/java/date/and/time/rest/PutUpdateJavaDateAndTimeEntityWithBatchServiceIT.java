@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaDateAndTimeRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaDateAndTimeRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeResponse;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeUpdateRequest;

@@ -30,7 +30,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJpaAssociationRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJpaAssociationRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationResponse;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationUpdateRequest;

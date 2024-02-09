@@ -32,6 +32,7 @@ services:
       OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
       MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
       # OTHER
+      MP_CONFIG_PROFILE: jdbc
       DEBUG: true
     deploy:
       resources:

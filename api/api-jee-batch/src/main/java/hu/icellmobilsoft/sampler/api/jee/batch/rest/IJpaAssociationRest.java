@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.api.jee.rest.batch;
+package hu.icellmobilsoft.sampler.api.jee.batch.rest;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -37,71 +37,71 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.sampler.dto.constant.XsdConstants;
 import hu.icellmobilsoft.sampler.dto.path.JpaBatchServicePath;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesInsertRequest;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesResponse;
-import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.JavaEnumTypesUpdateRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationInsertRequest;
+import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationResponse;
+import hu.icellmobilsoft.sampler.dto.sample.batch.jpaassociation.JpaAssociationUpdateRequest;
 
 /**
- * REST endpoints for JavaEnumTypes entities.
+ * REST endpoints for JpaAssociation entities.
  *
  * @author csaba.balogh
  * @since 2.0.0
  */
-@Tag(name = "REST endpoints for JavaEnumTypes entities", description = "REST endpoints for JavaEnumTypes entities")
-@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JAVA_ENUM_TYPES)
-public interface IJavaEnumTypesRest {
+@Tag(name = "REST endpoints for JpaAssociation entities", description = "REST endpoints for JpaAssociation entities")
+@Path(JpaBatchServicePath.REST_JPA_BATCH_SERVICE_JPA_ASSOCIATION)
+public interface IJpaAssociationRest {
 
     /**
-     * Creates and inserts a JavaEnumTypes entity with BatchService.
+     * Creates and inserts a JpaAssociation entity with BatchService.
      *
-     * @param javaEnumTypesInsertRequest
-     *            {@link JavaEnumTypesInsertRequest}.
-     * @return {@link JavaEnumTypesResponse}.
+     * @param jpaAssociationInsertRequest
+     *            {@link JpaAssociationInsertRequest}.
+     * @return {@link JpaAssociationResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Creates and inserts a JavaEnumTypes entity with BatchService.",
-            description = "Creates and inserts a JavaEnumTypes entity with BatchService.")
+    @Operation(summary = "Creates and inserts a JpaAssociation entity with BatchService.",
+            description = "Creates and inserts a JpaAssociation entity with BatchService.")
     @POST
     @Path(JpaBatchServicePath.INSERT)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JavaEnumTypesResponse postInsertJavaEnumTypesEntityWithBatchService(
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaEnumTypesInsertRequest javaEnumTypesInsertRequest) throws BaseException;
+    JpaAssociationResponse postInsertJpaAssociationEntityWithBatchService(
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JpaAssociationInsertRequest jpaAssociationInsertRequest) throws BaseException;
 
     /**
-     * Updates a JavaEnumTypes entity with BatchService.
+     * Updates a JpaAssociation entity with BatchService.
      *
-     * @param javaEnumTypesId
-     *            ID of JavaEnumTypes.
-     * @param javaEnumTypesUpdateRequest
-     *            {@link JavaEnumTypesUpdateRequest}.
-     * @return {@link JavaEnumTypesResponse}.
+     * @param jpaAssociationId
+     *            ID of JpaAssociation.
+     * @param jpaAssociationUpdateRequest
+     *            {@link JpaAssociationUpdateRequest}.
+     * @return {@link JpaAssociationResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Updates a JavaEnumTypes entity with BatchService.", description = "Updates a JavaEnumTypes entity with BatchService.")
+    @Operation(summary = "Updates a JpaAssociation entity with BatchService.", description = "Updates a JpaAssociation entity with BatchService.")
     @PUT
-    @Path(JpaBatchServicePath.UPDATE_JAVA_ENUM_TYPES_ID)
+    @Path(JpaBatchServicePath.UPDATE_JPA_ASSOCIATION_ID)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    JavaEnumTypesResponse putUpdateJavaEnumTypesEntityWithBatchService(
-            @PathParam(JpaBatchServicePath.PARAM_JAVA_ENUM_TYPES_ID) @Parameter(name = JpaBatchServicePath.PARAM_JAVA_ENUM_TYPES_ID,
-                    description = "JAVA_ENUM_TYPES.X__ID", required = true) String javaEnumTypesId,
-            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JavaEnumTypesUpdateRequest javaEnumTypesUpdateRequest) throws BaseException;
+    JpaAssociationResponse putUpdateJpaAssociationEntityWithBatchService(
+            @PathParam(JpaBatchServicePath.PARAM_JPA_ASSOCIATION_ID) @Parameter(name = JpaBatchServicePath.PARAM_JPA_ASSOCIATION_ID,
+                    description = "JPA_ASSOCIATION.X__ID", required = true) String jpaAssociationId,
+            @ValidateXML(xsdPath = XsdConstants.SUPER_XSD_PATH) JpaAssociationUpdateRequest jpaAssociationUpdateRequest) throws BaseException;
 
     /**
-     * Deletes all JavaEnumTypes entities with BatchService.
-     *
+     * Deletes all JpaAssociation entities with BatchService.
+     * 
      * @return {@link BaseResponse}.
      * @throws BaseException
      *             if any exception occurs during the process.
      */
-    @Operation(summary = "Deletes all JavaEnumTypes entities with BatchService.",
-            description = "Deletes all JavaEnumTypes entities with BatchService.")
+    @Operation(summary = "Deletes all JpaAssociation entities with BatchService.",
+            description = "Deletes all JpaAssociation entities with BatchService.")
     @DELETE
     @Path(JpaBatchServicePath.DELETE)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    BaseResponse deleteAllJavaEnumTypesEntitiesWithBatchService() throws BaseException;
+    BaseResponse deleteAllJpaAssociationEntitiesWithBatchService() throws BaseException;
 }

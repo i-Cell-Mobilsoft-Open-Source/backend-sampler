@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
-import hu.icellmobilsoft.sampler.api.jee.rest.batch.IJavaBaseTypesRest;
+import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJavaBaseTypesRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.BaseJavaBaseTypesType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesInsertType;

@@ -21,6 +21,11 @@
                 <artifactId>api-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.api</groupId>
+                <artifactId>api-jee-batch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.api</groupId>
