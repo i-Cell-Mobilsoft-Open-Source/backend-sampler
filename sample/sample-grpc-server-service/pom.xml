@@ -42,9 +42,13 @@
 <!--
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-grpc-opentracing-impl</artifactId>
+            <artifactId>coffee-grpc-traces-mpopentracing</artifactId>
         </dependency>
 -->
+        <dependency>
+            <groupId>hu.icellmobilsoft.coffee</groupId>
+            <artifactId>coffee-grpc-traces-mptelemetry</artifactId>
+        </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.api</groupId>
             <artifactId>api-grpc-stub-gen</artifactId>

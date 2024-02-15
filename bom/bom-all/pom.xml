@@ -10,10 +10,12 @@
   <packaging>pom</packaging>
 
     <properties>
-        <version.hu.icellmobilsoft.coffee>2.5.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
+        <version.hu.icellmobilsoft.coffee>2.6.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
         <version.org.eclipse.microprofile>6.0</version.org.eclipse.microprofile>
         <version.hu.icellmobilsoft.roaster>2.1.0</version.hu.icellmobilsoft.roaster>
         <version.io.smallrye.config.source.yaml>3.3.4</version.io.smallrye.config.source.yaml>
+        <!-- io.etcd:jetcd-core:0.7.7 vorking with this version -->
+        <version.io.grpc>1.60.0</version.io.grpc>
         <version.org.apache.avro>1.11.1</version.org.apache.avro>
         <version.io.confluent.kafka.avro>7.5.0</version.io.confluent.kafka.avro>
 
@@ -53,7 +55,7 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.coffee</groupId>
-                <artifactId>coffee-bom</artifactId>
+                <artifactId>coffee-bom-project</artifactId>
                 <version>${version.hu.icellmobilsoft.coffee}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -141,6 +143,50 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${version.org.junit.jupiter}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Trnasitive dependencies -->
+
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-junit5</artifactId>
+                <version>4.0.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>osgi.annotation</artifactId>
+                <version>8.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-api</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-context</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${version.io.grpc}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>5.8.0</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
