@@ -27,8 +27,12 @@ import jakarta.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
 
+import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
+import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
 import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageHandler;
 import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageLogger;
 
@@ -54,10 +58,15 @@ public class KafkaConsumer extends BaseAction {
      * 
      * @param message
      *            message payload
+     * @exception BaseException
+     *                error
      */
-    // @Incoming("from-kafka")
-    public void fromKafka(String message) {
-        log.info("Sample Incoming: [{0}]", message);
+    @Incoming("from-kafka-avro")
+    public void fromKafka(SampleKafkaDto message) throws BaseException {
+        if (message == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "message is missing");
+        }
+        log.info("Sample Incoming: [{0}], [{1}], [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
     }
 
     /**
@@ -66,9 +75,14 @@ public class KafkaConsumer extends BaseAction {
      * @param message
      *            incoming reactive message
      * @return computation stage
+     * @exception BaseException
+     *                error
      */
-    @Incoming("from-kafka")
-    public CompletionStage<Void> fromKafka(Message<String> message) {
+    @Incoming("from-kafka-string")
+    public CompletionStage<Void> fromKafkaString(Message<String> message) throws BaseException {
+        if (message == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "message is missing");
+        }
         // for debug
         // kafkaMessageHandler.handleIncomingMdc(message);
         // kafkaMessageLogger.printIncomingMessage(message);

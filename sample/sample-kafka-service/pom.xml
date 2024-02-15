@@ -43,6 +43,14 @@
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-avro-serializer</artifactId>
+		</dependency>
 
 		<!--Test dependecies -->
 		<dependency>
@@ -77,5 +85,15 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 </project>

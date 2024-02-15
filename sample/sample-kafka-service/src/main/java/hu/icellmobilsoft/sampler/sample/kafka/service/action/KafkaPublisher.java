@@ -25,6 +25,7 @@ import java.util.Map;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -32,10 +33,12 @@ import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Metadata;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
 import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageHandler;
 import hu.icellmobilsoft.sampler.sample.kafka.service.mpreactive.KafkaMessageLogger;
 import io.smallrye.reactive.messaging.MutinyEmitter;
@@ -51,6 +54,10 @@ import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
  */
 @ApplicationScoped
 public class KafkaPublisher extends BaseAction {
+
+    private static final String AVRO_CHANNEL_NAME = "to-kafka-avro";
+
+    private static final String STRING_CHANNEL_NAME = "to-kafka-string";
 
     @Inject
     private Logger log;
@@ -72,7 +79,11 @@ public class KafkaPublisher extends BaseAction {
      * send message imperative mode
      */
     @Inject
-    @Channel("to-kafka")
+    @Channel(AVRO_CHANNEL_NAME)
+    private MutinyEmitter<SampleKafkaDto> messageEmitter;
+
+    @Inject
+    @Channel(STRING_CHANNEL_NAME)
     private MutinyEmitter<String> mutinyEmitterString;
 
     /**
@@ -89,14 +100,17 @@ public class KafkaPublisher extends BaseAction {
     }
 
     /**
-     * Send message to kafka
+     * Send string message to kafka
      * 
      * @param message
-     *            message payload to publis
+     *            message payload to publish
      * @throws BaseException
      *             error
      */
-    public void toKafka(String message) throws BaseException {
+    public void toKafkaString(String message) throws BaseException {
+        if (StringUtils.isEmpty(message)) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "message is missing");
+        }
         // Send message by system handled feature (not recommended)
         sendString(message);
 
@@ -143,6 +157,29 @@ public class KafkaPublisher extends BaseAction {
         // metaMessage = kafkaMessageHandler.handleOutgoingMdc(metaMessage);
         // kafkaMessageLogger.printOutgoingMessage(metaMessage);
         mutinyEmitterString.sendMessageAndAwait(metaMessage);
+    }
+
+    /**
+     * Send avro message to kafka
+     *
+     * @param message
+     *            message payload to publish
+     * @throws BaseException
+     *             error
+     */
+    public void toKafkaAvro(SampleKafkaDto message) throws BaseException {
+        if (message == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "message is missing");
+        }
+
+        log.info("Sample Outgoing: [{0}] [{1}] [{2}]", message.getColumnA(), message.getColumnB(), message.getColumnC());
+        try {
+            messageEmitter.sendAndAwait(message);
+        } catch (org.apache.kafka.common.errors.TimeoutException e) {
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
+        } catch (Throwable e) {
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, e.getLocalizedMessage(), e);
+        }
     }
 
     // private void waitForPublish(CompletionStage<Void> publishStage) throws TechnicalException {

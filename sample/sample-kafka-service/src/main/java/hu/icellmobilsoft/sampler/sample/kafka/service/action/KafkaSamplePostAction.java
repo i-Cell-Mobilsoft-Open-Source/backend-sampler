@@ -23,8 +23,13 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
+import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
+import hu.icellmobilsoft.coffee.tool.utils.enums.EnumUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
+import hu.icellmobilsoft.sampler.dto.SampleKafkaDto;
+import hu.icellmobilsoft.sampler.dto.ValuesKafkaDto;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 
@@ -53,10 +58,21 @@ public class KafkaSamplePostAction extends BaseAction {
      *             error
      */
     public SampleResponse sample(SampleRequest sampleRequest) throws BaseException {
+        if (sampleRequest == null) {
+            throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "sampleRequest is missing");
+        }
+
         SampleResponse response = new SampleResponse();
-        kafkaPublisher.toKafka("sample-" + DateUtil.nowUTC());
+        kafkaPublisher.toKafkaString("sample-" + DateUtil.nowUTC());
+        kafkaPublisher.toKafkaAvro(convertToDto(sampleRequest));
         handleSuccessResultType(response, sampleRequest);
         return response;
+    }
+
+    private SampleKafkaDto convertToDto(SampleRequest sampleRequest) {
+        return SampleKafkaDto.newBuilder().setColumnA(sampleRequest.getSample().getColumnA() + "-" + DateUtil.nowUTC())
+                .setColumnB(EnumUtil.convert(sampleRequest.getSample().getColumnB(), ValuesKafkaDto.class))
+                .setColumnC(sampleRequest.getContext().getTimestamp().toLocalDate()).build();
     }
 
 }

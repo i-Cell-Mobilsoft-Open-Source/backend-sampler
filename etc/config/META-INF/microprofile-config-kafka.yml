@@ -5,7 +5,17 @@ mp:
         bootstrap:
           servers: bs-kafka:9092
     outgoing:
-      to-kafka:
+      to-kafka-avro:
+        connector: smallrye-kafka
+        topic: testing-avro
+        key:
+          serializer: org.apache.kafka.common.serialization.IntegerSerializer
+        value:
+          serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+        schema:
+          registry:
+            url: http://bs-schema-registry:8085
+      to-kafka-string:
         connector: smallrye-kafka
         # The following parameters have effect for each other so we need to take into consideration of theirs settings to avoid the next error message:
         # delivery.timeout.ms should be equal to or larger than linger.ms + request.timeout.ms
@@ -23,7 +33,7 @@ mp:
         request:
           timeout:
             ms: 500
-        topic: testing
+        topic: testing-string
         key:
           serializer: org.apache.kafka.common.serialization.IntegerSerializer
         value:
@@ -33,9 +43,22 @@ mp:
             - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingHeaderInterceptor
             - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingLoggingInterceptor
     incoming:
-      from-kafka:
+      from-kafka-avro:
         connector: smallrye-kafka
-        topic: testing
+        topic: testing-avro
+        value:
+          deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        key:
+          deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+        schema:
+          registry:
+            url: http://bs-schema-registry:8085
+        specific:
+          avro:
+            reader: true
+      from-kafka-string:
+        connector: smallrye-kafka
+        topic: testing-string
         value:
           deserializer: org.apache.kafka.common.serialization.StringDeserializer
         key:

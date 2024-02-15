@@ -33,6 +33,18 @@ services:
       # https://docs.kafka-ui.provectus.io/configuration/configuration-file
       KAFKA_CLUSTERS_0_NAME: bs-kafka
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: bs-kafka:9092
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://bs-schema-registry:8085
+  schema-registry:
+    container_name: bs-schema-registry
+    image: confluentinc/cp-schema-registry:7.4.2
+    ports:
+      - 8085:8085
+    depends_on:
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8085"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: bs-kafka:9092
 volumes:
   bs-kafka-persistence:
     name: bs-kafka-persistence
