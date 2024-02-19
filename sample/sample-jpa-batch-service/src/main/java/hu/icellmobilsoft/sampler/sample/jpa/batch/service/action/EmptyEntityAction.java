@@ -25,6 +25,7 @@ import jakarta.inject.Inject;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequest;
 import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
+import hu.icellmobilsoft.coffee.jpa.annotation.Transactional;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.emptyentity.EmptyEntityResponse;
@@ -56,12 +57,13 @@ public class EmptyEntityAction extends BaseAction {
      * @throws BaseException
      *             if any exception occurs during the process.
      */
+    @Transactional
     public EmptyEntityResponse createEmptyEntity(BaseRequest baseRequest) throws BaseException {
         if (baseRequest == null) {
             throw new InvalidParameterException("baseRequest is NULL!");
         }
 
-        EmptyEntity emptyEntity = transactionHelper.executeWithTransaction(emptyEntityService::save, new EmptyEntity());
+        EmptyEntity emptyEntity = emptyEntityService.save(new EmptyEntity());
 
         EmptyEntityType emptyEntityType = new EmptyEntityType().withEmptyEntityId(emptyEntity.getId());
 

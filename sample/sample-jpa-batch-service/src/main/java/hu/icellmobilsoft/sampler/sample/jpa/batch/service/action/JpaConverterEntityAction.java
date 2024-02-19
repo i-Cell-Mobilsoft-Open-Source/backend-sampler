@@ -147,13 +147,13 @@ public class JpaConverterEntityAction extends BaseAction {
         if (baseDateTime != null) {
             jpaConverterEntity.setZoneId(ZoneId.from(baseDateTime));
             jpaConverterEntity.setZoneOffset(ZoneOffset.from(baseDateTime));
-            jpaConverterEntity.setYear(Year.from(baseDateTime));
+            jpaConverterEntity.setYearNumber(Year.from(baseDateTime));
             jpaConverterEntity.setYearMonth(YearMonth.from(baseDateTime));
             jpaConverterEntity.setMonthDay(MonthDay.from(baseDateTime));
         } else {
             jpaConverterEntity.setZoneId(null);
             jpaConverterEntity.setZoneOffset(null);
-            jpaConverterEntity.setYear(null);
+            jpaConverterEntity.setYearNumber(null);
             jpaConverterEntity.setYearMonth(null);
             jpaConverterEntity.setMonthDay(null);
         }
