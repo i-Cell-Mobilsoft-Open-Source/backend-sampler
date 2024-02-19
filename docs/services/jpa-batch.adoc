@@ -9,6 +9,3 @@ A service használatához szükségünk van egy Oracle / PostgreSQL adatbázisra
 A szükséges docker-compose fájlok megtalálhatóak az `etc/docker-compose` alatt.
 
 Oracle adatbázis használata esetén létre kell hoznunk a `bs_sample_service` felhasználót, amelyhez a script az `etc/db/scripts/oracle-bs-sample-service.sql`-ben található meg.
-
-Végső soron pedig az adott adatbázisban létre kell hoznunk az entitásokhoz tartozó táblákat.
-A service-hez tartozó entitások a `model` modulon belül a `batch` mappában találhatóak meg.
