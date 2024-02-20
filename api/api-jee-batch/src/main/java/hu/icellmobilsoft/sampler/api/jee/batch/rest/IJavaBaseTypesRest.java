@@ -102,6 +102,5 @@ public interface IJavaBaseTypesRest {
     @DELETE
     @Path(JpaBatchServicePath.DELETE)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     BaseResponse deleteAllJavaBaseTypesEntitiesWithBatchService() throws BaseException;
 }

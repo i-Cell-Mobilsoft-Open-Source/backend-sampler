@@ -102,6 +102,5 @@ public interface IJpaAssociationRest {
     @DELETE
     @Path(JpaBatchServicePath.DELETE)
     @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.APPLICATION_XML })
     BaseResponse deleteAllJpaAssociationEntitiesWithBatchService() throws BaseException;
 }
