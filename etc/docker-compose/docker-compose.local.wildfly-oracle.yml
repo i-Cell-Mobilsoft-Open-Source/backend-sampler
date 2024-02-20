@@ -19,10 +19,9 @@ services:
       - '9991:9990'
       - '8788:8787'
     environment:
-      # ORACLE - db/scripts/oracle-bs-sample-service.sql
-      ORACLE_DS_CONNECTION_URL: jdbc:oracle:thin:@bs-oracle19c:1521:xe
-      ORACLE_DS_USERNAME: bs_sample_service
-      ORACLE_DS_PASSWORD: bs_sample_service
+      ORACLE_DS_CONNECTION_URL: jdbc:oracle:thin:@bs-sample-oracle:1521/xepdb1
+      ORACLE_DS_USERNAME: system
+      ORACLE_DS_PASSWORD: oracle
       HIBERNATE_DIALECT: org.hibernate.dialect.OracleDialect
       # OPEN TELEMETRY
       OTEL_SERVICE_NAME: bs-sample-service
