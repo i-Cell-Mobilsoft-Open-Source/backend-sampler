@@ -20,7 +20,7 @@
         <version.io.confluent.kafka.avro>7.5.0</version.io.confluent.kafka.avro>
 
         <version.com.oracle.ojdbc>19.17.0.0</version.com.oracle.ojdbc>
-        <version.org.postgresql>42.5.1</version.org.postgresql>
+        <version.org.postgresql>42.5.5</version.org.postgresql>
 
         <version.org.junit.jupiter>5.10.1</version.org.junit.jupiter>
     </properties>
