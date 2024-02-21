@@ -24,7 +24,9 @@ import java.util.List;
 import jakarta.persistence.QueryHint;
 
 import org.apache.deltaspike.data.api.EntityRepository;
+import org.apache.deltaspike.data.api.Modifying;
 import org.apache.deltaspike.data.api.Query;
+import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 import org.hibernate.jpa.HibernateHints;
@@ -73,5 +75,16 @@ public interface SampleEntityRepository extends EntityRepository<SampleEntity, S
             value = APPLICATION + CONTROLLER + ACTION + "route='findAllByStatus', " + FRAMEWORK + DB_DRIVER))
     // @Query(value = "SELECT s FROM SampleEntity s WHERE s.status = ?1")
     List<SampleEntity> findAllByStatus(SampleStatus status);
+
+    /**
+     * update all sampleEntity by params
+     *
+     * @param status status
+     * @param inputValue input value
+     * @return status of update
+     */
+    @Modifying
+    @Query("UPDATE SampleEntity s SET s.status = :status,  s.inputValue = :inputValue")
+    int updateAllSampleStatusAndInputValue(@QueryParam("status") SampleStatus status, @QueryParam("inputValue") String inputValue);
 
 }
