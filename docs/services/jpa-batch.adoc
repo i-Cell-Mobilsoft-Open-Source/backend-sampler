@@ -1,0 +1,11 @@
+= JPA Batch service
+`sample/sample-jpa-batch-service`
+
+A service célja, hogy a https://github.com/i-Cell-Mobilsoft-Open-Source/coffee/blob/master/coffee-jpa/src/main/java/hu/icellmobilsoft/coffee/jpa/sql/batch/BatchService.java[BatchService]-hez példákat és teszteket nyújtson, a lehető legtöbb entitás típust felhasználva.
+
+== Service használata
+
+A service használatához szükségünk van egy Oracle / PostgreSQL adatbázisra, majd az adatbázishoz megfelelő Wildfly image-re.
+A szükséges docker-compose fájlok megtalálhatóak az `etc/docker-compose` alatt.
+
+Oracle adatbázis használata esetén létre kell hoznunk a `bs_sample_service` felhasználót, amelyhez a script az `etc/db/scripts/oracle-bs-sample-service.sql`-ben található meg.

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="defaultPU" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <jta-data-source>java:jboss/datasources/icellmobilsoftDS</jta-data-source>
+
+        <mapping-file>META-INF/jpa-entity.xml</mapping-file>
+
+        <properties>
+            <property name="hibernate.dialect" value="${env.DEFAULT_PERSISTENCE_HIBERNATE_DIALECT}"/>
+
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+            <property name="hibernate.connection.release_mode" value="auto"/>
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
+
+            <!-- Hibernate v6 nem számol ezzel és hibát dob -->
+            <!-- <property name="hibernate.id.new_generator_mappings" value="false" /> -->
+
+            <property name="hibernate.jpa.compliance.proxy" value="false"/>
+            <property name="hibernate.criteria.literal_handling_mode" value="BIND"/>
+            <property name="hibernate.jdbc.time_zone" value="UTC"/>
+
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+
+            <!-- legacy wrapper array handling, Byte[] és Character[] esetén -->
+            <!-- <property name="hibernate.type.wrapper_array_handling" value="legacy"/> -->
+
+            <!--
+            After hibernate 6.2.x, timezone storage (org.hibernate.annotations.TimeZoneStorageType) changed to DEFAULT
+            (See more: https://github.com/hibernate/hibernate-orm/blob/6.2/migration-guide.adoc#timezone-and-offset-storage)
+            We save times without timezone into the database, so we have to set it back to NORMALIZE for backward compatibility.
+            Using PostgreSQL it's working without setting the default_storage property, but not with Oracle.
+            Without this property, oracle throws an exception when reading from the database: "ORA-18716: not in any time zone".
+            -->
+            <property name="hibernate.timezone.default_storage" value="NORMALIZE"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -12,4 +12,14 @@
     <public
         publicId="http://dto.sampler.icellmobilsoft.hu/sample/rest/post"
         uri="./sample/rest/post.xsd" />
+
+    <!-- batch -->
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/emptyentity" uri="./sample/batch/emptyentity.xsd" />
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/jpaassociation" uri="./sample/batch/jpaassociation.xsd" />
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/javadata" uri="./sample/batch/javadata.xsd" />
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/javaenumtypes" uri="./sample/batch/javaenumtypes.xsd" />
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/javabasetypes" uri="./sample/batch/javabasetypes.xsd" />
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/javadateandtime" uri="./sample/batch/javadateandtime.xsd" />
+    <public publicId="http://dto.sampler.icellmobilsoft.hu/sample/batch/jpaconverterentity" uri="./sample/batch/jpaconverterentity.xsd" />
+
 </catalog>

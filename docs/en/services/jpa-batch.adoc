@@ -1,0 +1,11 @@
+= JPA Batch service
+`sample/sample-jpa-batch-service`
+
+The purpose of the service is to provide examples and tests for https://github.com/i-Cell-Mobilsoft-Open-Source/coffee/blob/master/coffee-jpa/src/main/java/hu/icellmobilsoft/coffee/jpa/sql/batch/BatchService.java[BatchService], using as many entity types as possible.
+
+== Service usage
+
+To use the service, we need an Oracle / PostgreSQL database and a Wildfly image based on the selected database.
+The necessary docker-compose files can be found under `etc/docker-compose`.
+
+When using an Oracle database, we need to create the `bs_sample_service` user, for which the script can be found in `etc/db/scripts/oracle-bs-sample-service.sql`.

@@ -29,6 +29,11 @@
 			<groupId>hu.icellmobilsoft.sampler.api</groupId>
 			<artifactId>api-grpc-stub-gen</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+        </dependency>
         
         <!-- ez nalunk exclude org.apache.httpcomponents:httpclient-ben itt viszont kell -->
         <dependency>

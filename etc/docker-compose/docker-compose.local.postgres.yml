@@ -1,0 +1,19 @@
+version: "3.8"
+
+name: backend-sampler
+
+services:
+  postgres:
+    container_name: bs-postgres
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=bs_sample_service
+      - POSTGRES_PASSWORD=bs_sample_service
+      - POSTGRES_DB=bs_sample_service
+
+networks:
+  default:
+    external:
+      name: bs-local-network

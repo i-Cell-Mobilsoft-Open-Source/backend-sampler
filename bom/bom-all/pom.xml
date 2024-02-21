@@ -19,6 +19,9 @@
         <version.org.apache.avro>1.11.1</version.org.apache.avro>
         <version.io.confluent.kafka.avro>7.5.0</version.io.confluent.kafka.avro>
 
+        <version.com.oracle.ojdbc>19.17.0.0</version.com.oracle.ojdbc>
+        <version.org.postgresql>42.5.1</version.org.postgresql>
+
         <version.org.junit.jupiter>5.10.1</version.org.junit.jupiter>
     </properties>
 
@@ -136,6 +139,25 @@
                         <artifactId>common-utils</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!-- oracle -->
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc10</artifactId>
+                <version>${version.com.oracle.ojdbc}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.database.nls</groupId>
+                <artifactId>orai18n</artifactId>
+                <version>${version.com.oracle.ojdbc}</version>
+            </dependency>
+
+            <!-- postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.org.postgresql}</version>
             </dependency>
 
             <!--Test dependecies -->
