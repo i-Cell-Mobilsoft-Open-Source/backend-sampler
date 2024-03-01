@@ -38,3 +38,34 @@ Nincs egyenlőre Kafka funkcióra kötve.
 === POST `/rest/sample`
 
 . Üzenetet küld és olvas `testing` kafka topicra/ból.
+
+== Kafka secure service
+
+`docker compose up -f etc/docker-compose/docker-compose.local.kafka-secure.yml up -d`
+
+== TLS setup (Kafka secure pre-steps)
+
+.Generate a keystore that includes the Kafka server's private key and public certificate:
+This command creates a keystore file kafka.server.keystore.jks with a new key pair (private and public key). The key is associated with a self-signed certificate.
+
+[source,bash]
+keytool -keystore kafka.server.keystore.jks -alias kafka-server -validity 365 -genkey -keyalg RSA -storepass kafka-server-pass -keypass kafka-server-pass -dname "CN=localhost, O=organization, L=city, C=country" -ext SAN=DNS:localhost,DNS:bs-kafka-secure,IP:192.168.0.181
+
+The -ext SAN argument specifies the Subject Alternative Name for the certificate. This field allows the certificate to be valid for multiple hostnames and IP addresses. In this context, it ensures that the certificate is trusted when the Kafka server is accessed via localhost, bs-kafka-secure, or the IP 192.168.0.181.
+
+.Export the Kafka server certificate to share it:
+[source,bash]
+keytool -keystore kafka.server.keystore.jks -alias kafka-server -export -file kafka-server-cert.cer -storepass kafka-server-pass
+
+.Server-side TLS (i.e., the clients trust the server, but the server does not verify the clients):
+The Kafka server's truststore will contain its own certificate.
+
+[source,bash]
+keytool -keystore kafka.server.truststore.jks -alias kafka-server -import -file kafka-server-cert.cer -storepass kafka-server-pass -noprompt
+
+For server-side TLS (where clients trust the server, but the server doesn't verify the clients), import the Kafka server certificate into its own truststore.
+
+.For the client to trust the Kafka server, it needs the Kafka server certificate in its own truststore:
+
+[source,bash]
+keytool -keystore client.truststore.jks -alias kafka-server -import -file kafka-server-cert.cer -storepass client-pass -noprompt

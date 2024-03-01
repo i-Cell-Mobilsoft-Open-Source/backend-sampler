@@ -3,6 +3,20 @@ mp:
     connector:
       smallrye-kafka:
         bootstrap:
+          servers: bs-kafka-secure:9094
+        security:
+          protocol: SASL_SSL
+        sasl:
+          mechanism: PLAIN
+          jaas:
+            config: org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka-client" password="kafka-client-secret";
+        ssl:
+          truststore:
+            location: /sampler/client.truststore.jks
+            password: client-pass
+        # Ha a kliens hitelesítés engedélyezve van a bróker oldalán:
+        # ssl.keystore.location: /path/to/your/keystore.jks
+        # ssl.keystore.password: yourKeystorePassword
     outgoing:
       to-kafka-avro:
         connector: smallrye-kafka
