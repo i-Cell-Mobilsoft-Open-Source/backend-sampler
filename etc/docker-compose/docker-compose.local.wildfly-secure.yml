@@ -1,0 +1,43 @@
+version: "3.8"
+
+# futtatas
+# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly-secure.yml up --build --force-recreate
+#
+# belemaszas
+# docker exec -it bs-sample-service /bin/bash
+#
+# uresbe inditas
+# docker run --rm -it docker-compose_sample-service /bin/bash
+services:
+  sample-service:
+    container_name: bs-sample-service
+    build:
+      context: .
+      dockerfile: develop.dockerfile
+      args:
+        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
+#        custom cli script futtatása, ha a deploymenthez kell
+        SERVICE_CLI_DIR: 'wildfly/cli/mp-all'
+    volumes:
+      - './wildfly/sample.properties:/sampler/wildfly.properties'
+      - ../config/kafka/client.truststore.jks:/sampler/client.truststore.jks
+    ports:
+      - '8081:8080'
+      - '9991:9990'
+      - '8788:8787'
+      - '8199:8199' #GRPC
+    environment:
+      OPENTRACING_JAEGER_AGENT_HOST: jaeger
+      JAEGER_SERVICE_NAME: bs-sample-service
+#      MP_CONFIG_PROFILE: redispubsub
+      MP_CONFIG_PROFILE: kafka-secure
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+networks: 
+  default: 
+    external: 
+      name: bs-local-network
