@@ -34,7 +34,7 @@
         <version.org.eclipse.microprofile.reactive-streams-operators>3.0</version.org.eclipse.microprofile.reactive-streams-operators>
         <version.org.apache.kafka>3.5.1</version.org.apache.kafka>
         <version.io.smallrye.reactive.smallrye-reactive-messaging-kafka-api>4.9.0</version.io.smallrye.reactive.smallrye-reactive-messaging-kafka-api>
-        <version.io.vertx.vertx-core>4.4.6</version.io.vertx.vertx-core>
+        <version.io.vertx.vertx-core>4.4.8</version.io.vertx.vertx-core>
 
         <!-- from org.wildfly.bom:wildfly-ee-with-tools -->
         <version.com.h2database>2.2.220</version.com.h2database>
