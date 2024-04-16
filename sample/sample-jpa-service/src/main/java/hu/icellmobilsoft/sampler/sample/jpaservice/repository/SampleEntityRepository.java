@@ -74,4 +74,13 @@ public interface SampleEntityRepository extends EntityRepository<SampleEntity, S
     // @Query(value = "SELECT s FROM SampleEntity s WHERE s.status = ?1")
     List<SampleEntity> findAllByStatus(SampleStatus status);
 
+    /**
+     * Find sample entity by id.
+     *
+     * @param id
+     *            {@link SampleEntity#getId()}
+     * @return entity
+     */
+    SampleEntity findById(String id);
+
 }

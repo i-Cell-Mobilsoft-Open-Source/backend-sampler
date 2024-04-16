@@ -51,7 +51,7 @@ public class SampleRedisStreamTraceAction {
 
         Traced traced = new Traced.Literal("thread", SpanAttribute.INTERNAL, "NAN");
         String operation = "tracedMethod2";
-        traceHandler.runWithTrace(() -> this.tracedMethod2(), traced, operation);
+        traceHandler.runWithTraceNoException(this::tracedMethod2, traced, operation);
     }
 
     /**
