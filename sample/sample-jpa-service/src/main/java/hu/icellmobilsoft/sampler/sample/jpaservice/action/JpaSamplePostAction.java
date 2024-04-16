@@ -111,7 +111,7 @@ public class JpaSamplePostAction extends BaseAction {
             throw new TechnicalException("Unexpected data integrity error, cant find sample entity with DONE status!");
         }
 
-        SampleEntity readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
+        SampleEntity readed = sampleEntityService.findById(created.getId());
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
                 || !created.getCreatorUser().equals(readed.getCreatorUser()) || created.getStatus() != readed.getStatus()) {
