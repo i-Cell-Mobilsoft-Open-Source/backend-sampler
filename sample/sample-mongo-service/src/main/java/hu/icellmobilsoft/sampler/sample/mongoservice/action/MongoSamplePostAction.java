@@ -28,11 +28,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.BasicDBObject;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.module.mongodb.extension.MongoClientConfiguration;
 import hu.icellmobilsoft.coffee.module.mongodb.extension.MongoDbClient;
 import hu.icellmobilsoft.coffee.module.mongodb.util.MongoJsonUtil;
 import hu.icellmobilsoft.coffee.module.mongodb.util.MongoUtil;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;

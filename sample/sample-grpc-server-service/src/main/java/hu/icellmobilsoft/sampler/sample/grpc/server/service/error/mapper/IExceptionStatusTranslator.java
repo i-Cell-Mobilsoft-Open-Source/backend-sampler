@@ -22,7 +22,7 @@ package hu.icellmobilsoft.sampler.sample.grpc.server.service.error.mapper;
 import com.google.rpc.Code;
 import com.google.rpc.Status;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 
 /**
  * Interface for translating exceptions to status.

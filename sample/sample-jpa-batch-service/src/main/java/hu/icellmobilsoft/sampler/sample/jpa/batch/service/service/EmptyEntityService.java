@@ -21,7 +21,7 @@ package hu.icellmobilsoft.sampler.sample.jpa.batch.service.service;
 
 import jakarta.enterprise.inject.Model;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.jpa.service.BaseService;
 import hu.icellmobilsoft.sampler.model.sample.batch.EmptyEntity;
 

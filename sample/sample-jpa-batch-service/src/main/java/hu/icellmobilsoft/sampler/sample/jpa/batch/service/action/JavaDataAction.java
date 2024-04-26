@@ -32,9 +32,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequestType;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
+import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertRequest;
@@ -174,7 +175,7 @@ public class JavaDataAction extends BaseAction {
         try {
             return new SerialBlob(data);
         } catch (Exception e) {
-            throw new BaseException("Could not create SerialBlob", e);
+            throw new BaseException(CoffeeFaultType.OPERATION_FAILED, "Could not create SerialBlob", e);
         }
     }
 

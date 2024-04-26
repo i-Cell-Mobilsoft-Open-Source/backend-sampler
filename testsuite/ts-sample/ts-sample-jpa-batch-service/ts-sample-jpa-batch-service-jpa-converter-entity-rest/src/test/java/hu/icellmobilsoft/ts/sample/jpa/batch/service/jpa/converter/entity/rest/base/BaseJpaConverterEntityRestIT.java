@@ -21,7 +21,7 @@ package hu.icellmobilsoft.ts.sample.jpa.batch.service.jpa.converter.entity.rest.
 
 import java.time.OffsetDateTime;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.batch.rest.IJpaConverterEntityRest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaconverterentity.JpaConverterEntityInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaconverterentity.JpaConverterEntityInsertType;
