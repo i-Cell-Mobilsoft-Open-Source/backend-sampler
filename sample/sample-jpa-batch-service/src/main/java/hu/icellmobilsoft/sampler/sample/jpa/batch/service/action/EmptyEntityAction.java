@@ -23,10 +23,10 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequest;
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.jpa.annotation.Transactional;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.emptyentity.EmptyEntityResponse;
 import hu.icellmobilsoft.sampler.dto.sample.batch.emptyentity.EmptyEntityType;

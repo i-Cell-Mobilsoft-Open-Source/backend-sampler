@@ -22,7 +22,7 @@ package hu.icellmobilsoft.sampler.sample.redisstreamservice.action;
 import jakarta.enterprise.inject.Model;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType;
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;

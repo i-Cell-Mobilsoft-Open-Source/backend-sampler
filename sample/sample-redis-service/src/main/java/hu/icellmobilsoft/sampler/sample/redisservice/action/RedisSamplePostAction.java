@@ -26,11 +26,11 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BONotFoundException;
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.module.redis.annotation.RedisConnection;
 import hu.icellmobilsoft.coffee.module.redis.manager.RedisManager;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.gson.JsonUtil;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;

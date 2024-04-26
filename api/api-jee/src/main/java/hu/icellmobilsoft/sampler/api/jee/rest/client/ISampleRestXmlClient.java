@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
 import hu.icellmobilsoft.sampler.dto.path.SamplePath;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;

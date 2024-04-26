@@ -24,7 +24,7 @@ import java.util.Map;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.rest.cdi.ApplicationContainer;

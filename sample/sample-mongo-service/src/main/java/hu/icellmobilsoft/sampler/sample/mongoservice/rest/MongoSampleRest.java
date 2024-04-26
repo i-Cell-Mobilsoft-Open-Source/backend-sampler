@@ -21,7 +21,7 @@ package hu.icellmobilsoft.sampler.sample.mongoservice.rest;
 
 import jakarta.inject.Inject;
 
-import hu.icellmobilsoft.coffee.dto.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.api.jee.rest.ISampleRest;
 import hu.icellmobilsoft.sampler.common.system.rest.rest.BaseRestService;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
