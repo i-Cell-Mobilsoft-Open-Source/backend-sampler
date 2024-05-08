@@ -1,0 +1,73 @@
+// hu_icellmobilsoft_sampler_common_sample_rest_post.proto at 0:0
+syntax = "proto3";
+package hu.icellmobilsoft.sampler.common.sample.rest.post;
+
+import "hu/icellmobilsoft/coffee/dto/common/commonservice/hu_icellmobilsoft_coffee_dto_common_commonservice.proto";
+
+option java_multiple_files = false;
+option java_outer_classname = "XsdProtoWrapper";
+
+// Sample core type
+message SampleCoreType {
+  // [Description of columnA]
+  string column_a = 1;
+  // [Description of columnB]
+  SampleValueEnumType column_b = 2;
+}
+message SampleRequestGeneratedTypePlaceholder {
+  hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType context = 1;
+  // [Description of business object]
+  SampleCoreType sample = 21;
+}
+// [Description business object] request type
+message SampleRequestType {
+  hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType context = 1;
+  // [Description of business object]
+  SampleCoreType sample = 21;
+}
+message SampleResponseGeneratedTypePlaceholder {
+  hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType context = 1;
+  hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType func_code = 2;
+  string message = 3;
+  // [Description of business object]
+  SampleType sample = 31;
+}
+// [Description business object] response type
+message SampleResponseType {
+  hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType context = 1;
+  hu.icellmobilsoft.coffee.dto.common.commonservice.FunctionCodeType func_code = 2;
+  string message = 3;
+  // [Description of business object]
+  SampleType sample = 31;
+}
+// Status sample enum type
+enum SampleStatusEnumType {
+  // Default
+  SAMPLE_STATUS_ENUM_TYPE_UNSPECIFIED = 0;
+  // Processing status
+  SAMPLE_STATUS_ENUM_TYPE_PROCESSING = 1;
+  // Done status
+  SAMPLE_STATUS_ENUM_TYPE_DONE = 2;
+}
+// Sample type
+message SampleType {
+  // [Description of columnA]
+  string column_a = 1;
+  // [Description of columnB]
+  SampleValueEnumType column_b = 2;
+  // [Description of sampleId]
+  string sample_id = 21;
+  // [Description of sampleStatus]
+  SampleStatusEnumType sample_status = 22;
+}
+// Sample value enum type
+enum SampleValueEnumType {
+  // Default
+  SAMPLE_VALUE_ENUM_TYPE_UNSPECIFIED = 0;
+  // Value A
+  SAMPLE_VALUE_ENUM_TYPE_VALUE_A = 1;
+  // Value B
+  SAMPLE_VALUE_ENUM_TYPE_VALUE_B = 2;
+  // Value C
+  SAMPLE_VALUE_ENUM_TYPE_VALUE_C = 3;
+}
