@@ -11,7 +11,7 @@ version: "3.8"
 services:
   sample-service:
     container_name: bs-sample-service
-    image: icellmobilsoft/wildfly-mp-full:3.0.0-SNAPSHOT
+    image: icellmobilsoft/wildfly-mp-full:3.0.0
     volumes:
       - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
     ports:
