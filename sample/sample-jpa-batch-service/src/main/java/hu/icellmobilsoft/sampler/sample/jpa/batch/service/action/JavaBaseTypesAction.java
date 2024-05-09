@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,8 +30,8 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequestType;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.IJpaBatchService;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
-import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.BaseJavaBaseTypesType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javabasetypes.JavaBaseTypesInsertRequest;
@@ -45,7 +45,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaBaseTypesS
 
 /**
  * Action class for {@link JavaBaseTypes}.
- * 
+ *
  * @author csaba.balogh
  * @since 2.0.0
  */
@@ -53,7 +53,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaBaseTypesS
 public class JavaBaseTypesAction extends BaseAction {
 
     @Inject
-    private BatchService batchService;
+    private IJpaBatchService jpaBatchService;
 
     @Inject
     private TransactionHelper transactionHelper;
@@ -81,7 +81,7 @@ public class JavaBaseTypesAction extends BaseAction {
 
         List<JavaBaseTypes> javaBaseTypesList = List.of(javaBaseTypes);
 
-        transactionHelper.executeWithTransaction(batchService::batchInsertNative, javaBaseTypesList, JavaBaseTypes.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchInsertNative, javaBaseTypesList, JavaBaseTypes.class);
 
         return createResponse(javaBaseTypesInsertRequest, javaBaseTypes);
     }
@@ -112,7 +112,7 @@ public class JavaBaseTypesAction extends BaseAction {
 
         List<JavaBaseTypes> javaBaseTypesList = List.of(javaBaseTypes);
 
-        transactionHelper.executeWithTransaction(batchService::batchUpdateNative, javaBaseTypesList, JavaBaseTypes.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchUpdateNative, javaBaseTypesList, JavaBaseTypes.class);
 
         return createResponse(javaBaseTypesUpdateRequest, javaBaseTypes);
     }
@@ -126,7 +126,7 @@ public class JavaBaseTypesAction extends BaseAction {
      */
     public BaseResponse deleteAllJavaBaseTypes() throws BaseException {
         List<JavaBaseTypes> javaBaseTypesList = javaBaseTypesService.findAll();
-        transactionHelper.executeWithTransaction(batchService::batchDeleteNative, javaBaseTypesList, JavaBaseTypes.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchDeleteNative, javaBaseTypesList, JavaBaseTypes.class);
         return createBaseResponse();
     }
 

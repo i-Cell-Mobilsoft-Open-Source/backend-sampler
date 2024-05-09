@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,9 +38,9 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequestType;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.IJpaBatchService;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
-import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadateandtime.JavaDateAndTimeResponse;
@@ -51,7 +51,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaDateAndTim
 
 /**
  * Action class for {@link JavaDateAndTime}.
- * 
+ *
  * @author csaba.balogh
  * @since 2.0.0
  */
@@ -59,7 +59,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaDateAndTim
 public class JavaDateAndTimeAction extends BaseAction {
 
     @Inject
-    private BatchService batchService;
+    private IJpaBatchService jpaBatchService;
 
     @Inject
     private TransactionHelper transactionHelper;
@@ -87,7 +87,7 @@ public class JavaDateAndTimeAction extends BaseAction {
 
         List<JavaDateAndTime> javaDateAndTimeList = List.of(javaDateAndTime);
 
-        transactionHelper.executeWithTransaction(batchService::batchInsertNative, javaDateAndTimeList, JavaDateAndTime.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchInsertNative, javaDateAndTimeList, JavaDateAndTime.class);
 
         return createResponse(javaDateAndTimeInsertRequest, javaDateAndTime);
     }
@@ -118,7 +118,7 @@ public class JavaDateAndTimeAction extends BaseAction {
 
         List<JavaDateAndTime> javaDateAndTimeList = List.of(javaDateAndTime);
 
-        transactionHelper.executeWithTransaction(batchService::batchUpdateNative, javaDateAndTimeList, JavaDateAndTime.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchUpdateNative, javaDateAndTimeList, JavaDateAndTime.class);
 
         return createResponse(javaDateAndTimeUpdateRequest, javaDateAndTime);
     }
@@ -132,7 +132,7 @@ public class JavaDateAndTimeAction extends BaseAction {
      */
     public BaseResponse deleteAllJavaDateAndTime() throws BaseException {
         List<JavaDateAndTime> javaDateAndTimeList = javaDateAndTimeService.findAll();
-        transactionHelper.executeWithTransaction(batchService::batchDeleteNative, javaDateAndTimeList, JavaDateAndTime.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchDeleteNative, javaDateAndTimeList, JavaDateAndTime.class);
         return createBaseResponse();
     }
 

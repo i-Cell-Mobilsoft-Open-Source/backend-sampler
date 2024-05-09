@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,8 +35,8 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.IJpaBatchService;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
-import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javadata.JavaDataInsertType;
@@ -57,7 +57,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaDataServic
 public class JavaDataAction extends BaseAction {
 
     @Inject
-    private BatchService batchService;
+    private IJpaBatchService jpaBatchService;
 
     @Inject
     private TransactionHelper transactionHelper;
@@ -90,7 +90,7 @@ public class JavaDataAction extends BaseAction {
 
         List<JavaData> javaDataList = List.of(javaData);
 
-        transactionHelper.executeWithTransaction(batchService::batchInsertNative, javaDataList, JavaData.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchInsertNative, javaDataList, JavaData.class);
 
         return createResponse(javaDataInsertRequest, javaData.getId(), data);
     }
@@ -125,7 +125,7 @@ public class JavaDataAction extends BaseAction {
 
         List<JavaData> javaDataList = List.of(javaData);
 
-        transactionHelper.executeWithTransaction(batchService::batchUpdateNative, javaDataList, JavaData.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchUpdateNative, javaDataList, JavaData.class);
 
         return createResponse(javaDataUpdateRequest, javaDataId, data);
     }
@@ -139,7 +139,7 @@ public class JavaDataAction extends BaseAction {
      */
     public BaseResponse deleteAllJavaData() throws BaseException {
         List<JavaData> javaDataList = javaDataService.findAll();
-        transactionHelper.executeWithTransaction(batchService::batchDeleteNative, javaDataList, JavaData.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchDeleteNative, javaDataList, JavaData.class);
         return createBaseResponse();
     }
 

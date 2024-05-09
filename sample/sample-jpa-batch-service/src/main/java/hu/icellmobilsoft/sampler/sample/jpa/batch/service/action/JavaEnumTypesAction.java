@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,9 +30,9 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequestType;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.IJpaBatchService;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.tool.utils.enums.EnumUtil;
-import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.BaseJavaEnumTypesType;
 import hu.icellmobilsoft.sampler.dto.sample.batch.javaenumtypes.BatchOperationTypeType;
@@ -48,7 +48,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaEnumTypesS
 
 /**
  * Action class for {@link JavaEnumTypes}.
- * 
+ *
  * @author csaba.balogh
  * @since 2.0.0
  */
@@ -56,7 +56,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JavaEnumTypesS
 public class JavaEnumTypesAction extends BaseAction {
 
     @Inject
-    private BatchService batchService;
+    private IJpaBatchService jpaBatchService;
 
     @Inject
     private TransactionHelper transactionHelper;
@@ -84,7 +84,7 @@ public class JavaEnumTypesAction extends BaseAction {
 
         List<JavaEnumTypes> javaEnumTypesList = List.of(javaEnumTypes);
 
-        transactionHelper.executeWithTransaction(batchService::batchInsertNative, javaEnumTypesList, JavaEnumTypes.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchInsertNative, javaEnumTypesList, JavaEnumTypes.class);
 
         return createResponse(javaEnumTypesInsertRequest, javaEnumTypes);
     }
@@ -115,7 +115,7 @@ public class JavaEnumTypesAction extends BaseAction {
 
         List<JavaEnumTypes> javaEnumTypesList = List.of(javaEnumTypes);
 
-        transactionHelper.executeWithTransaction(batchService::batchUpdateNative, javaEnumTypesList, JavaEnumTypes.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchUpdateNative, javaEnumTypesList, JavaEnumTypes.class);
 
         return createResponse(javaEnumTypesUpdateRequest, javaEnumTypes);
     }
@@ -129,7 +129,7 @@ public class JavaEnumTypesAction extends BaseAction {
      */
     public BaseResponse deleteAllJavaEnumTypes() throws BaseException {
         List<JavaEnumTypes> javaEnumTypesList = javaEnumTypesService.findAll();
-        transactionHelper.executeWithTransaction(batchService::batchDeleteNative, javaEnumTypesList, JavaEnumTypes.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchDeleteNative, javaEnumTypesList, JavaEnumTypes.class);
         return createBaseResponse();
     }
 

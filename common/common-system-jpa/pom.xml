@@ -25,8 +25,12 @@
             <groupId>hu.icellmobilsoft.coffee</groupId>
             <artifactId>coffee-system-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>hu.icellmobilsoft.frappee</groupId>
+            <artifactId>frappee-hibernate</artifactId>
+        </dependency>
 
-       <dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>

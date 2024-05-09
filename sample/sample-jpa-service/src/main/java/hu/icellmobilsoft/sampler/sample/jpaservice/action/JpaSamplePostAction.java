@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,10 +38,10 @@ import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.IJpaBatchService;
 import hu.icellmobilsoft.coffee.jpa.sql.batch.enums.Status;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
-import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.exception.SamplerException;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
@@ -54,7 +54,7 @@ import hu.icellmobilsoft.sampler.sample.jpaservice.service.SampleEntityService;
 
 /**
  * Sample query action
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  */
@@ -73,7 +73,7 @@ public class JpaSamplePostAction extends BaseAction {
     private TransactionHelper transactionHelper;
 
     @Inject
-    private BatchService batchService;
+    private IJpaBatchService jpaBatchService;
 
     @Inject
     @ThisLogger
@@ -81,7 +81,7 @@ public class JpaSamplePostAction extends BaseAction {
 
     /**
      * Dummy sample write and read data from DB
-     * 
+     *
      * @param sampleRequest
      *            validated http entity body
      * @return Sample response with random readed data
@@ -174,8 +174,8 @@ public class JpaSamplePostAction extends BaseAction {
     }
 
     /**
-     * Creates the given entity by {@link BatchService#batchInsertNative(Collection, Class)}. Need transaction for success.
-     * 
+     * Creates the given entity by {@link IJpaBatchService#batchInsertNative(Collection, Class)}. Need transaction for success.
+     *
      * @param sampleEntity
      *            the entity to create
      * @return created, persisted entity
@@ -186,7 +186,7 @@ public class JpaSamplePostAction extends BaseAction {
         if (sampleEntity == null) {
             throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "sampleEntity is missing");
         }
-        Map<String, Status> resultMap = batchService.batchInsertNative(List.of(sampleEntity), SampleEntity.class);
+        Map<String, Status> resultMap = jpaBatchService.batchInsertNative(List.of(sampleEntity), SampleEntity.class);
         Optional<String> firstKey = resultMap.keySet().stream().findFirst();
 
         if (firstKey.isPresent()) {
@@ -197,8 +197,8 @@ public class JpaSamplePostAction extends BaseAction {
     }
 
     /**
-     * Updates one entity by {@link BatchService#batchUpdateNative(Collection, Class)}. Need transaction for success.
-     * 
+     * Updates one entity by {@link IJpaBatchService#batchUpdateNative(Collection, Class)}. Need transaction for success.
+     *
      * @param sampleEntity
      *            the entity to update
      * @return modified, persisted entity
@@ -209,7 +209,7 @@ public class JpaSamplePostAction extends BaseAction {
         if (sampleEntity == null) {
             throw new InvalidParameterException(CoffeeFaultType.INVALID_INPUT, "sampleEntity is missing");
         }
-        Map<String, Status> resultMap = batchService.batchUpdateNative(List.of(sampleEntity), SampleEntity.class);
+        Map<String, Status> resultMap = jpaBatchService.batchUpdateNative(List.of(sampleEntity), SampleEntity.class);
         Optional<String> firstKey = resultMap.keySet().stream().findFirst();
 
         if (firstKey.isPresent()) {

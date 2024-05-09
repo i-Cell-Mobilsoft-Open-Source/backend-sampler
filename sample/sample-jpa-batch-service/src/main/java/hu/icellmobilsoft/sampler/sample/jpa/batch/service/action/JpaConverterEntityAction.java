@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,8 +38,8 @@ import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseRequestType;
 import hu.icellmobilsoft.coffee.dto.common.commonservice.BaseResponse;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
+import hu.icellmobilsoft.coffee.jpa.sql.batch.IJpaBatchService;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
-import hu.icellmobilsoft.sampler.common.system.jpa.service.BatchService;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaconverterentity.JpaConverterEntityInsertRequest;
 import hu.icellmobilsoft.sampler.dto.sample.batch.jpaconverterentity.JpaConverterEntityInsertType;
@@ -52,7 +52,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JpaConverterEn
 
 /**
  * Action class for {@link JpaConverterEntity}.
- * 
+ *
  * @author csaba.balogh
  * @since 2.0.0
  */
@@ -60,7 +60,7 @@ import hu.icellmobilsoft.sampler.sample.jpa.batch.service.service.JpaConverterEn
 public class JpaConverterEntityAction extends BaseAction {
 
     @Inject
-    private BatchService batchService;
+    private IJpaBatchService jpaBatchService;
 
     @Inject
     private TransactionHelper transactionHelper;
@@ -91,7 +91,7 @@ public class JpaConverterEntityAction extends BaseAction {
 
         List<JpaConverterEntity> jpaConverterEntityList = List.of(jpaConverterEntity);
 
-        transactionHelper.executeWithTransaction(batchService::batchInsertNative, jpaConverterEntityList, JpaConverterEntity.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchInsertNative, jpaConverterEntityList, JpaConverterEntity.class);
 
         return createResponse(jpaConverterEntityInsertRequest, jpaConverterEntity.getId());
     }
@@ -125,7 +125,7 @@ public class JpaConverterEntityAction extends BaseAction {
 
         List<JpaConverterEntity> jpaConverterEntityList = List.of(jpaConverterEntity);
 
-        transactionHelper.executeWithTransaction(batchService::batchUpdateNative, jpaConverterEntityList, JpaConverterEntity.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchUpdateNative, jpaConverterEntityList, JpaConverterEntity.class);
 
         return createResponse(jpaConverterEntityUpdateRequest, jpaConverterEntityId);
     }
@@ -139,7 +139,7 @@ public class JpaConverterEntityAction extends BaseAction {
      */
     public BaseResponse deleteAllJpaConverterEntity() throws BaseException {
         List<JpaConverterEntity> jpaConverterEntityList = jpaConverterEntityService.findAll();
-        transactionHelper.executeWithTransaction(batchService::batchDeleteNative, jpaConverterEntityList, JpaConverterEntity.class);
+        transactionHelper.executeWithTransaction(jpaBatchService::batchDeleteNative, jpaConverterEntityList, JpaConverterEntity.class);
         return createBaseResponse();
     }
 
