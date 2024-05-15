@@ -20,12 +20,13 @@
 package hu.icellmobilsoft.sampler.common.system.jpa.service;
 
 import jakarta.enterprise.context.Dependent;
-import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 import hu.icellmobilsoft.coffee.model.base.javatime.AbstractIdentifiedAuditEntity;
 import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
 import hu.icellmobilsoft.frappee.hibernate.batch.HibernateBatchService;
+import hu.icellmobilsoft.frappee.hibernate.util.HibernateEntityHelper;
 import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
 
 /**
@@ -36,11 +37,15 @@ import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
  *
  */
 @Dependent
-@Alternative
 public class CustomHibernateBatchService extends HibernateBatchService {
 
+    private final EntityHelper entityHelper;
+
     @Inject
-    private EntityHelper entityHelper;
+    public CustomHibernateBatchService(EntityHelper entityHelper, EntityManager em, HibernateEntityHelper hibernateEntityHelper) {
+        super(em, hibernateEntityHelper);
+        this.entityHelper = entityHelper;
+    }
 
     @Override
     protected <E> void handleInsertAudit(E entity) {
