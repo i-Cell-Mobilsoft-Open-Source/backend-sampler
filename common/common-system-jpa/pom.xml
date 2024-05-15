@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.frappee</groupId>
-            <artifactId>frappee-hibernate-batch-cdi</artifactId>
+            <artifactId>frappee-hibernate-batch</artifactId>
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.frappee</groupId>
