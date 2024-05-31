@@ -41,6 +41,16 @@ public class CustomHibernateBatchService extends HibernateBatchService {
 
     private final EntityHelper entityHelper;
 
+    /**
+     * Constructor.
+     *
+     * @param entityHelper
+     *            {@link EntityHelper}
+     * @param em
+     *            {@link EntityManager}
+     * @param hibernateEntityHelper
+     *            {@link HibernateEntityHelper}
+     */
     @Inject
     public CustomHibernateBatchService(EntityHelper entityHelper, EntityManager em, HibernateEntityHelper hibernateEntityHelper) {
         super(em, hibernateEntityHelper);
