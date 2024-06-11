@@ -88,7 +88,7 @@ public class SampleEntityService extends BaseService<SampleEntity> {
      * Find sample entity by id. It is for testing criteria query method.
      * @param id {@link SampleEntity#getId()}
      * @param clazz Entity class
-     * @return {@link Optional<SampleEntity>}
+     * @return {@link Optional}&lt;{@link SampleEntity}&gt;
      * @throws BaseException on error
      */
     @Traced
