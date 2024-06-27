@@ -28,7 +28,7 @@ import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper;
 import hu.icellmobilsoft.sampler.grpc.api.service.error.RequestForError;
 import hu.icellmobilsoft.sampler.grpc.api.service.error.ResponseForError;

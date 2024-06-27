@@ -35,10 +35,10 @@ import org.apache.commons.collections.CollectionUtils;
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
-import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
 import hu.icellmobilsoft.frappee.jpa.batch.IJpaBatchService;
 import hu.icellmobilsoft.frappee.jpa.batch.enums.Status;
 import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
@@ -108,14 +108,14 @@ public class JpaSamplePostAction extends BaseAction {
         // use repository
         List<SampleEntity> samples = sampleEntityService.findAllByStatus(SampleStatus.DONE);
         if (CollectionUtils.isEmpty(samples)) {
-            throw new TechnicalException("Unexpected data integrity error, cant find sample entity with DONE status!");
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, cant find sample entity with DONE status!");
         }
 
         SampleEntity readed = sampleEntityService.findById(created.getId());
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
                 || !created.getCreatorUser().equals(readed.getCreatorUser()) || created.getStatus() != readed.getStatus()) {
-            throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
         // BatchService insert/update testing
@@ -124,7 +124,7 @@ public class JpaSamplePostAction extends BaseAction {
         entityToCreate.setModLocalDate(LocalDate.now()); // insertable false
         created = transactionHelper.executeWithTransaction(() -> batchInsertNative(entityToCreate));
         if (created.getModLocalDate() != null) {
-            throw new TechnicalException("Unexpected data integrity error, insertable false field inserted!");
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, insertable false field inserted!");
         }
 
         // update entity
@@ -134,7 +134,7 @@ public class JpaSamplePostAction extends BaseAction {
         SampleEntity entityToModify = created;
         SampleEntity modified = transactionHelper.executeWithTransaction(() -> batchUpdateNative(entityToModify));
         if (TEST_SYSTEM_USER.equals(modified.getCreatorUser())) {
-            throw new TechnicalException("Unexpected data integrity error, updatable false field updated!");
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, updatable false field updated!");
         }
 
         readed = sampleEntityService.findById(created.getId(), SampleEntity.class);
@@ -142,7 +142,7 @@ public class JpaSamplePostAction extends BaseAction {
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
                 || !EntityHelper.DEFAULT_SYSTEM_USER.equals(readed.getCreatorUser()) || SampleStatus.DONE != readed.getStatus()
                 || !created.getModLocalDate().equals(readed.getModLocalDate())) {
-            throw new TechnicalException("Unexpected data integrity error, some mandatory field is empty or not equal!");
+            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
         SampleResponse response = new SampleResponse();

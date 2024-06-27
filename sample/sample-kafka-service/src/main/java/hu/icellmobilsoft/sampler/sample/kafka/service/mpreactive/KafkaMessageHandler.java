@@ -33,7 +33,7 @@ import org.eclipse.microprofile.reactive.messaging.Message;
 
 import hu.icellmobilsoft.coffee.dto.common.LogConstants;
 import hu.icellmobilsoft.coffee.se.logging.mdc.MDC;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.IncomingHeaderInterceptor;
 import hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingHeaderInterceptor;
 import io.smallrye.reactive.messaging.kafka.api.IncomingKafkaRecordMetadata;
