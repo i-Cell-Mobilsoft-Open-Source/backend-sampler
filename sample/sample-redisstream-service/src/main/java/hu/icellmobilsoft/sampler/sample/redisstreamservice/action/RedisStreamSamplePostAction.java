@@ -27,7 +27,7 @@ import hu.icellmobilsoft.coffee.module.redisstream.annotation.RedisStreamProduce
 import hu.icellmobilsoft.coffee.module.redisstream.publisher.RedisStreamPublisher;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
