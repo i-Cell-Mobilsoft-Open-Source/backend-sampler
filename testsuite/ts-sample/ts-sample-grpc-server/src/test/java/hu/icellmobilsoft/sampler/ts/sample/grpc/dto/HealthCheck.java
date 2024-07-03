@@ -19,9 +19,6 @@
  */
 package hu.icellmobilsoft.sampler.ts.sample.grpc.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
 /**
