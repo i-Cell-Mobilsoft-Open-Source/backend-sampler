@@ -26,7 +26,7 @@ import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
-import org.eclipse.microprofile.health.Readiness;
+import org.eclipse.microprofile.health.Startup;
 
 import hu.icellmobilsoft.coffee.grpc.server.health.GrpcHealth;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
@@ -77,7 +77,7 @@ public class GrpcHealthCheck {
      * @return health values
      */
     @Produces
-    @Readiness
+    @Startup
     public HealthCheck produceGrpcStartup() {
         return this::checkGrpc;
     }
