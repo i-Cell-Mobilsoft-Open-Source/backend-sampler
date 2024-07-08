@@ -50,6 +50,10 @@ A jaeger felé továbbítódnak a span adatok, gRPC + REST + redis stream consum
 
 Két dashboard a /etc/config/grafana/provisioning/dashboards alatt érhető el.
 
+== gRPC Health
+
+* The *GrpcHealthCheck* activates the check implemented in *GrpcHealth*.
+
 == Service példa
 
 .service.proto
