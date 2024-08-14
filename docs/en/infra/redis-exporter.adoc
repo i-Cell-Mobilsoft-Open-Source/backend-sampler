@@ -1,0 +1,11 @@
+= Redis Exporter
+
+The purpose of the configuration is to be able to monitor the operation of redis through metrics, even within the framework of a more complex application. More information: https://github.com/oliver006/redis_exporter
+
+To use this package, you need to run docker redis. e.g.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
+
+Then the redis metrics can be queried locally here: http://localhost:9121/metrics
+
+In addition, by running the docker observability package, which includes Grafana and Prometheus. e.g.: `docker-compose up -f etcd/docker-compose/docker-compose.local.observability.yml up -d`
+
+The stream metrics extracted using the Redis Exporter can also be followed within Grafana on the `redis stream metrics` dashboard.

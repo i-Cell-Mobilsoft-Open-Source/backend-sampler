@@ -1,0 +1,19 @@
+= Grafana Alerts
+
+The purpose of the configuration is to demonstrate how Grafana Alerts work. The package configuration is prepared for provisioning in the `etcd/config/grafana/provisioning` folder.
+
+One example includes an alarm for the length of a redis stream exceeding the limit.
+
+For the example, you need to run docker redis. e.g.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
+
+Also, you need to run the docker observability package, which includes Grafana and Prometheus. e.g.: `docker-compose up -f etcd/docker-compose/docker-compose.local.observability.yml up -d`
+
+The redis metrics are extracted using the Redis Exporter, the query of which was connected to the configuration of Prometheus. Stream metrics can also be followed within Grafana on the `redis stream metrics` dashboard.
+
+Values can be added to the stream with the XADD command (e.g.: XADD sample 1526919030474-55 sugar pea) using the `docker exec` command, or even by expanding the compose file, or with a graphical client (e.g.: Medis). As soon as we put more than 1 element in it, our alert is activated (pending, than firing).
+
+With this setting, it sends an email, which can be checked locally on the MailPit interface (which is also part of the observability package) at the address http://localhost:8025. But there is also a configuration for using Google Chat, but here we will have to enter the webhook of our own chat. There are also partial examples for handling our message templates.
+
+If we delete the extra elements from the stream, we will also be notified of the normalized state (resolved).
+
+You can read more information and parameterization options in the Grafana documentation.
