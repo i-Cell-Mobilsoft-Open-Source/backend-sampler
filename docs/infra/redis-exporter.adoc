@@ -1,0 +1,11 @@
+= Redis Exporter
+
+A konfiguráció célja a redis működését metrikákon keresztül lehessen monitorozni akár egy komplexebb alkalmazás keretei között is. Bővebb információ: https://github.com/oliver006/redis_exporter
+
+A csomag használatához futtatni kell a dockeres redist. pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
+
+Ezután a redis metrikák lokálisan itt kérdezhetőek le: http://localhost:9121/metrics
+
+Ezen felül a dockeres observibility csomag futtatásával, aminek része a Grafana, illetve a Prometheus is. pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.observability.yml up -d`
+
+A Redis Exporter segítségével kinyert stream-es metrikákat a Grafanán belül a `redis stream metrics` dashboardon is követhetjük.

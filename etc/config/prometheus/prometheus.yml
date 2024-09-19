@@ -25,3 +25,9 @@ scrape_configs:
      - targets:
        - 'bs-sample-service:9990'
        - 'opentelemetry-collector:1234'
+  - job_name: redis
+    metrics_path: /metrics
+    scrape_interval: 1s
+    static_configs:
+      - targets:
+          - 'bs-sample-redis-exporter:9121'

@@ -1,0 +1,19 @@
+= Grafana Alerts
+
+A konfiguráció célja, hogy bemutassa a Grafana Alert-ek működését. A csomag konfiguráció provisioning-hez előkészítve az `etcd/config/grafana/provisioning` könyvtárban.
+
+Az egyik példa egy redis stream hosszának limiten felüli riasztását tartalmazza.
+
+A példához futtatni kell a dockeres redist. pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.redis.yml up -d`
+
+Illetve futtatni kell a dockeres observibility csomagot, aminek része a Grafana, illetve a Prometheus is. pl.: `docker-compose up -f etcd/docker-compose/docker-compose.local.observability.yml up -d`
+
+A redis metrikákat a Redis Exporter segítségével nyerjük ki, aminek a lekérdezése a Prometheus konfigurációjába be lett kötve. A stream metrikákat a Grafanán belül a `redis stream metrics` dashboardon is követhetjük.
+
+A streamhez hozzáadhatunk értékeket pl az XADD utasítással (pl.: XADD sample 1526919030474-55 cukor borso) `docker exec` parancs használatával, esetleg akár a compose file bővítésével, vagy grafikus klienssel is (pl.: Medis). Amint 1-nél több elemet rakunk bele, akkor aktiválódik az alertünk (pending, majd firing).
+
+Jelen beállítással emailt küld, amit a MailPit felületén (ami szintén az observability csomag része), lokálisan a http://localhost:8025 címen ellenőrízhetünk is. De van konfiguráció a Google Chat használatához is, itt viszont a saját chatünk webhookját kell majd megadnunk. Tovább részlegesen vannak példák az üzenetek template-jeinke kezeléséhez is.
+
+Ha kitöröljük a plusz elemeket a streamről, akkor pedig a normalizálódott állapotról (resolved) is kapunk értesítést.
+
+Bővebb információkat, paraméterezési lehetőségeket a Grafana dokumentációban lehet olvasni.

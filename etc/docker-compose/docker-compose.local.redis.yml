@@ -7,6 +7,20 @@ services:
     image: redis:6.0-alpine
     ports:
       - '6379:6379'
+  sample-redis-cli:
+    container_name: bs-sample-redis-cli
+    image: redis:6.0-alpine
+    command: redis-cli -h bs-sample-redis XGROUP CREATE sample sample $ MKSTREAM
+    depends_on:
+      - sample-redis
+  sample-redis-exporter:
+    container_name: bs-sample-redis-exporter
+    image: oliver006/redis_exporter:v1.62.0
+    ports:
+      - '9121:9121'
+    environment:
+      REDIS_ADDR: redis://bs-sample-redis:6379
+      REDIS_EXPORTER_CHECK_STREAMS: db0=sample
 networks: 
   default: 
     external: 
