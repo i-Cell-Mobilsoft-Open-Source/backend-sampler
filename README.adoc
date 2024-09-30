@@ -7,7 +7,7 @@ The goal of this project to provide a functional usage pattern for general proje
 include::docs/requirements.adoc[leveloffset=+1]
 
 == Sample services
-Every service uses the same API, 
+Every service uses the same API,
 runs on the same port, and in the same environment.
 
 === REST service
@@ -21,7 +21,7 @@ Every additional sample service is an extension of this basic implementation.
 `sample/sample-jpa-service`
 
 The purpose of the service is to utilize the JPA server
-Since it is designed to be universal, it uses the H2 database. 
+Since it is designed to be universal, it uses the H2 database.
 However, the management of each entity is handled as if it were a regular database underneath.
 
 === Mongo service
@@ -37,7 +37,7 @@ as it allows more advanced configurations compared to using docker alone.
 .Service server - starting the environment
 [source,bash]
 ----
-docker-compose -f local_path/sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --force-recreate
+docker compose -f local_path/sampler/etc/docker-compose/docker-compose.local.wildfly.yml up --force-recreate
 ----
 The `--force-recreate` switch is used to ensure that the previous docker container is deleted during startup
 allowing a fresh environment to be created for each run.
@@ -52,14 +52,14 @@ So you can use the following deployment "copy" script, where you need to set <PR
 .war file installation
 [source,bash]
 ----
-# in case of sample-rest-service 
-docker cp local_path/sample/sample-rest-service/target/sample-rest-service-<PROJECT_VERSION>.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+# in case of sample-rest-service
+docker cp local_path/sample/sample-rest-service/target/sample-rest-service-<PROJECT_VERSION>.war bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war
 
 # in case of sample-jpa-service
-docker cp local_path/sample/sample-jpa-service/target/sample-jpa-service-<PROJECT_VERSION>.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+docker cp local_path/sample/sample-jpa-service/target/sample-jpa-service-<PROJECT_VERSION>.war bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war
 
 # in case of sample-mongo-service
-docker cp local_path/sample/sample-mongo-service/target/sample-mongo-service-<PROJECT_VERSION>.war bs-sample-service:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+docker cp local_path/sample/sample-mongo-service/target/sample-mongo-service-<PROJECT_VERSION>.war bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war
 ----
 
 However, more conveniently, using Ant with a single click from the IDE
@@ -67,7 +67,7 @@ e.g. the `sample/sample-rest-service/build.xml` Ant file, with the "deploy-war-d
 This handles the paths, version numbers,
 and eliminates the neet to remember anything, open console, etc
 
-Some services, such as `sample-mongo-service`, require a mondodb service as well, 
+Some services, such as `sample-mongo-service`, require a mondodb service as well,
 for this the `etc/docker-compose/docker-compose.local.mongodb.yml` ducker compose file is prepared.
 The docker compose file `etc/docker-compose/docker-compose.local.mongodb.yml` needs to be started.
 There is nothing else to do except to start it.
