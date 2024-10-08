@@ -17,7 +17,7 @@
         <version.io.smallrye.config.source.yaml>3.3.4</version.io.smallrye.config.source.yaml>
         <!-- io.etcd:jetcd-core:0.7.7 vorking with this version -->
         <version.io.grpc>1.60.0</version.io.grpc>
-        <version.org.apache.avro>1.11.3</version.org.apache.avro>
+        <version.org.apache.avro>1.11.4</version.org.apache.avro>
         <version.io.confluent.kafka.avro>7.5.0</version.io.confluent.kafka.avro>
 
         <version.com.oracle.ojdbc>19.17.0.0</version.com.oracle.ojdbc>
