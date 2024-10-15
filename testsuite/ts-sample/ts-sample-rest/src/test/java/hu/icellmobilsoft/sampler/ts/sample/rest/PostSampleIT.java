@@ -97,19 +97,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing JSON: valid json string success")
         void testJsonValidString() {
             // given
-            String request = """
-                    {
-                        "context": {
-                            "requestId": "4EEMHK5QH4FVX601",
-                            "timestamp": "2023-12-05T22:11:46.382Z"
-                        },
-                            "sample": {
-                            "columnA": "colA",
-                            "columnB": "VALUE_B",
-                            "columnC": "VALUE_C"
-                        }
-                    }
-                    """;
+            String request = "{\n" +
+                    "                        \"context\": {\n" +
+                    "                            \"requestId\": \"4EEMHK5QH4FVX601\",\n" +
+                    "                            \"timestamp\": \"2023-12-05T22:11:46.382Z\"\n" +
+                    "                        },\n" +
+                    "                            \"sample\": {\n" +
+                    "                            \"columnA\": \"colA\",\n" +
+                    "                            \"columnB\": \"VALUE_B\",\n" +
+                    "                            \"columnC\": \"VALUE_C\"\n" +
+                    "                        }\n" +
+                    "                    }";
 
             // when
             SampleResponse response = responseProcessor.postJson(request, SampleResponse.class);
@@ -122,20 +120,18 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing JSON: invalid json string with UNKNOWN field should throw validation errors")
         void testJsonUnknownField() {
             // given
-            String request = """
-                    {
-                        "context": {
-                            "requestId": "4EEMHK5QH4FVX601",
-                            "timestamp": "2023-12-05T22:11:46.382Z"
-                        },
-                            "sample": {
-                            "columnA": "colA",
-                            "columnB": "VALUE_B",
-                            "columnC": "VALUE_C",
-                            "valamiIsmeretlen": "VALUE_C"
-                        }
-                    }
-                    """;
+            String request = "{\n" +
+                    "                        \"context\": {\n" +
+                    "                            \"requestId\": \"4EEMHK5QH4FVX601\",\n" +
+                    "                            \"timestamp\": \"2023-12-05T22:11:46.382Z\"\n" +
+                    "                        },\n" +
+                    "                            \"sample\": {\n" +
+                    "                            \"columnA\": \"colA\",\n" +
+                    "                            \"columnB\": \"VALUE_B\",\n" +
+                    "                            \"columnC\": \"VALUE_C\",\n" +
+                    "                            \"valamiIsmeretlen\": \"VALUE_C\"\n" +
+                    "                        }\n" +
+                    "                    }";
 
             // when
             var response = responseProcessorError.postJson(request, InvalidRequestFault.class);
@@ -148,19 +144,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing JSON: invalid json string with UNKNOWN ENUM value should throw validation error")
         void testJsonUnknownEnumValue() {
             // given
-            String request = """
-                    {
-                        "context": {
-                            "requestId": "4EEMHK5QH4FVX601",
-                            "timestamp": "2023-12-05T22:11:46.382Z"
-                        },
-                            "sample": {
-                            "columnA": "colA",
-                            "columnB": "valamiIsmeretlen",
-                            "columnC": "VALUE_C"
-                        }
-                    }
-                    """;
+            String request = "{\n" +
+                    "                        \"context\": {\n" +
+                    "                            \"requestId\": \"4EEMHK5QH4FVX601\",\n" +
+                    "                            \"timestamp\": \"2023-12-05T22:11:46.382Z\"\n" +
+                    "                        },\n" +
+                    "                            \"sample\": {\n" +
+                    "                            \"columnA\": \"colA\",\n" +
+                    "                            \"columnB\": \"valamiIsmeretlen\",\n" +
+                    "                            \"columnC\": \"VALUE_C\"\n" +
+                    "                        }\n" +
+                    "                    }";
 
             // when
             var response = responseProcessorError.postJson(request, InvalidRequestFault.class);
@@ -173,19 +167,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing JSON: invalid json string with UNKNOWN optional ENUM value should throw validation error")
         void testJsonUnknownOptionalEnumValue() {
             // given
-            String request = """
-                    {
-                        "context": {
-                            "requestId": "4EEMHK5QH4FVX601",
-                            "timestamp": "2023-12-05T22:11:46.382Z"
-                        },
-                            "sample": {
-                            "columnA": "colA",
-                            "columnB": "VALUE_B",
-                            "columnC": "valamiIsmeretlen"
-                        }
-                    }
-                    """;
+            String request = "{\n" +
+                    "                        \"context\": {\n" +
+                    "                            \"requestId\": \"4EEMHK5QH4FVX601\",\n" +
+                    "                            \"timestamp\": \"2023-12-05T22:11:46.382Z\"\n" +
+                    "                        },\n" +
+                    "                            \"sample\": {\n" +
+                    "                            \"columnA\": \"colA\",\n" +
+                    "                            \"columnB\": \"VALUE_B\",\n" +
+                    "                            \"columnC\": \"valamiIsmeretlen\"\n" +
+                    "                        }\n" +
+                    "                    }";
 
             // when
             var response = responseProcessorError.postJson(request, InvalidRequestFault.class);
@@ -198,19 +190,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing JSON: invalid json string using ENUM ordinal value should throw validation error")
         void testJsonEnumOrdinalValue() {
             // given
-            String request = """
-                    {
-                        "context": {
-                            "requestId": "4EEMHK5QH4FVX601",
-                            "timestamp": "2023-12-05T22:11:46.382Z"
-                        },
-                            "sample": {
-                            "columnA": "colA",
-                            "columnB": "0",
-                            "columnC": "1"
-                        }
-                    }
-                    """;
+            String request = "{\n" +
+                    "                        \"context\": {\n" +
+                    "                            \"requestId\": \"4EEMHK5QH4FVX601\",\n" +
+                    "                            \"timestamp\": \"2023-12-05T22:11:46.382Z\"\n" +
+                    "                        },\n" +
+                    "                            \"sample\": {\n" +
+                    "                            \"columnA\": \"colA\",\n" +
+                    "                            \"columnB\": \"0\",\n" +
+                    "                            \"columnC\": \"1\"\n" +
+                    "                        }\n" +
+                    "                    }";
 
             // when
             var response = responseProcessorError.postJson(request, InvalidRequestFault.class);
@@ -223,19 +213,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing JSON: invalid json string using wrong TIME format should throw validation error")
         void testJsonWrongTimeFormat() {
             // given
-            String request = """
-                    {
-                        "context": {
-                            "requestId": "4EEMHK5QH4FVX601",
-                            "timestamp": "2022-03-10T12:15"
-                        },
-                            "sample": {
-                            "columnA": "colA",
-                            "columnB": "VALUE_B",
-                            "columnC": "VALUE_C"
-                        }
-                    }
-                    """;
+            String request = "{\n" +
+                    "                        \"context\": {\n" +
+                    "                            \"requestId\": \"4EEMHK5QH4FVX601\",\n" +
+                    "                            \"timestamp\": \"2022-03-10T12:15\"\n" +
+                    "                        },\n" +
+                    "                            \"sample\": {\n" +
+                    "                            \"columnA\": \"colA\",\n" +
+                    "                            \"columnB\": \"VALUE_B\",\n" +
+                    "                            \"columnC\": \"VALUE_C\"\n" +
+                    "                        }\n" +
+                    "                    }";
 
             // when
             var response = responseProcessorError.postJson(request, InvalidRequestFault.class);
@@ -278,19 +266,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing XML: valid xml string success")
         void testXmlValidString() {
             // given
-            String request = """
-                    <ns2:SampleRequest xmlns="http://common.dto.coffee.icellmobilsoft.hu/commonservice" xmlns:ns2="http://dto.sampler.icellmobilsoft.hu/sample/rest/post">
-                      <context>
-                        <requestId>4EEMW6I0QS7JKQ01</requestId>
-                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>
-                      </context>
-                      <ns2:sample>
-                        <ns2:columnA>colA</ns2:columnA>
-                        <ns2:columnB>VALUE_B</ns2:columnB>
-                        <ns2:columnC>VALUE_C</ns2:columnC>
-                      </ns2:sample>
-                    </ns2:SampleRequest>
-                    """;
+            String request = "<ns2:SampleRequest xmlns=\"http://common.dto.coffee.icellmobilsoft.hu/commonservice\" xmlns:ns2=\"http://dto.sampler.icellmobilsoft.hu/sample/rest/post\">\n" +
+                    "                      <context>\n" +
+                    "                        <requestId>4EEMW6I0QS7JKQ01</requestId>\n" +
+                    "                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>\n" +
+                    "                      </context>\n" +
+                    "                      <ns2:sample>\n" +
+                    "                        <ns2:columnA>colA</ns2:columnA>\n" +
+                    "                        <ns2:columnB>VALUE_B</ns2:columnB>\n" +
+                    "                        <ns2:columnC>VALUE_C</ns2:columnC>\n" +
+                    "                      </ns2:sample>\n" +
+                    "                    </ns2:SampleRequest>";
 
             // when
             var response = responseProcessor.postXml(request, SampleResponse.class);
@@ -303,20 +289,18 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing XML: invalid xml string with UNKNOWN field should throw validation error")
         void testXmlUnknownField() {
             // given
-            String request = """
-                    <ns2:SampleRequest xmlns="http://common.dto.coffee.icellmobilsoft.hu/commonservice" xmlns:ns2="http://dto.sampler.icellmobilsoft.hu/sample/rest/post">
-                      <context>
-                        <requestId>4EEMW6I0QS7JKQ01</requestId>
-                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>
-                      </context>
-                      <ns2:sample>
-                        <ns2:columnA>colA</ns2:columnA>
-                        <ns2:columnB>VALUE_B</ns2:columnB>
-                        <ns2:columnC>VALUE_C</ns2:columnC>
-                        <ns2:valamiIsmeretlen>VALUE_C</ns2:valamiIsmeretlen>
-                      </ns2:sample>
-                    </ns2:SampleRequest>
-                    """;
+            String request = "<ns2:SampleRequest xmlns=\"http://common.dto.coffee.icellmobilsoft.hu/commonservice\" xmlns:ns2=\"http://dto.sampler.icellmobilsoft.hu/sample/rest/post\">\n" +
+                    "                      <context>\n" +
+                    "                        <requestId>4EEMW6I0QS7JKQ01</requestId>\n" +
+                    "                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>\n" +
+                    "                      </context>\n" +
+                    "                      <ns2:sample>\n" +
+                    "                        <ns2:columnA>colA</ns2:columnA>\n" +
+                    "                        <ns2:columnB>VALUE_B</ns2:columnB>\n" +
+                    "                        <ns2:columnC>VALUE_C</ns2:columnC>\n" +
+                    "                        <ns2:valamiIsmeretlen>VALUE_C</ns2:valamiIsmeretlen>\n" +
+                    "                      </ns2:sample>\n" +
+                    "                    </ns2:SampleRequest>";
 
             // when
             var response = responseProcessorError.postXml(request, InvalidRequestFault.class);
@@ -329,19 +313,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing XML: invalid xml string with UNKNOWN ENUM value should throw validation error")
         void testXmlUnknownEnumValue() {
             // given
-            String request = """
-                    <ns2:SampleRequest xmlns="http://common.dto.coffee.icellmobilsoft.hu/commonservice" xmlns:ns2="http://dto.sampler.icellmobilsoft.hu/sample/rest/post">
-                      <context>
-                        <requestId>4EEMW6I0QS7JKQ01</requestId>
-                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>
-                      </context>
-                      <ns2:sample>
-                        <ns2:columnA>colA</ns2:columnA>
-                        <ns2:columnB>valamiIsmeretlen</ns2:columnB>
-                        <ns2:columnC>VALUE_C</ns2:columnC>
-                      </ns2:sample>
-                    </ns2:SampleRequest>
-                    """;
+            String request = "<ns2:SampleRequest xmlns=\"http://common.dto.coffee.icellmobilsoft.hu/commonservice\" xmlns:ns2=\"http://dto.sampler.icellmobilsoft.hu/sample/rest/post\">\n" +
+                    "                      <context>\n" +
+                    "                        <requestId>4EEMW6I0QS7JKQ01</requestId>\n" +
+                    "                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>\n" +
+                    "                      </context>\n" +
+                    "                      <ns2:sample>\n" +
+                    "                        <ns2:columnA>colA</ns2:columnA>\n" +
+                    "                        <ns2:columnB>valamiIsmeretlen</ns2:columnB>\n" +
+                    "                        <ns2:columnC>VALUE_C</ns2:columnC>\n" +
+                    "                      </ns2:sample>\n" +
+                    "                    </ns2:SampleRequest>";
 
             // when
             var response = responseProcessorError.postXml(request, InvalidRequestFault.class);
@@ -354,19 +336,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing XML: invalid xml string with UNKNOWN optional ENUM value should throw validation error")
         void testXmlUnknownOptionalEnumValue() {
             // given
-            String request = """
-                    <ns2:SampleRequest xmlns="http://common.dto.coffee.icellmobilsoft.hu/commonservice" xmlns:ns2="http://dto.sampler.icellmobilsoft.hu/sample/rest/post">
-                      <context>
-                        <requestId>4EEMW6I0QS7JKQ01</requestId>
-                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>
-                      </context>
-                      <ns2:sample>
-                        <ns2:columnA>colA</ns2:columnA>
-                        <ns2:columnB>VALUE_B</ns2:columnB>
-                        <ns2:columnC>valamiIsmeretlen</ns2:columnC>
-                      </ns2:sample>
-                    </ns2:SampleRequest>
-                    """;
+            String request = "<ns2:SampleRequest xmlns=\"http://common.dto.coffee.icellmobilsoft.hu/commonservice\" xmlns:ns2=\"http://dto.sampler.icellmobilsoft.hu/sample/rest/post\">\n" +
+                    "                      <context>\n" +
+                    "                        <requestId>4EEMW6I0QS7JKQ01</requestId>\n" +
+                    "                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>\n" +
+                    "                      </context>\n" +
+                    "                      <ns2:sample>\n" +
+                    "                        <ns2:columnA>colA</ns2:columnA>\n" +
+                    "                        <ns2:columnB>VALUE_B</ns2:columnB>\n" +
+                    "                        <ns2:columnC>valamiIsmeretlen</ns2:columnC>\n" +
+                    "                      </ns2:sample>\n" +
+                    "                    </ns2:SampleRequest>";
 
             // when
             var response = responseProcessorError.postXml(request, InvalidRequestFault.class);
@@ -379,19 +359,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing XML: invalid xml string using ENUM ordinal value should throw validation error")
         void testXmlEnumOrdinalValue() {
             // given
-            String request = """
-                    <ns2:SampleRequest xmlns="http://common.dto.coffee.icellmobilsoft.hu/commonservice" xmlns:ns2="http://dto.sampler.icellmobilsoft.hu/sample/rest/post">
-                      <context>
-                        <requestId>4EEMW6I0QS7JKQ01</requestId>
-                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>
-                      </context>
-                      <ns2:sample>
-                        <ns2:columnA>colA</ns2:columnA>
-                        <ns2:columnB>1</ns2:columnB>
-                        <ns2:columnC>2</ns2:columnC>
-                      </ns2:sample>
-                    </ns2:SampleRequest>
-                    """;
+            String request = "<ns2:SampleRequest xmlns=\"http://common.dto.coffee.icellmobilsoft.hu/commonservice\" xmlns:ns2=\"http://dto.sampler.icellmobilsoft.hu/sample/rest/post\">\n" +
+                    "                      <context>\n" +
+                    "                        <requestId>4EEMW6I0QS7JKQ01</requestId>\n" +
+                    "                        <timestamp>2023-12-05T22:23:08.52Z</timestamp>\n" +
+                    "                      </context>\n" +
+                    "                      <ns2:sample>\n" +
+                    "                        <ns2:columnA>colA</ns2:columnA>\n" +
+                    "                        <ns2:columnB>1</ns2:columnB>\n" +
+                    "                        <ns2:columnC>2</ns2:columnC>\n" +
+                    "                      </ns2:sample>\n" +
+                    "                    </ns2:SampleRequest>";
 
             // when
             var response = responseProcessorError.postXml(request, InvalidRequestFault.class);
@@ -404,19 +382,17 @@ class PostSampleIT extends BaseConfigurableWeldIT {
         @DisplayName("Testing XML: invalid xml string using wrong TIME format should throw validation error")
         void testXmlWrongTimeFormat() {
             // given
-            String request = """
-                    <ns2:SampleRequest xmlns="http://common.dto.coffee.icellmobilsoft.hu/commonservice" xmlns:ns2="http://dto.sampler.icellmobilsoft.hu/sample/rest/post">
-                      <context>
-                        <requestId>4EEMW6I0QS7JKQ01</requestId>
-                        <timestamp>2022-03-10T12:15</timestamp>
-                      </context>
-                      <ns2:sample>
-                        <ns2:columnA>colA</ns2:columnA>
-                        <ns2:columnB>VALUE_B</ns2:columnB>
-                        <ns2:columnC>VALUE_C</ns2:columnC>
-                      </ns2:sample>
-                    </ns2:SampleRequest>
-                    """;
+            String request = "<ns2:SampleRequest xmlns=\"http://common.dto.coffee.icellmobilsoft.hu/commonservice\" xmlns:ns2=\"http://dto.sampler.icellmobilsoft.hu/sample/rest/post\">\n" +
+                    "                      <context>\n" +
+                    "                        <requestId>4EEMW6I0QS7JKQ01</requestId>\n" +
+                    "                        <timestamp>2022-03-10T12:15</timestamp>\n" +
+                    "                      </context>\n" +
+                    "                      <ns2:sample>\n" +
+                    "                        <ns2:columnA>colA</ns2:columnA>\n" +
+                    "                        <ns2:columnB>VALUE_B</ns2:columnB>\n" +
+                    "                        <ns2:columnC>VALUE_C</ns2:columnC>\n" +
+                    "                      </ns2:sample>\n" +
+                    "                    </ns2:SampleRequest>";
 
             // when
             var response = responseProcessorError.postXml(request, InvalidRequestFault.class);
