@@ -26,7 +26,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.gson.JsonUtil;
+import hu.icellmobilsoft.coffee.tool.utils.json.JsonUtil;
 import hu.icellmobilsoft.sampler.common.rest.cdi.ApplicationContainer;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.sample.redispubsub.service.config.RedisPubSubConfig;
@@ -58,7 +58,7 @@ public class PostInListener {
     @Outgoing(RedisPubSubConfig.NoSub.REDIS_CHANNEL)
     String consume(String dummy) {
         log.info(">> incoming dummy: [{0}]", dummy);
-        applicationContainer.getObjectMap().put(RedisPubSubConfig.SamplePost.DUMMY_KEY, JsonUtil.toObject(dummy, SampleType.class));
+        applicationContainer.getObjectMap().put(RedisPubSubConfig.SamplePost.DUMMY_KEY, JsonUtil.toObjectOpt(dummy, SampleType.class).orElse(null));
         return dummy;
     }
 }
