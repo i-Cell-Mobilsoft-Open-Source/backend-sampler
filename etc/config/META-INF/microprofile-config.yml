@@ -29,7 +29,7 @@ coffee:
       permitKeepAliveWithoutCalls: false
       port: 8199
       #gRPC server thread pool properties
-      threadpool:
+      threadPool:
         #simple executor
         #default:
         #  corePoolSize: 64

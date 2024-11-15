@@ -22,3 +22,9 @@ include::services/mongo.adoc[leveloffset=+2]
 include::services/kafka.adoc[leveloffset=+2]
 include::services/etcd.adoc[leveloffset=+2]
 include::services/jpa-batch.adoc[leveloffset=+2]
+
+== Infrastruktúra példák
+A példacsomagban különböző thirdparty alkalmazásokhoz is találhatóak példák.
+
+include::infra/redis-exporter.adoc[leveloffset=+2]
+include::infra/grafana-alerts.adoc[leveloffset=+2]

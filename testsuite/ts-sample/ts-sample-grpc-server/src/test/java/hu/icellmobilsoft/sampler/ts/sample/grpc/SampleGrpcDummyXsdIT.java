@@ -35,7 +35,7 @@ import com.google.protobuf.Timestamp;
 
 import hu.icellmobilsoft.coffee.dto.common.commonservice.XsdProtoWrapper.ContextType;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleCoreType;
 import hu.icellmobilsoft.sampler.common.sample.rest.post.XsdProtoWrapper.SampleRequestType;

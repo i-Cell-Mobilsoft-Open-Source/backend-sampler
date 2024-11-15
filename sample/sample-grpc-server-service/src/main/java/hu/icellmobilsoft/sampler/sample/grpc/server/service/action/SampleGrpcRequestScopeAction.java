@@ -24,7 +24,7 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.grpc.api.service.sample.BaseMessage;
 import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyRequest;
 import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyResponse;
