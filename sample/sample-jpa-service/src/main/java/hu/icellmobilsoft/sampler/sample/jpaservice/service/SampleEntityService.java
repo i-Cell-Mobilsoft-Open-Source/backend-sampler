@@ -37,7 +37,7 @@ import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.cdi.trace.annotation.Traced;
 import hu.icellmobilsoft.coffee.dto.exception.InvalidParameterException;
-import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
+import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.sampler.common.system.jpa.service.BaseService;
@@ -64,9 +64,11 @@ public class SampleEntityService extends BaseService<SampleEntity> {
     /**
      * Elements associated with status
      *
-     * @param status sample status
+     * @param status
+     *            sample status
      * @return entity
-     * @throws BaseException on error
+     * @throws BaseException
+     *             on error
      */
     public List<SampleEntity> findAllByStatus(SampleStatus status) throws BaseException {
         return wrapListValidated(sampleEntityRepository::findAllByStatus, status, "findAllByStatus", "status");
@@ -76,9 +78,11 @@ public class SampleEntityService extends BaseService<SampleEntity> {
      * Find sample entity by id. It is for testing query method tracing.
      * <a href="https://github.com/i-Cell-Mobilsoft-Open-Source/coffee/issues/550">See coffee issue</a>
      *
-     * @param id {@link SampleEntity#getId()}
+     * @param id
+     *            {@link SampleEntity#getId()}
      * @return entity
-     * @throws BaseException on error
+     * @throws BaseException
+     *             on error
      */
     public SampleEntity findById(String id) throws BaseException {
         return wrapValidated(sampleEntityRepository::findById, id, "findById", "id");
@@ -86,13 +90,17 @@ public class SampleEntityService extends BaseService<SampleEntity> {
 
     /**
      * Find sample entity by id. It is for testing criteria query method.
-     * @param id {@link SampleEntity#getId()}
-     * @param clazz Entity class
+     *
+     * @param id
+     *            {@link SampleEntity#getId()}
+     * @param clazz
+     *            Entity class
      * @return {@link Optional}&lt;{@link SampleEntity}&gt;
-     * @throws BaseException on error
+     * @throws BaseException
+     *             on error
      */
     @Traced
-    public Optional<SampleEntity> findOptionalById(String id, Class<SampleEntity> clazz) throws BaseException {
+    public Optional<SampleEntity> findByQueryParams(String id, Class<SampleEntity> clazz) throws BaseException {
         if (StringUtils.isBlank(id) || clazz == null) {
             log.warn("Entity Id is blank or clazz is null skipped to load!");
             throw new InvalidParameterException("id is blank or clazz is null!");
@@ -113,7 +121,8 @@ public class SampleEntityService extends BaseService<SampleEntity> {
                 log.debug("No result, id: [{0}].", id);
             }
         } catch (Exception e) {
-            String msg = MessageFormat.format("Error occured in finding class: [{0}] by id: [{1}]: [{2}]", clazz.getCanonicalName(), id, e.getLocalizedMessage());
+            String msg = MessageFormat.format("Error occured in finding class: [{0}] by id: [{1}]: [{2}]", clazz.getCanonicalName(), id,
+                    e.getLocalizedMessage());
             log.error(msg, e);
             throw new TechnicalException(CoffeeFaultType.REPOSITORY_FAILED, msg, e);
         } finally {
