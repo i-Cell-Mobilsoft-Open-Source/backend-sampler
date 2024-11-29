@@ -1,43 +1,70 @@
 version: "3.8"
 
-# futtatas
-# docker-compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.wildfly-secure.yml up --build --force-recreate
-#
-# belemaszas
-# docker exec -it bs-sample-service /bin/bash
-#
-# uresbe inditas
-# docker run --rm -it docker-compose_sample-service /bin/bash
 services:
   sample-service:
     container_name: bs-sample-service
-    build:
-      context: .
-      dockerfile: develop.dockerfile
-      args:
-        WILDFLY_BASE_IMAGE: 'quay.io/wildfly/wildfly:27.0.0.Final-jdk17'
-#        custom cli script futtatása, ha a deploymenthez kell
-        SERVICE_CLI_DIR: 'wildfly/cli/mp-all'
+    image: dockerhub-dockerio.icellmobilsoft.hu/icellmobilsoft/wildfly-mp-full:3.0.0-SNAPSHOT
     volumes:
-      - './wildfly/sample.properties:/sampler/wildfly.properties'
-      - ../config/kafka/client.truststore.jks:/sampler/client.truststore.jks
+      - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
+      - '../config/kafka/client.truststore.jks:/home/icellmobilsoft/config/client.truststore.jks'
     ports:
       - '8081:8080'
       - '9991:9990'
       - '8788:8787'
       - '8199:8199' #GRPC
     environment:
-      OPENTRACING_JAEGER_AGENT_HOST: jaeger
-      JAEGER_SERVICE_NAME: bs-sample-service
-#      MP_CONFIG_PROFILE: redispubsub
-      MP_CONFIG_PROFILE: kafka-secure
+      OPENTELEMETRY_SERVICE_NAME: bs-sample-service
+      # athidalo megoldas a service nevere
+      OTEL_SERVICE_NAME: bs-sample-service
+      OPENTELEMETRY_SAMPLER_TYPE: on # default is ratio with 0.01
+      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
+      OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
+      MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
+      #      MP_CONFIG_PROFILE: redispubsub
+      MP_CONFIG_PROFILE: kafkasecure
+      HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
+      DEBUG: "true"
+
+      # Ha ENV valtozokkent akarjuk felvenni az MP CONFIG ertekeket:
+#      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_BOOTSTRAP_SERVERS: bs-kafka-secure:9094
+#      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SECURITY_PROTOCOL: SASL_SSL
+#      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SASL_MECHANISM: PLAIN
+#      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SASL_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka-client" password="kafka-client-secret";
+#      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SSL_TRUSTSTORE_LOCATION: /home/icellmobilsoft/config/client.truststore.jks
+#      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SSL_TRUSTSTORE_PASSWORD: client-pass
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_AVRO_CONNECTOR: smallrye-kafka
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_AVRO_TOPIC: testing-avro
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_AVRO_KEY_SERIALIZER: org.apache.kafka.common.serialization.IntegerSerializer
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_AVRO_VALUE_SERIALIZER: io.confluent.kafka.serializers.KafkaAvroSerializer
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_AVRO_SCHEMA_REGISTRY_URL: http://bs-schema-registry:8085
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_CONNECTOR: smallrye-kafka
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_RETRIES: 0
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_DELIVERY_TIMEOUT_MS: 5000
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_LINGER_MS: 1000
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_REQUEST_TIMEOUT_MS: 500
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_TOPIC: testing-string
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_KEY_SERIALIZER: org.apache.kafka.common.serialization.IntegerSerializer
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_VALUE_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
+#      MP_MESSAGING_OUTGOING_TO_KAFKA_STRING_INTERCEPTOR_CLASSES: hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingHeaderInterceptor,hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingLoggingInterceptor
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_AVRO_CONNECTOR: smallrye-kafka
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_AVRO_TOPIC: testing-avro
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_AVRO_VALUE_DESERIALIZER: io.confluent.kafka.serializers.KafkaAvroDeserializer
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_AVRO_KEY_DESERIALIZER: org.apache.kafka.common.serialization.IntegerDeserializer
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_AVRO_SCHEMA_REGISTRY_URL: http://bs-schema-registry:8085
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_AVRO_SPECIFIC_AVRO_READER: true
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_STRING_CONNECTOR: smallrye-kafka
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_STRING_TOPIC: testing-string
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_STRING_VALUE_DESERIALIZER: org.apache.kafka.common.serialization.StringDeserializer
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_STRING_KEY_DESERIALIZER: org.apache.kafka.common.serialization.IntegerDeserializer
+#      MP_MESSAGING_INCOMING_FROM_KAFKA_STRING_INTERCEPTOR_CLASSES: hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.IncomingHeaderInterceptor,hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.IncomingLoggingInterceptor
+
     deploy:
       resources:
         limits:
           memory: 1G
         reservations:
           memory: 512M
-networks: 
-  default: 
-    external: 
+networks:
+  default:
+    external:
       name: bs-local-network
