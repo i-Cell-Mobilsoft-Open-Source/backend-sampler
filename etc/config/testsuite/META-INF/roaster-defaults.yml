@@ -11,3 +11,7 @@ testsuite:
             sample:
                 baseUriKey: sampler.service.sample.base.uri
                 path: /rest/sample
+    sample:
+        fileupload:
+            client:
+                service/mp-rest/url: http://localhost:8081

@@ -40,6 +40,8 @@ services:
       MP_CONFIG_PROFILE: kafka
       HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
       DEBUG: "true"
+      # 1GB
+      UNDERTOW_HTTP_MAX_POST_SIZE: 1073741824
     deploy:
       resources:
         limits:

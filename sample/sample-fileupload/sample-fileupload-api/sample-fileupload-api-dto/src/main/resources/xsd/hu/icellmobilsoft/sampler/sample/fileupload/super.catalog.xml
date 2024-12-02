@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+    <public publicId="http://sample.sampler.icellmobilsoft.hu/fileupload"
+        uri="maven:hu.icellmobilsoft.sampler.sample.fileupload.api:sample-fileupload-api-schema:jar::!/xsd/hu/icellmobilsoft/sampler/sample/fileupload/schema/fileupload.xsd" />
+
+</catalog>
