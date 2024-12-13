@@ -21,18 +21,25 @@ package hu.icellmobilsoft.sampler.ts.sample.fileupload.stream;
 
 import java.io.InputStream;
 
-import jakarta.inject.Inject;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
 import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
+import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
+import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
 import hu.icellmobilsoft.sampler.ts.sample.fileupload.io.RandomInputStream;
+import jakarta.inject.Inject;
 
+/**
+ * Two-phase file upload test.
+ *
+ * @author attila-kiss-it
+ * @since 2.0.0
+ */
 @DisplayName("Testing Sample FileUpload - Stream")
 @Tag(TestSuiteGroup.RESTASSURED)
 class PostStreamUploadIT extends BaseConfigurableWeldIT {
@@ -44,16 +51,14 @@ class PostStreamUploadIT extends BaseConfigurableWeldIT {
     @DisplayName("POST /fileupload/multipart/upload")
     void testUpload() throws BaseException {
 
-        // PostFileUploadRequest postFileUploadRequest = new PostFileUploadRequest().withFileName("test.txt").withFileDescription("test description");
-        //
-        // PostFileUploadResponse postFileUploadResponse = fileUploadStreamClient.postStreamInit(postFileUploadRequest);
-        //
-        // Assertions.assertNotNull(postFileUploadResponse);
-        // Assertions.assertNotNull(postFileUploadResponse.getFileUploadId());
-        //
-        // String fileUploadId = postFileUploadResponse.getFileUploadId();
+        PostFileUploadRequest postFileUploadRequest = new PostFileUploadRequest().withFileName("test.txt").withFileDescription("test description");
 
-        String fileUploadId = RandomUtil.generateId();
+        PostFileUploadResponse postFileUploadResponse = fileUploadStreamClient.postStreamInit(postFileUploadRequest);
+
+        Assertions.assertNotNull(postFileUploadResponse);
+        Assertions.assertNotNull(postFileUploadResponse.getFileUploadId());
+
+        String fileUploadId = postFileUploadResponse.getFileUploadId();
 
         InputStream inputStream = new RandomInputStream(500 * 1024 * 1024);
 

@@ -21,9 +21,6 @@ package hu.icellmobilsoft.sampler.ts.sample.fileupload.multipart;
 
 import java.io.InputStream;
 
-import jakarta.inject.Inject;
-import jakarta.ws.rs.core.MediaType;
-
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +33,15 @@ import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
 import hu.icellmobilsoft.sampler.ts.sample.fileupload.io.RandomInputStream;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.core.MediaType;
 
+/**
+ * Multipart file upload test.
+ *
+ * @author attila-kiss-it
+ * @since 2.0.0
+ */
 @DisplayName("Testing Sample FileUpload - Multipart")
 @Tag(TestSuiteGroup.RESTASSURED)
 class PostMultpartUploadIT extends BaseConfigurableWeldIT {

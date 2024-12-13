@@ -22,9 +22,6 @@ package hu.icellmobilsoft.sampler.sample.filupload.service.action;
 import java.io.IOException;
 import java.io.InputStream;
 
-import jakarta.enterprise.inject.Model;
-import jakarta.inject.Inject;
-
 import org.apache.commons.io.IOUtils;
 
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
@@ -35,9 +32,11 @@ import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 /**
- * Abstract file upload action.
+ * File upload action.
  *
  * @author attila-kiss-it
  * @since 2.0.0

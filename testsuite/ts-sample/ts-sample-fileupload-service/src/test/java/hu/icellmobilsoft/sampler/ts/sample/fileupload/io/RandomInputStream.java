@@ -23,6 +23,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
+/**
+ * {@link InputStream} implementation that generates random content in the given length.
+ *
+ * @author attila-kiss-it
+ * @since 2.0.0
+ */
 public class RandomInputStream extends InputStream {
 
     private final long maxLengthByte;
@@ -31,6 +37,12 @@ public class RandomInputStream extends InputStream {
 
     private long length;
 
+    /**
+     * Constructor.
+     *
+     * @param lengthInByte
+     *            the size of the {@link InputStream} in bytes
+     */
     public RandomInputStream(long lengthInByte) {
         this.length = 0;
         this.maxLengthByte = lengthInByte;
