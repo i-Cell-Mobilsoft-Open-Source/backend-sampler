@@ -11,6 +11,10 @@ testsuite:
             sample:
                 baseUriKey: sampler.service.sample.base.uri
                 path: /rest/sample
+            management:
+                health:
+                    baseUriKey: sampler.service.sample.management.uri
+                    path: /health
     sample:
         fileupload:
             client:

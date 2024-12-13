@@ -26,14 +26,14 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.dto.exception.BONotFoundException;
-import hu.icellmobilsoft.coffee.dto.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.module.redis.annotation.RedisConnection;
 import hu.icellmobilsoft.coffee.module.redis.manager.RedisManager;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
 import hu.icellmobilsoft.coffee.se.logging.Logger;
-import hu.icellmobilsoft.coffee.tool.gson.JsonUtil;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
+import hu.icellmobilsoft.coffee.tool.utils.json.JsonUtil;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleRequest;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
@@ -111,6 +111,6 @@ public class RedisSamplePostAction extends BaseAction {
     private SampleType readDummy(String redisKey) throws BaseException {
         String redisObject = redisManager.runWithConnection(Jedis::get, "get", redisKey)
                 .orElseThrow(() -> new BONotFoundException(MessageFormat.format("Redis object with key:[{0}] not found!", redisKey)));
-        return JsonUtil.toObjectEx(redisObject, SampleType.class);
+        return JsonUtil.toObject(redisObject, SampleType.class);
     }
 }

@@ -14,9 +14,14 @@ services:
         container_name: grafana
         volumes:
             - '../config/grafana/provisioning/:/etc/grafana/provisioning/'
-        image: dockerhub-dockerio.icellmobilsoft.hu/grafana/grafana:10.2.3
+        image: dockerhub-dockerio.icellmobilsoft.hu/grafana/grafana:11.1.0
         ports:
             - '3000:3000'
+        environment:
+            GF_SMTP_ENABLED: true
+            GF_SMTP_HOST: mailpit:1025
+            GF_SMTP_FROM_NAME: grafana
+            GF_SMTP_FROM_ADDRESS: grafana@sample.hu
     jaeger:
         container_name: jaeger
         image: dockerhub-dockerio.icellmobilsoft.hu/jaegertracing/all-in-one:1.52
@@ -55,6 +60,15 @@ services:
             - 4318:4318 # OTLP http receiver
             - 55679:55679 # zpages extension
             - 1234:1234 # /metrics endpoint
+    mailpit:
+        container_name: mailpit
+        image: axllent/mailpit:v1.20.1
+        restart: unless-stopped
+        ports:
+            - '8025:8025'
+            - '1025:1025'
+        environment:
+            TZ: Europe/Budapest
 networks:
     default:
         # if it could not be found on compose up, then execute: docker network create bs-local-network

@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,30 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package hu.icellmobilsoft.sampler.ts.common.rest;
+package hu.icellmobilsoft.sampler.ts.sample.grpc.dto;
 
-import hu.icellmobilsoft.coffee.dto.common.commonservice.ContextType;
-import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
-import hu.icellmobilsoft.coffee.tool.utils.date.DateUtil;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.microprofile.health.HealthCheckResponse;
 
 /**
- * DTO helper
- * 
- * @author Imre Scheffer
+ * Health response DTO
  *
- * @since 0.1.0
+ * @author karoly.tammas
+ * @since 2.0.0
  */
-public class DtoHelper {
+public class HealthResponse {
 
-    /**
-     * Create basic ContextType
-     * 
-     * @return filled context
-     */
-    public static ContextType createContext() {
-        ContextType context = new ContextType();
-        context.setRequestId(RandomUtil.generateId());
-        context.setTimestamp(DateUtil.nowUTCTruncatedToMillis());
-        return context;
+    private HealthCheckResponse.Status status;
+    private List<HealthCheck> checks;
+
+    public HealthCheckResponse.Status getStatus() {
+        return status;
+    }
+
+    public List<HealthCheck> getChecks() {
+        if (checks == null) {
+            checks = new ArrayList<>();
+        }
+        return checks;
     }
 }

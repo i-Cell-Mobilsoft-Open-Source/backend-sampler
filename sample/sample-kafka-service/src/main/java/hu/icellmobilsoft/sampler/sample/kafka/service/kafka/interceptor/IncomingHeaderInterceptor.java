@@ -32,7 +32,7 @@ import org.apache.kafka.common.header.Header;
 
 import hu.icellmobilsoft.coffee.dto.common.LogConstants;
 import hu.icellmobilsoft.coffee.se.logging.mdc.MDC;
-import hu.icellmobilsoft.coffee.tool.utils.string.RandomUtil;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import io.vertx.core.Context;
 import io.vertx.core.Vertx;
 

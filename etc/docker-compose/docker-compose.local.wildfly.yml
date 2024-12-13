@@ -48,7 +48,7 @@ services:
           memory: 1G
         reservations:
           memory: 512M
-networks: 
-  default: 
-    external: 
+networks:
+  default:
+    external:
       name: bs-local-network
