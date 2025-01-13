@@ -7,21 +7,12 @@
     </parent>
 
     <groupId>hu.icellmobilsoft.sampler.sample</groupId>
-    <artifactId>sample</artifactId>
+    <artifactId>sample-consumer</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>sample-rest-service</module>
-        <module>sample-jpa-service</module>
-        <module>sample-mongo-service</module>
-        <module>sample-redis-service</module>
-        <module>sample-redisstream-service</module>
-        <module>sample-redispubsub-service</module>
-        <module>sample-grpc-server-service</module>
-        <module>sample-kafka-service</module>
-        <module>sample-etcd-service</module>
-        <module>sample-jpa-batch-service</module>
-        <module>sample-consumer</module>
+        <module>sample-consumer-model</module>
+        <module>sample-consumer-service</module>
     </modules>
 
     <dependencyManagement>
@@ -35,4 +26,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>
