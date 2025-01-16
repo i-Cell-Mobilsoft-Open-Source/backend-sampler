@@ -14,6 +14,7 @@ services:
     image: icellmobilsoft/wildfly-mp-full:3.0.0
     volumes:
       - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
+#     - './customConfig:/home/customConfig'
     ports:
       - '8081:8080'
       - '9991:9990'
@@ -40,6 +41,7 @@ services:
       MP_CONFIG_PROFILE: kafka
       HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
       DEBUG: "true"
+#     CONFIG_PROPERTIES_FILE_PATH: /home/customConfig/config.properties
     deploy:
       resources:
         limits:
