@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@ import jakarta.enterprise.event.Observes;
 import hu.icellmobilsoft.coffee.module.redisstream.bootstrap.BaseRedisConsumerStarter;
 
 /**
- * Minden Redis stream consumer indításáért felel
+ * Redis consumer starter.
  *
  * @author attila.kiss
  * @since 2.0.0
@@ -35,7 +35,7 @@ import hu.icellmobilsoft.coffee.module.redisstream.bootstrap.BaseRedisConsumerSt
 public class RedisConsumerStarter extends BaseRedisConsumerStarter {
 
     /**
-     * CDI event observer
+     * CDI event observer to start all of the redis stream consumers.
      *
      * @param init
      *            CDI

@@ -92,9 +92,6 @@ public class PainterAction {
         // data query for validation
         CarProduction carProduction = carProductionService.findById(carProductionId, CarProduction.class);
 
-        // prepare the stream message of the next consumer
-        String streamMessage = carProduction.getId();
-
         ProductionStatus actualStatus = carProduction.getProductionStatus();
 
         // validate the data based on the state the consumer accepts for processing
@@ -108,6 +105,8 @@ public class PainterAction {
         // ============================================
         // ===== STEP-2: COLLECT AND PROCESS DATA =====
         // ============================================
+
+        // prepare the stream message of the next consumer
 
         // REST call for external data query
         String color = carOrderRestClient.getColor("carOrderId");
@@ -129,7 +128,7 @@ public class PainterAction {
         // create the process record of the next consumer
         ProcessCarPaintedToAssembled processCarPaintedToAssembled = new ProcessCarPaintedToAssembled();
         processCarPaintedToAssembled.setCarProduction(carProduction);
-        processCarPaintedToAssembled.setStreamMessage(streamMessage);
+        processCarPaintedToAssembled.setStreamMessage(carProduction.getId());
 
         // ... create and modify entities
 
@@ -160,7 +159,7 @@ public class PainterAction {
         // fire an async event to publish the stream message to the next redis stream
         // the consumer execution is successful either if the redish operation fails, the failover solution will retry it later
         asyncRedisPublishEventDispatcher.fireAsyncRedisPublishEvent(
-                streamMessage,
+                processCarPaintedToAssembled.getStreamMessage(),
                 RedisStreamConstant.CarProduction.Assembler.CONFIG_KEY,
                 RedisStreamConstant.CarProduction.Assembler.GROUP);
     }
