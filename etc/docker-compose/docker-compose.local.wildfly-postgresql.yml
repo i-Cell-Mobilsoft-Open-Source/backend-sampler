@@ -1,5 +1,3 @@
-version: "3.8"
-
 name: backend-sampler
 
 # futtatas
@@ -42,5 +40,5 @@ services:
           memory: 512M
 networks:
   default:
-    external:
-      name: bs-local-network
+    name: bs-local-network
+    external: true

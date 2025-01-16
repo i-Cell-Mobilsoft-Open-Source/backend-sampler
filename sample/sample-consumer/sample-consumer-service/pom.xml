@@ -33,11 +33,17 @@
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-module-redis</artifactId>
+            <artifactId>coffee-module-redisstream</artifactId>
         </dependency>
         <dependency>
-            <groupId>hu.icellmobilsoft.coffee</groupId>
-            <artifactId>coffee-module-redisstream</artifactId>
+            <groupId>hu.icellmobilsoft.sampler.common</groupId>
+            <artifactId>common-system-jpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>hu.icellmobilsoft.sampler.api</groupId>
+                    <artifactId>api-jee</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>hu.icellmobilsoft.sampler.sample</groupId>
@@ -52,7 +58,7 @@
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>../../etc/config</directory>
+                <directory>../../../etc/config</directory>
                 <includes>
                     <include>META-INF/microprofile-config*</include>
                 </includes>

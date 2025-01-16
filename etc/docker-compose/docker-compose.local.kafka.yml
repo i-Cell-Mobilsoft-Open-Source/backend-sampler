@@ -1,5 +1,3 @@
-version: "3"
-
 # run from project directory
 # docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.kafka.yml up --build --force-recreate
 services:
@@ -50,6 +48,6 @@ volumes:
     name: bs-kafka-persistence
 networks:
   default:
-    external:
-      # if it could not be found on compose up, then execute: docker network create bs-local-network
-      name: bs-local-network
+    # if it could not be found on compose up, then execute: docker network create bs-local-network
+    name: bs-local-network
+    external: true

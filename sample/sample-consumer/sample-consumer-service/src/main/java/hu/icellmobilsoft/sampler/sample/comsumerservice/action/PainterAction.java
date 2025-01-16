@@ -19,6 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.sample.comsumerservice.action;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,8 +50,6 @@ import hu.icellmobilsoft.sampler.sample.comsumerservice.service.process.ProcessC
  */
 @Model
 public class PainterAction {
-
-    private static final ProductionStatus INCOMING_STATUS = ProductionStatus.WELDED;
 
     private static final ProductionStatus OUTGOING_STATUS = ProductionStatus.PAINTED;
 
@@ -99,15 +98,12 @@ public class PainterAction {
         ProductionStatus actualStatus = carProduction.getProductionStatus();
 
         // validate the data based on the state the consumer accepts for processing
-        if (actualStatus == INCOMING_STATUS) {
-            processDataAndSave(carProduction, streamMessage);
-            publishNextEvent(streamMessage);
-        } else if (actualStatus == OUTGOING_STATUS) {
-            publishNextEvent(streamMessage);
+        if (actualStatus != ProductionStatus.WELDED) {
+            logger.warn(MessageFormat.format("Unsupported car production [{0}] status [{1}]!", carProductionId, actualStatus));
+            return;
         }
-    }
 
-    private void processDataAndSave(CarProduction carProduction, String streamMessage) throws BaseException {
+        // ... more initialization and validation
 
         // ============================================
         // ===== STEP-2: COLLECT AND PROCESS DATA =====
@@ -143,7 +139,7 @@ public class PainterAction {
 
         transactionHelper.executeWithTransaction(() -> {
 
-            // !!! ONLY DATABASE OPERATIONS ON THE PREPARED ENTITIES !!!
+            // !!! DO ONLY DATABASE OPERATIONS ON THE PREPARED ENTITIES !!!
 
             // delete the process record of the actual process
             processCarProductionService.deleteByCarProductionId(ProcessCarWeldedToPainted.class, carProduction.getId());
@@ -156,9 +152,6 @@ public class PainterAction {
 
             // ... more database operations
         });
-    }
-
-    private void publishNextEvent(String streamMessage) throws BaseException {
 
         // =========================================
         // ===== STEP-4: PUBLISH NEXT EVENT(S) =====

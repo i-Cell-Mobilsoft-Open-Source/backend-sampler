@@ -23,7 +23,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotNull;
 
-import hu.icellmobilsoft.coffee.model.base.javatime.AbstractIdentifiedAuditEntity;
+import hu.icellmobilsoft.coffee.model.base.AbstractIdentifiedEntity;
 
 /**
  * Abstract process entity with stream message.
@@ -32,7 +32,7 @@ import hu.icellmobilsoft.coffee.model.base.javatime.AbstractIdentifiedAuditEntit
  * @since 2.0.0
  */
 @MappedSuperclass
-public class AbstractProcessEntity extends AbstractIdentifiedAuditEntity {
+public class AbstractProcessEntity extends AbstractIdentifiedEntity {
 
     /**
      * The message sent to the redis stream.

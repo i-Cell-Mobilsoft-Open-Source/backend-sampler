@@ -32,4 +32,6 @@ import jakarta.persistence.Table;
 @Table(name = "PROCESS_CAR_PAINTED_TO_ASSEMBLED")
 public class ProcessCarPaintedToAssembled extends AbstractProcessCarProductionEntity {
 
+    private static final long serialVersionUID = 1L;
+
 }

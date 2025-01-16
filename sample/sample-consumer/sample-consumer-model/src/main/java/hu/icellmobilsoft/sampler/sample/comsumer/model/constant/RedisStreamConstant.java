@@ -35,7 +35,7 @@ public interface RedisStreamConstant {
         /**
          * Car production redis connection config key.
          */
-        String CONFIG_KEY = "carProductionStream";
+        String CONFIG_KEY = "sample";
 
     }
 

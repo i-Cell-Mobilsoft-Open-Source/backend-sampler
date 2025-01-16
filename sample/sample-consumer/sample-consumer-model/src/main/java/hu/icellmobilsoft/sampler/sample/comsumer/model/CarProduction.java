@@ -27,7 +27,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import hu.icellmobilsoft.coffee.model.base.javatime.AbstractIdentifiedAuditEntity;
+import hu.icellmobilsoft.coffee.model.base.AbstractIdentifiedEntity;
 import hu.icellmobilsoft.sampler.sample.comsumer.model.enums.ProductionStatus;
 
 /**
@@ -38,7 +38,9 @@ import hu.icellmobilsoft.sampler.sample.comsumer.model.enums.ProductionStatus;
  */
 @Entity
 @Table(name = "CAR_PRODUCTION")
-public class CarProduction extends AbstractIdentifiedAuditEntity {
+public class CarProduction extends AbstractIdentifiedEntity {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The status of the car production process.
