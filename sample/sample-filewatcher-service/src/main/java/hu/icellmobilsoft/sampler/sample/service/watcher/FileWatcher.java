@@ -92,6 +92,7 @@ public class FileWatcher {
      *            startup event object, not used
      */
     public void init(@Observes @Initialized(ApplicationScoped.class) Object obj) {
+        log.info("FileWatcher initialization started");
         managedExecutorService.submit(() -> {
             log.info("Loading initial configuration file: [{0}]", configFilePathString);
             loadConfigFile();
@@ -106,7 +107,6 @@ public class FileWatcher {
             }
         });
 
-        log.info("FileWatcher started!");
     }
 
     private void watchConfigFileForChanges() throws IOException, InterruptedException {
@@ -119,8 +119,8 @@ public class FileWatcher {
         parentDir.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
         log.debug("parentDir [{0}] registered for watching!", parentDir);
 
-        WatchKey key = watchService.take();
         log.info("Waiting for changes in: [{0}]", configFilePath);
+        WatchKey key = watchService.take();
         while (key != null) {
             List<WatchEvent<?>> events = key.pollEvents();
             log.debug("Watch event occurred in [{0}]!", parentDir);
