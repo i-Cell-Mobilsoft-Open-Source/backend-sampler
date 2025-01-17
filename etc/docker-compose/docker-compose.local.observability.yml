@@ -38,6 +38,7 @@ services:
             #- '14250:14250' # Collector |14250 |sampling.proto |gRPC |For SDKs that want to use gRPC (e.g. OpenTelemetry Java SDK)
     opentelemetry-collector:
         container_name: opentelemetry-collector
+        #TODO collector "The number of requests this listener has served" but should have "Number of all requests"
         image: otel/opentelemetry-collector:0.92.0
         # contrib collector repo e.g. tail_sampling processor
         # https://github.com/open-telemetry/opentelemetry-collector-contrib

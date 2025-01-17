@@ -12,7 +12,7 @@
     <properties>
         <version.hu.icellmobilsoft.coffee>2.10.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
         <version.hu.icellmobilsoft.frappee>1.0.0</version.hu.icellmobilsoft.frappee>
-        <version.org.eclipse.microprofile>6.0</version.org.eclipse.microprofile>
+        <version.org.eclipse.microprofile>6.1</version.org.eclipse.microprofile>
         <version.hu.icellmobilsoft.roaster>2.3.0</version.hu.icellmobilsoft.roaster>
         <version.io.smallrye.config.source.yaml>3.3.4</version.io.smallrye.config.source.yaml>
         <!-- io.etcd:jetcd-core:0.7.7 vorking with this version -->
@@ -24,6 +24,7 @@
         <version.org.postgresql>42.5.6</version.org.postgresql>
 
         <version.org.junit.jupiter>5.10.1</version.org.junit.jupiter>
+        <version.commons-beanutils>1.9.4</version.commons-beanutils>
     </properties>
 
     <dependencyManagement>
@@ -38,7 +39,7 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.bom</groupId>
-                <artifactId>bom-wf-30</artifactId>
+                <artifactId>bom-wf-34</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -147,6 +148,14 @@
                         <artifactId>common-utils</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!-- utils -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${version.commons-beanutils}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- oracle -->

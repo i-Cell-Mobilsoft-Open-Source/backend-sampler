@@ -9,7 +9,8 @@
 services:
   sample-service:
     container_name: bs-sample-service
-    image: icellmobilsoft/wildfly-mp-full:3.0.0
+    #image: icellmobilsoft/wildfly-mp-full:3.0.0
+    image: icellmobilsoft/wildfly-mp-ms:4.0.0-SNAPSHOT
     volumes:
       - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
 #     - './customConfig:/home/customConfig'
@@ -21,10 +22,9 @@ services:
     environment:
 #      OPENTRACING_JAEGER_AGENT_HOST: jaeger
 #      JAEGER_SERVICE_NAME: bs-sample-service
-      # bug, nem veszi a beallitast https://issues.redhat.com/browse/WFLY-18631
       OPENTELEMETRY_SERVICE_NAME: bs-sample-service
-      # athidalo megoldas a service nevere
-      OTEL_SERVICE_NAME: bs-sample-service
+      # alternative config
+#      OTEL_SERVICE_NAME: bs-sample-service
       OPENTELEMETRY_SAMPLER_TYPE: on # default is ratio with 0.01
       # 1. -> jaeger, hagyomanyos
       #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:14250
@@ -32,7 +32,7 @@ services:
       #OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
       #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:4317
       # 3. -> otlp-collector -> jaeger otlp
-      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
+      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is otlp, "The 'jaeger' exporter is no longer supported.", but the docs say its allowed
       OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
       MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
 #      MP_CONFIG_PROFILE: redispubsub
