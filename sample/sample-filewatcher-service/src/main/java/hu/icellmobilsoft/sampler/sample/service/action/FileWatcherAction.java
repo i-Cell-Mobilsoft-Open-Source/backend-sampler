@@ -29,7 +29,6 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.service.watcher.FileConfigCache;
-import hu.icellmobilsoft.sampler.sample.service.watcher.FileWatcher;
 
 /**
  * Service for file watcher demo
@@ -41,9 +40,6 @@ import hu.icellmobilsoft.sampler.sample.service.watcher.FileWatcher;
 public class FileWatcherAction extends BaseAction {
 
     private static final String SAMPLE_CONFIG_KEY = "sampler.column.a";
-
-    @Inject
-    private FileWatcher fileWatcher;
 
     @Inject
     private FileConfigCache fileConfigCache;
