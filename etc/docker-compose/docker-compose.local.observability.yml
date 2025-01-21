@@ -69,6 +69,4 @@ services:
             TZ: Europe/Budapest
 networks:
     default:
-        # if it could not be found on compose up, then execute: docker network create bs-local-network
         name: bs-local-network
-        external: true

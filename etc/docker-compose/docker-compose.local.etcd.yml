@@ -15,6 +15,4 @@ volumes:
     driver: local
 networks:
   default:
-    # hogyha hianyolja: docker network create bs-local-network
     name: bs-local-network
-    external: true

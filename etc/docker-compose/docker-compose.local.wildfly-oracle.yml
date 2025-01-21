@@ -40,4 +40,3 @@ services:
 networks:
   default:
     name: bs-local-network
-    external: true

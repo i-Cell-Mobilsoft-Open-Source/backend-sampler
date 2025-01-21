@@ -21,6 +21,4 @@ services:
       REDIS_EXPORTER_CHECK_STREAMS: db0=sample
 networks: 
   default: 
-    # hogyha hianyolja: docker network create bs-local-network
     name: bs-local-network
-    external: true
