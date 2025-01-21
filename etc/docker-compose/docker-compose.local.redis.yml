@@ -1,5 +1,3 @@
-version: "3.8"
-
 # docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.redis.yml up --build --force-recreate
 services:
   sample-redis:
@@ -23,6 +21,4 @@ services:
       REDIS_EXPORTER_CHECK_STREAMS: db0=sample
 networks: 
   default: 
-    external: 
-# hogyha hianyolja: docker network create bs-local-network
-      name: bs-local-network
+    name: bs-local-network

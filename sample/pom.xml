@@ -22,6 +22,7 @@
         <module>sample-etcd-service</module>
         <module>sample-filewatcher-service</module>
         <module>sample-jpa-batch-service</module>
+        <module>sample-consumer</module>
     </modules>
 
     <dependencyManagement>
