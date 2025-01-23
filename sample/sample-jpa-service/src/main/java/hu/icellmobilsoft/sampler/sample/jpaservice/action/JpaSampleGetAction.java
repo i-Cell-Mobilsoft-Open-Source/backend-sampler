@@ -53,7 +53,7 @@ public class JpaSampleGetAction extends BaseAction {
      */
     public SampleResponse sample() throws BaseException {
 
-        var none = sampleEntityService.findOptionalById("aaaaaa", SampleEntity.class);
+        var none = sampleEntityService.findByQueryParams("aaaaaa", SampleEntity.class);
 
         SampleResponse response = new SampleResponse();
         SampleType sampleType = new SampleType();
