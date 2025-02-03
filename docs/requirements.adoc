@@ -2,7 +2,7 @@
 A technológiák melyeken alapszik:
 
 .War
-- Java 11
+- Java 17
 - Maven 3.3.0+
 - Jakarta EE 10
 - Wildfly 27.0.0.Final

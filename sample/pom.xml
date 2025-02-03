@@ -20,6 +20,7 @@
         <module>sample-grpc-server-service</module>
         <module>sample-kafka-service</module>
         <module>sample-etcd-service</module>
+        <module>sample-filewatcher-service</module>
         <module>sample-jpa-batch-service</module>
     </modules>
 

@@ -21,6 +21,7 @@ include::services/grpc.adoc[leveloffset=+2]
 include::services/mongo.adoc[leveloffset=+2]
 include::services/kafka.adoc[leveloffset=+2]
 include::services/etcd.adoc[leveloffset=+2]
+include::services/filewatcher.adoc[leveloffset=+2]
 include::services/jpa-batch.adoc[leveloffset=+2]
 
 == Infrastruktúra példák

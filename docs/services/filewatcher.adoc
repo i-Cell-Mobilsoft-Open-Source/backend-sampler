@@ -1,0 +1,13 @@
+= FileWatcher service
+`sample/sample-filewatcher-service`
+
+A service célja annak bemutatása, hogy hogyan lehet konfigurációt felolvasni, illetve annak változását is követni, properties fájlból a
+`java.nio.file.WatchService` segítségével.
+
+A service használata előtt a properties fájl megtalálásához meg kell adni annak a konténeren kívüli mappáját, illetve a properties fájl konténeren belüli
+elérését, amihez  a `docker-compose.local.wildfly.yml` compose fájlt ki kell egészíteni az alábbiak szerint:
+
+* CONFIG_PROPERTIES_FILE_PATH környezeti változóban meg kell adni a konténeren belüli elérési útját a properties fájlnak
+** `CONFIG_PROPERTIES_FILE_PATH: /home/customConfig/config.properties` (ez az alapértelmezett érték)
+* a properties fájl tartalmazó mappát fel kell csatolni a konténerhez, mint Docker volume, mivel a fájl változás követés mappán keresztül lehetséges
+** `./customConfig:/home/customConfig'`
