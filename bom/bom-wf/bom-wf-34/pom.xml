@@ -33,10 +33,9 @@
         <version.io.smallrye.reactive.smallrye-reactive-messaging-api>4.24.0</version.io.smallrye.reactive.smallrye-reactive-messaging-api>
 
         <version.org.eclipse.microprofile.reactive-streams-operators>3.0.1</version.org.eclipse.microprofile.reactive-streams-operators>
-        <!-- TODO version check and test-->
         <version.org.apache.kafka>3.5.1</version.org.apache.kafka>
-        <version.io.smallrye.reactive.smallrye-reactive-messaging-kafka-api>4.9.0</version.io.smallrye.reactive.smallrye-reactive-messaging-kafka-api>
-        <version.io.vertx.vertx-core>4.4.6</version.io.vertx.vertx-core>
+        <version.io.smallrye.reactive.smallrye-reactive-messaging-kafka-api>4.24.0</version.io.smallrye.reactive.smallrye-reactive-messaging-kafka-api>
+        <version.io.vertx.vertx-core>4.5.10</version.io.vertx.vertx-core>
 
         <!-- from org.wildfly.bom:wildfly-ee-with-tools -->
         <version.com.h2database>2.2.224</version.com.h2database>
