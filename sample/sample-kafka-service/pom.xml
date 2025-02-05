@@ -15,7 +15,16 @@
 			<groupId>hu.icellmobilsoft.sampler.common</groupId>
 			<artifactId>common-system-rest</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- https://github.com/eclipse/microprofile-reactive-messaging/issues/10 -->
 		<!-- FYI: wildfly-27.0.1.Final https://github.com/wildfly/wildfly/blob/27.x/microprofile/galleon-common/src/main/resources/modules/system/layers/base/org/eclipse/microprofile/reactive-messaging/api/main/module.xml#L27 -->
 		<!-- dependency>
@@ -96,4 +105,36 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<!-- RUN: mvn exec:exec -P deploy -->
+			<!-- Deploy war file to local docker container -->
+			<id>deploy</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<executable>docker</executable>
+							<arguments>
+								<argument>cp</argument>
+								<argument>${project.build.directory}/${project.build.finalName}.${project.packaging}</argument>
+								<argument>bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war</argument>
+							</arguments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
