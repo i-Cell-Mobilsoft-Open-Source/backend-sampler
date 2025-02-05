@@ -11,6 +11,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>hu.icellmobilsoft.sampler.common</groupId>
             <artifactId>common-system-rest</artifactId>
         </dependency>
@@ -49,5 +53,35 @@
             </resource>
         </resources>
     </build>
-
+    <profiles>
+        <profile>
+            <!-- RUN: mvn exec:exec -P deploy -->
+            <!-- Deploy war file to local docker container -->
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>docker</executable>
+                            <arguments>
+                                <argument>cp</argument>
+                                <argument>${project.build.directory}/${project.build.finalName}.${project.packaging}</argument>
+                                <argument>bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
