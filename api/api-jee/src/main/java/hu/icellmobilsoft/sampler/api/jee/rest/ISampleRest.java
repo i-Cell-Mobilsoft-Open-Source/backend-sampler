@@ -19,6 +19,7 @@
  */
 package hu.icellmobilsoft.sampler.api.jee.rest;
 
+import jakarta.mvc.Controller;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -44,6 +45,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
  */
 @Tag(name = ISampleRest.TAG_SAMPLE, description = "Minta folyamattal kapcsolatos REST operációk")
 @Path(SamplePath.REST_SAMPLE_SERVICE)
+@Controller
 public interface ISampleRest {
 
     /**

@@ -19,6 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.ts.sample.rest;
 
+import java.util.Map;
+
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
@@ -64,6 +66,36 @@ class GetSampleIT extends BaseConfigurableWeldIT {
     void testGet_xml() {
 
         SampleResponse response = responseProcessor.getXml(SampleResponse.class);
+
+        Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
+    }
+
+    @Test
+    @DisplayName("test get - json - locale - hu")
+    void testGet_json_localeHu() {
+
+        responseProcessor.setQueryParams(Map.of("lang","hu"));
+        SampleResponse response = responseProcessor.getJson(SampleResponse.class);
+
+        Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
+    }
+
+    @Test
+    @DisplayName("test get - json - locale - en")
+    void testGet_json_localeEn() {
+
+        responseProcessor.setQueryParams(Map.of("lang","en"));
+        SampleResponse response = responseProcessor.getJson(SampleResponse.class);
+
+        Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
+    }
+
+    @Test
+    @DisplayName("test get - json - locale - de")
+    void testGet_json_localeDe() {
+
+        responseProcessor.setQueryParams(Map.of("lang","de"));
+        SampleResponse response = responseProcessor.getJson(SampleResponse.class);
 
         Assertions.assertEquals(FunctionCodeType.OK, response.getFuncCode());
     }

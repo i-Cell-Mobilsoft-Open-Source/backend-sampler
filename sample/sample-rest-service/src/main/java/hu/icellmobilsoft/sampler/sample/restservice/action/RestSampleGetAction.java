@@ -19,6 +19,8 @@
  */
 package hu.icellmobilsoft.sampler.sample.restservice.action;
 
+import java.util.Locale;
+
 import jakarta.enterprise.event.Event;
 import jakarta.enterprise.event.ObservesAsync;
 import jakarta.enterprise.inject.Model;
@@ -28,6 +30,7 @@ import hu.icellmobilsoft.coffee.dto.common.LogConstants;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.logging.mdc.MDC;
 import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
+import hu.icellmobilsoft.sampler.common.rest.locale.Messages;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
@@ -50,6 +53,9 @@ import io.opentelemetry.api.trace.Tracer;
 public class RestSampleGetAction extends BaseAction {
 
     @Inject
+    Messages messages;
+
+    @Inject
     private Tracer tracer;
 
     @Inject
@@ -67,11 +73,14 @@ public class RestSampleGetAction extends BaseAction {
 
         SampleResponse response = new SampleResponse();
 
+        String sampleMessage = messages.get("sample.message");
+
         SampleType sampleType = new SampleType();
         sampleType.setSampleId(RandomUtil.generateId());
         sampleType.setSampleStatus(SampleStatusEnumType.DONE);
         sampleType.setColumnA("A");
         sampleType.setColumnB(SampleValueEnumType.VALUE_A);
+        sampleType.setSampleMessage(sampleMessage);
         response.setSample(sampleType);
         span.addEvent("construct response type", Attributes.of(AttributeKey.stringKey("sample.id"), sampleType.getSampleId()));
 

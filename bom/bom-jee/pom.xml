@@ -20,7 +20,9 @@
         <version.jakarta.enterprise>4.0.0</version.jakarta.enterprise>
         <version.jakarta.websocket-api>2.1.0</version.jakarta.websocket-api>
         <version.jakarta.mail-api>2.1.0</version.jakarta.mail-api>
+        <version.jakarta.mvc-api>2.1.0</version.jakarta.mvc-api>
         <version.org.glassfish.jakarta.el>5.0.0-M1</version.org.glassfish.jakarta.el>
+        <version.krazo>3.0.1</version.krazo>
     </properties>
 
     <dependencyManagement>
@@ -79,6 +81,21 @@
                 <artifactId>jakarta.mail-api</artifactId>
                 <version>${version.jakarta.mail-api}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.mvc</groupId>
+                <artifactId>jakarta.mvc-api</artifactId>
+                <version>${version.jakarta.mvc-api}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo</groupId>
+                <artifactId>krazo-core</artifactId>
+                <version>${version.krazo}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo</groupId>
+                <artifactId>krazo-resteasy</artifactId>
+                <version>${version.krazo}</version>
             </dependency>
 
             <dependency>

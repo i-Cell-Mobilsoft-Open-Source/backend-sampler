@@ -91,6 +91,11 @@
                             <xsd:documentation>[Description of sampleStatus]</xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
+                    <xsd:element name="sampleMessage" type="coffeeCommon:SimpleText100Type" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>[Description of sampleMessage]</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
