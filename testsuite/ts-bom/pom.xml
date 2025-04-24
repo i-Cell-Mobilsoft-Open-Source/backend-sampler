@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>hu.icellmobilsoft.sampler.testsuite</groupId>
@@ -11,7 +12,7 @@
 
     <properties>
         <version.hu.icellmobilsoft.roaster>2.3.0</version.hu.icellmobilsoft.roaster>
-        <version.hu.icellmobilsoft.coffee>2.9.0</version.hu.icellmobilsoft.coffee>
+        <version.hu.icellmobilsoft.coffee>2.10.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
 
         <version.commons-logging>1.2</version.commons-logging>
         <version.com.fasterxml.jackson.core.jackson-databind>2.14.1</version.com.fasterxml.jackson.core.jackson-databind>
@@ -19,6 +20,7 @@
         <version.awaitility>4.2.0</version.awaitility>
 
         <version.io.grpc.version>1.51.0</version.io.grpc.version>
+        <version.org.postgresql>42.5.6</version.org.postgresql>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +42,11 @@
                 <version>${version.hu.icellmobilsoft.coffee}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.coffee</groupId>
+                <artifactId>coffee-module-redisstream</artifactId>
+                <version>${version.hu.icellmobilsoft.coffee}</version>
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.roaster</groupId>
@@ -82,6 +89,12 @@
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-netty</artifactId>
                 <version>${version.io.grpc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.org.postgresql}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

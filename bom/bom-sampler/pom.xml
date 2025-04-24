@@ -88,6 +88,11 @@
                 <artifactId>common-etcd</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>hu.icellmobilsoft.sampler.sample</groupId>
+                <artifactId>sample-consumer-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
