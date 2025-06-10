@@ -9,8 +9,8 @@
 services:
   sample-service:
     container_name: bs-sample-service
-    #image: icellmobilsoft/wildfly-mp-full:3.0.0
-    image: icellmobilsoft/wildfly-mp-ms:4.0.0-SNAPSHOT
+    #image: icellmobilsoft/wildfly-mp-ms:4.0.0
+    image: icellmobilsoft/wildfly-mp-full:4.0.0-SNAPSHOT
     volumes:
       - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
 #     - './customConfig:/home/customConfig'

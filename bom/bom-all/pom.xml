@@ -10,8 +10,8 @@
   <packaging>pom</packaging>
 
     <properties>
-        <version.hu.icellmobilsoft.coffee>2.10.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
-        <version.hu.icellmobilsoft.frappee>1.1.0-SNAPSHOT</version.hu.icellmobilsoft.frappee>
+        <version.hu.icellmobilsoft.coffee>2.11.0-SNAPSHOT</version.hu.icellmobilsoft.coffee>
+        <version.hu.icellmobilsoft.frappee>2.0.0-SNAPSHOT</version.hu.icellmobilsoft.frappee>
         <version.org.eclipse.microprofile>6.1</version.org.eclipse.microprofile>
         <version.hu.icellmobilsoft.roaster>2.3.0</version.hu.icellmobilsoft.roaster>
         <version.io.smallrye.config.source.yaml>3.3.4</version.io.smallrye.config.source.yaml>
