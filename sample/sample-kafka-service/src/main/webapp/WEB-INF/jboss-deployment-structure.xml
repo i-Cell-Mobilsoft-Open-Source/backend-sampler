@@ -16,6 +16,8 @@
 			<module name="io.smallrye.common.constraint" />
 			<!-- Needed for Kafka reactive message MDC. -->
 			<module name="io.vertx.core"/>
+			<!-- https://issues.redhat.com/browse/WFLY-20058 -->
+			<module name="io.netty.netty-common" />
 		</dependencies>
 	</deployment>
 </jboss-deployment-structure>
