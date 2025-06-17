@@ -42,7 +42,7 @@
         <version.io.smallrye.config>3.9.1</version.io.smallrye.config>
         <version.io.smallrye.common.smallrye-common-constraint>2.5.0</version.io.smallrye.common.smallrye-common-constraint>
 
-        <!-- benne van, de nem a bom-ban -->
+        <!-- included, but not in the BOM -->
         <version.commons-lang3>3.15.0</version.commons-lang3>
         <version.com.google.guava.guava>33.0.0-jre</version.com.google.guava.guava>
         <version.com.google.code.gson>2.8.9</version.com.google.code.gson>
@@ -73,7 +73,7 @@
             </dependency>
 
             <!-- VVVVVVVVVVVVVVVVVVV -->
-            <!-- Provided-re allitas -->
+            <!-- Setting to provided scope -->
             <!-- VVVVVVVVVVVVVVVVVVV -->
 
             <!-- https://github.com/wildfly/boms -->
@@ -102,7 +102,7 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- Resteasy 4+: resteasy-jaxrs szet van bontva core, core-spi es egyebekre-->
+            <!-- Resteasy 4+: resteasy-jaxrs is split into core, core-spi and others -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-core</artifactId>
@@ -212,7 +212,7 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- benne van, de nem a bom-ban -->
+            <!-- included, but not in the BOM -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -256,7 +256,7 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- vertx kapcsan erintett fuggosegek-->
+          <!-- dependencies related to vertx -->
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-buffer</artifactId>
