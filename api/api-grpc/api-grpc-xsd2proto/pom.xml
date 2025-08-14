@@ -10,7 +10,7 @@
 
 	<properties>
 		<version.schema2proto-maven-plugin.version>1.83</version.schema2proto-maven-plugin.version>
-		<version.protoc.version>3.21.7</version.protoc.version>
+		<version.protoc.version>3.25.5</version.protoc.version>
 		<version.proto-google-common-protos.version>2.9.0</version.proto-google-common-protos.version>
 		<version.os-maven-plugin.version>1.7.1</version.os-maven-plugin.version>
 	</properties>
