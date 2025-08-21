@@ -14,6 +14,8 @@
 			<module name="io.smallrye.common.classloader" />
 			<module name="org.yaml.snakeyaml" />
 			<module name="io.smallrye.common.constraint" />
+			<!-- https://issues.redhat.com/browse/WFLY-20058 -->
+			<module name="io.netty.netty-common" />
 		</dependencies>
 	</deployment>
 </jboss-deployment-structure>

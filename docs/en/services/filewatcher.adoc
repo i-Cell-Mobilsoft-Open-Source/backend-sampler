@@ -1,0 +1,12 @@
+= FileWatcher service
+`sample/sample-filewatcher-service`
+
+The purpose of this service is to demonstrate how to read configuration and track its changes from a plane properties file using `java.nio.file.WatchService`.
+
+Before using this service, must be specified the directory where the properties file located outside of the container and the path where the file located
+inside the container. For this, the `docker-compose.local.wildfly.yml` compose file must be changed as follow:
+
+* `CONFIG_PROPERTIES_FILE_PATH` environment variable define the properties file path inside the container
+** `CONFIG_PROPERTIES_FILE_PATH: /home/customConfig/config.properties` (this is the default value)
+* the directory of the properties file must be mounted to the container
+** `./customConfig:/home/customConfig'`

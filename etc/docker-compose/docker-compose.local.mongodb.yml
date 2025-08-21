@@ -1,5 +1,3 @@
-version: "3.8"
-
 # futtatas
 # docker compose -f <PROJECT_PATH>/backend-sampler/etc/docker-compose/docker-compose.local.mongodb.yml up --build --force-recreate
 #
@@ -22,5 +20,4 @@ services:
       - "27017:27017"
 networks: 
   default: 
-    external: 
-      name: bs-local-network
+    name: bs-local-network
