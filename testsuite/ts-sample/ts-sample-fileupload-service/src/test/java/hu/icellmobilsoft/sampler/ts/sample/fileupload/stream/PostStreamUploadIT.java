@@ -21,6 +21,10 @@ package hu.icellmobilsoft.sampler.ts.sample.fileupload.stream;
 
 import java.io.InputStream;
 
+import jakarta.inject.Inject;
+import jakarta.ws.rs.ProcessingException;
+
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -31,8 +35,8 @@ import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
+import hu.icellmobilsoft.sampler.ts.sample.fileupload.TestConstant;
 import hu.icellmobilsoft.sampler.ts.sample.fileupload.io.RandomInputStream;
-import jakarta.inject.Inject;
 
 /**
  * Two-phase file upload test.
@@ -45,11 +49,12 @@ import jakarta.inject.Inject;
 class PostStreamUploadIT extends BaseConfigurableWeldIT {
 
     @Inject
+    @RestClient
     private IFileUploadStreamClient fileUploadStreamClient;
 
     @Test
-    @DisplayName("POST /fileupload/multipart/upload")
-    void testUpload() throws BaseException {
+    @DisplayName("POST /fileupload/multipart/upload - HTTP 200")
+    void testUploadOK() throws BaseException {
 
         PostFileUploadRequest postFileUploadRequest = new PostFileUploadRequest().withFileName("test.txt").withFileDescription("test description");
 
@@ -60,10 +65,27 @@ class PostStreamUploadIT extends BaseConfigurableWeldIT {
 
         String fileUploadId = postFileUploadResponse.getFileUploadId();
 
-        InputStream inputStream = new RandomInputStream(500 * 1024 * 1024);
+        InputStream inputStream = new RandomInputStream(TestConstant.FILE_SIZE_OK);
 
         fileUploadStreamClient.postStreamUpload(fileUploadId, inputStream);
+    }
 
+    @Test
+    @DisplayName("POST /fileupload/multipart/upload - HTTP 500")
+    void testUploadTooBig() throws BaseException {
+
+        PostFileUploadRequest postFileUploadRequest = new PostFileUploadRequest().withFileName("test.txt").withFileDescription("test description");
+
+        PostFileUploadResponse postFileUploadResponse = fileUploadStreamClient.postStreamInit(postFileUploadRequest);
+
+        Assertions.assertNotNull(postFileUploadResponse);
+        Assertions.assertNotNull(postFileUploadResponse.getFileUploadId());
+
+        String fileUploadId = postFileUploadResponse.getFileUploadId();
+
+        InputStream inputStream = new RandomInputStream(TestConstant.FILE_SIZE_TOO_BIG);
+
+        Assertions.assertThrowsExactly(ProcessingException.class, () -> fileUploadStreamClient.postStreamUpload(fileUploadId, inputStream));
     }
 
 }

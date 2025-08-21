@@ -34,6 +34,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.rest.validation.xml.JaxbTool;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
+import hu.icellmobilsoft.coffee.se.api.exception.BusinessException;
 import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
@@ -83,7 +84,10 @@ public class FileUploadMultipartAction {
             fileUploadAction.processInputStream(postFileUploadResponse.getFileUploadId(), inputStream);
 
         } catch (IOException e) {
-            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Failed to process file list!", e);
+            throw new BusinessException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Failed to process file list!",
+                    e);
         }
 
         return postFileUploadResponse;

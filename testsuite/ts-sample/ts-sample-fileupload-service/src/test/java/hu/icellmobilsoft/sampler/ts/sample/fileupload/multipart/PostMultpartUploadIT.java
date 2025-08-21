@@ -21,6 +21,11 @@ package hu.icellmobilsoft.sampler.ts.sample.fileupload.multipart;
 
 import java.io.InputStream;
 
+import jakarta.inject.Inject;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -32,9 +37,8 @@ import hu.icellmobilsoft.roaster.api.TestSuiteGroup;
 import hu.icellmobilsoft.roaster.restassured.BaseConfigurableWeldIT;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
+import hu.icellmobilsoft.sampler.ts.sample.fileupload.TestConstant;
 import hu.icellmobilsoft.sampler.ts.sample.fileupload.io.RandomInputStream;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.core.MediaType;
 
 /**
  * Multipart file upload test.
@@ -47,14 +51,15 @@ import jakarta.ws.rs.core.MediaType;
 class PostMultpartUploadIT extends BaseConfigurableWeldIT {
 
     @Inject
+    @RestClient
     private IFileUploadMultipartClient fileUploadMultipartClient;
 
     @Test
-    @DisplayName("POST /fileupload/multipart/upload")
-    void testUpload() throws BaseException {
+    @DisplayName("POST /fileupload/multipart/upload - HTTP 200")
+    void testUploadOK() throws BaseException {
 
         PostFileUploadRequest postFileUploadRequest = new PostFileUploadRequest().withFileName("test.txt").withFileDescription("test description");
-        InputStream inputStream = new RandomInputStream(500 * 1024 * 1024);
+        InputStream inputStream = new RandomInputStream(TestConstant.FILE_SIZE_OK);
 
         MultipartFormDataOutput multipartFormDataOutput = new MultipartFormDataOutput();
         multipartFormDataOutput.addFormData("body", postFileUploadRequest, MediaType.APPLICATION_XML_TYPE);
@@ -64,6 +69,20 @@ class PostMultpartUploadIT extends BaseConfigurableWeldIT {
 
         Assertions.assertNotNull(postFileUploadResponse);
         Assertions.assertNotNull(postFileUploadResponse.getFileUploadId());
+    }
+
+    @Test
+    @DisplayName("POST /fileupload/multipart/upload - HTTP 500")
+    void testUploadTooBig() throws BaseException {
+
+        PostFileUploadRequest postFileUploadRequest = new PostFileUploadRequest().withFileName("test.txt").withFileDescription("test description");
+        InputStream inputStream = new RandomInputStream(TestConstant.FILE_SIZE_TOO_BIG);
+
+        MultipartFormDataOutput multipartFormDataOutput = new MultipartFormDataOutput();
+        multipartFormDataOutput.addFormData("body", postFileUploadRequest, MediaType.APPLICATION_XML_TYPE);
+        multipartFormDataOutput.addFormData("file", inputStream, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+
+        Assertions.assertThrowsExactly(ProcessingException.class, () -> fileUploadMultipartClient.postMultpartUpload(multipartFormDataOutput));
     }
 
 }

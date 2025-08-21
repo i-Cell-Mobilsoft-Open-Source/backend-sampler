@@ -28,6 +28,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <dev.resteasy.entity.file.threshold>500MB</dev.resteasy.entity.file.threshold>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
         <resources>

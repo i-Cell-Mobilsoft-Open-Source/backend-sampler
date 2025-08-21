@@ -21,6 +21,10 @@ package hu.icellmobilsoft.sampler.sample.filupload.service.action;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.MessageFormat;
+
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
 
@@ -28,12 +32,10 @@ import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
-import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
+import hu.icellmobilsoft.coffee.se.api.exception.BusinessException;
 import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadRequest;
 import hu.icellmobilsoft.sampler.sample.fileupload.PostFileUploadResponse;
-import jakarta.enterprise.inject.Model;
-import jakarta.inject.Inject;
 
 /**
  * File upload action.
@@ -84,7 +86,10 @@ public class FileUploadAction {
             log.info(">>> file processed: fileUploadId [{0}], numberOfBytes [{1}]", fileUploadId, numberOfBytes);
 
         } catch (IOException e) {
-            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Failed to process input stream!", e);
+            throw new BusinessException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    MessageFormat.format("Failed to process input stream of fileUploadId [{0}]!)", fileUploadId),
+                    e);
         }
     }
 
