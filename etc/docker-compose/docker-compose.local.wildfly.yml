@@ -40,6 +40,8 @@ services:
       HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
       DEBUG: "true"
 #     CONFIG_PROPERTIES_FILE_PATH: /home/customConfig/config.properties
+      # 100MB
+      UNDERTOW_HTTP_MAX_POST_SIZE: 104857600
     deploy:
       resources:
         limits:

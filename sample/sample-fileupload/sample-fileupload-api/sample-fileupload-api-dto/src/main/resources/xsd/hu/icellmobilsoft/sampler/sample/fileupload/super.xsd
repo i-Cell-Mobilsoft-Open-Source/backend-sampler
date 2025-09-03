@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns="http://http://sample.sampler.icellmobilsoft.hu/fileupload/super"
+    targetNamespace="http://sample.sampler.icellmobilsoft.hu/fileupload/super" elementFormDefault="qualified" attributeFormDefault="unqualified"
+    jaxb:version="3.0" jaxb:extensionBindingPrefixes="xjc">
+
+    <xsd:import namespace="http://sample.sampler.icellmobilsoft.hu/fileupload" />
+
+</xsd:schema>

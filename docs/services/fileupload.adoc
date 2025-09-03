@@ -1,0 +1,37 @@
+= Fileupload service
+`sample/sample-fileupload`
+
+A példa célja, hogy bemutassa a file feltöltési lehetőségeket és azok közti különbségeket Wildfly-on.
+
+== Multipart üzenet
+`IFileUploadRest.postMultpartUpload(MultipartFormDataInput multipartFormDataInput)`
+
+Multipart üzenet fogadása, melyben a body-ban kapott metaadok feldolgozása mellett file-t is fogadunk. A resteasy használatával a `MultipartFormDataInput` előállításakor minden klienstől kapott adat bekerül a memóriába, a klienstől kapott stream a feldolgozáskor már teljesen be van töltve.
+
+== Két fázisú fájlfeltöltés
+`IFileUploadRest.postStreamInit(PostFileUploadRequest postFileUploadRequest)`
+`IFileUploadRest.postStreamUpload(String fileUploadId, InputStream inputStream)`
+
+A fájlfeltöltés több lépcsőben történik. Először a metaadatok fogadása történik a `postStreamInit()` végponton, majd a `postStreamUpload()` végponton történik a fájl(ok) fogadása. Ilyenkor a stream feldolgozása során csak az aktuálisan beolvasott byte-ok kerülnek a memóriába.
+
+== Service használata
+
+```
+# backend-sample gyökér mappájában állva
+
+# build
+mvn clean install
+
+# wildfly container indítása
+docker compose -f etc/docker-compose/docker-compose.local.wildfly.yml up -d
+
+# deploy
+docker cp sample/sample-fileupload/sample-fileupload-service/target/sample-fileupload-service-2.0.0-SNAPSHOT.war bs-sample-service:/home/icellmobilsoft/wildfly/standalone/deployments/ROOT.war
+
+# log nézés
+docker logs -f bs-sample-service
+```
+
+=== Tesztek
+`PostMultpartUploadIT`
+`PostStreamUploadIT`

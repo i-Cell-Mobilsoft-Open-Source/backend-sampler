@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://sample.sampler.icellmobilsoft.hu/fileupload"
+    targetNamespace="http://sample.sampler.icellmobilsoft.hu/fileupload" elementFormDefault="qualified">
+
+    <!-- SIMPLE TYPES -->
+
+    <!-- GROUPS -->
+
+    <!-- BASE TYPES -->
+    <xsd:complexType name="PostFileUploadRequestType">
+        <xsd:sequence>
+            <xsd:element name="fileName" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>The name of the file.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="fileDescription" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>The description of the file.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PostFileUploadResponseType">
+        <xsd:sequence>
+            <xsd:element name="fileUploadId" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>The ID of the file.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- REQUEST/RESPONSE ELEMENTS -->
+    <xsd:element name="PostFileUploadRequest">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PostFileUploadRequestType" />
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="PostFileUploadResponse">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="PostFileUploadResponseType" />
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
