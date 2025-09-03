@@ -33,9 +33,4 @@ public interface FileUploadXsdConstants {
      */
     String SUPER_XSD = "xsd/hu/icellmobilsoft/sampler/sample/fileupload/super.xsd";
 
-    /**
-     * Path of the super catalog.
-     */
-    String SUPER_CATALOG = "xsd/hu/icellmobilsoft/sampler/sample/fileupload/super.catalog.xml";
-
 }

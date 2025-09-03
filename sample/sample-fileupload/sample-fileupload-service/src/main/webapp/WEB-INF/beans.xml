@@ -5,8 +5,4 @@
       https://jakarta.ee/xml/ns/jakartaee 
       https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd">
 
-    <alternatives>
-        <class>hu.icellmobilsoft.sampler.sample.filupload.service.catalog.FileUploadCatalogProducer</class>
-    </alternatives>
-
 </beans>
