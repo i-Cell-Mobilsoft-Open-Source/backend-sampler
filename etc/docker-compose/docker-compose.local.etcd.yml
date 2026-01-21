@@ -3,7 +3,7 @@
 services:
   etcd:
     container_name: bs-sample-etcd
-    image: docker.io/bitnami/etcd:3
+    image: public.ecr.aws/bitnami/etcd:3
     ports:
       - 2379:2379
     environment:
