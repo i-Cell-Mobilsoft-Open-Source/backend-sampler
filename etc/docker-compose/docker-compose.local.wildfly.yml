@@ -9,8 +9,8 @@
 services:
   sample-service:
     container_name: bs-sample-service
-    #image: icellmobilsoft/wildfly-mp-ms:4.0.0
-    image: icellmobilsoft/wildfly-mp-full:4.0.0
+    #image: icellmobilsoft/wildfly-mp-ms:5.0.0-SNAPSHOT
+    image: icellmobilsoft/wildfly-mp-full:5.0.0-SNAPSHOT
     volumes:
       - './wildfly/sample.properties:/home/icellmobilsoft/config/wildfly.properties'
 #     - './customConfig:/home/customConfig'
@@ -29,14 +29,14 @@ services:
       # 1. -> jaeger, hagyomanyos
       #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:14250
       # 2. -> jaeger otlp
-      #OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
-      #OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:4317
+      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is jeager
+      OPENTELEMETRY_EXPORTER_ENDPOINT: http://jaeger:4317
       # 3. -> otlp-collector -> jaeger otlp
-      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is otlp, "The 'jaeger' exporter is no longer supported.", but the docs say its allowed
-      OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
-      MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
+#      OPENTELEMETRY_EXPORTER_TYPE: otlp # default is otlp, "The 'jaeger' exporter is no longer supported.", but the docs say its allowed
+#      OPENTELEMETRY_EXPORTER_ENDPOINT: http://opentelemetry-collector:4317
+#      MICROMETER_ENDPOINT: http://opentelemetry-collector:4318/v1/metrics
 #      MP_CONFIG_PROFILE: redispubsub
-      MP_CONFIG_PROFILE: kafka
+#      MP_CONFIG_PROFILE: kafka
       HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
       DEBUG: "true"
 #     CONFIG_PROPERTIES_FILE_PATH: /home/customConfig/config.properties
