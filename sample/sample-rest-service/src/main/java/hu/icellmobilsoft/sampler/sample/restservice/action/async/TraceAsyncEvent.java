@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,7 @@ import io.opentelemetry.api.trace.Span;
 
 /**
  * Sample trace async event
- * 
+ *
  * @author czenczl
  * @since 2.0.0
  */
@@ -32,8 +32,15 @@ public class TraceAsyncEvent {
     private String extSessionId;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public TraceAsyncEvent() {
+        super();
+    }
+
+    /**
      * Gets the unique session id
-     * 
+     *
      * @return span ext session id
      */
     public String getExtSessionId() {
@@ -42,7 +49,7 @@ public class TraceAsyncEvent {
 
     /**
      * Sets the unique session id
-     * 
+     *
      * @param extSessionId
      *            unique id
      */
@@ -52,7 +59,7 @@ public class TraceAsyncEvent {
 
     /**
      * Gets the {@link Span}
-     * 
+     *
      * @return span
      */
     public Span getSpan() {
@@ -61,7 +68,7 @@ public class TraceAsyncEvent {
 
     /**
      * Sets the {@link Span} to use in async trace flow
-     * 
+     *
      * @param span
      *            trace span
      */

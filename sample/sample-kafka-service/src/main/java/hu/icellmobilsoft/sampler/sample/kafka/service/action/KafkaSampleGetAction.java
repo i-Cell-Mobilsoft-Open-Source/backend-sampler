@@ -39,6 +39,13 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 public class KafkaSampleGetAction extends BaseAction {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public KafkaSampleGetAction() {
+        super();
+    }
+
+    /**
      * Dummy sample reponse
      * 
      * @return SampleResponse Sample response with random id

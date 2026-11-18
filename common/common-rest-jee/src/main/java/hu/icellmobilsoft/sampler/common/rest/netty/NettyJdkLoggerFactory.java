@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,7 @@ import io.netty.util.internal.logging.JdkLoggerFactory;
 
 /**
  * Workaround for BUG https://issues.redhat.com/browse/WFLY-20058
- * 
+ *
  * @author czenczl
  * @since 2.0.0
  */
@@ -36,8 +36,15 @@ import io.netty.util.internal.logging.JdkLoggerFactory;
 public class NettyJdkLoggerFactory {
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public NettyJdkLoggerFactory() {
+        super();
+    }
+
+    /**
      * Set the default logger, wf34 bug BUG https://issues.redhat.com/browse/WFLY-20058
-     * 
+     *
      * @param init
      *            event
      */

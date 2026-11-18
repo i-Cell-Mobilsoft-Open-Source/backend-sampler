@@ -60,11 +60,6 @@
             </dependency>
             <dependency>
                 <groupId>hu.icellmobilsoft.sampler.common</groupId>
-                <artifactId>common-util</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.icellmobilsoft.sampler.common</groupId>
                 <artifactId>common-rest-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>

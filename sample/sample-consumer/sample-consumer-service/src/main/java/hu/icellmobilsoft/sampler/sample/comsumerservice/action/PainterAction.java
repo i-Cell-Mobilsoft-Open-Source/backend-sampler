@@ -73,6 +73,13 @@ public class PainterAction {
     private AsyncRedisPublishEventDispatcher asyncRedisPublishEventDispatcher;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public PainterAction() {
+        super();
+    }
+
+    /**
      * Painting and finishing business process.
      *
      * @param carProductionId

@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.JavaDateAndTime;
 public class JavaDateAndTimeService extends BaseService<JavaDateAndTime> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaDateAndTimeService() {
+        super();
+    }
+
+    /**
      * Find {@link JavaDateAndTime} by ID.
      *
      * @param id

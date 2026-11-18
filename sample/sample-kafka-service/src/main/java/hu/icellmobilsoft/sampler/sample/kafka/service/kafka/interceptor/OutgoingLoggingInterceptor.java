@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,7 +33,7 @@ import hu.icellmobilsoft.coffee.se.logging.Logger;
 /**
  * Listener for Outgoing kafka message - logging.<br>
  * Usage with congiration:
- * 
+ *
  * <pre>
  *mp:
  *  messaging:
@@ -43,13 +43,20 @@ import hu.icellmobilsoft.coffee.se.logging.Logger;
  *          classes:
  *            - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingLoggingInterceptor
  * </pre>
- * 
+ *
  * @param <K>
  *            Message Key Type (default String)
  * @param <V>
  *            Message Payload Type
  */
 public class OutgoingLoggingInterceptor<K, V> implements ProducerInterceptor<K, V>, KafkaInterceptorConstant {
+
+    /**
+     * Default constructor, constructs a new object
+     */
+    public OutgoingLoggingInterceptor() {
+        super();
+    }
 
     @Override
     public void configure(Map<String, ?> configs) {
@@ -82,7 +89,12 @@ public class OutgoingLoggingInterceptor<K, V> implements ProducerInterceptor<K, 
         sb.append(OUTGOING).append(TAB).append("-- Topic").append(VALUE).append(record.topic()).append(NEWLINE);
         sb.append(OUTGOING).append(TAB).append("-- Headers:").append(NEWLINE);
         for (Header header : record.headers()) {
-            sb.append(OUTGOING).append(TAB).append(TAB).append(header.key()).append(VALUE).append(new String(header.value(), StandardCharsets.UTF_8))
+            sb.append(OUTGOING)
+                    .append(TAB)
+                    .append(TAB)
+                    .append(header.key())
+                    .append(VALUE)
+                    .append(new String(header.value(), StandardCharsets.UTF_8))
                     .append(NEWLINE);
         }
         sb.append(OUTGOING).append(TAB).append("-- Value").append(VALUE).append(record.value()).append(NEWLINE);

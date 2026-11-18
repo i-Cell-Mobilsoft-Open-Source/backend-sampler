@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.JavaEnumTypes;
 public class JavaEnumTypesService extends BaseService<JavaEnumTypes> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaEnumTypesService() {
+        super();
+    }
+
+    /**
      * Find {@link JavaEnumTypes} by ID.
      *
      * @param id

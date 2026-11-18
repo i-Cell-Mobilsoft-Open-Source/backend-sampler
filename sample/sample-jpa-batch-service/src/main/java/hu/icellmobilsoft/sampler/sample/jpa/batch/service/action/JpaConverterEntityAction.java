@@ -69,6 +69,13 @@ public class JpaConverterEntityAction extends BaseAction {
     private JpaConverterEntityService jpaConverterEntityService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JpaConverterEntityAction() {
+        super();
+    }
+
+    /**
      * Creates and inserts a {@link JpaConverterEntity} entity with BatchService.
      *
      * @param jpaConverterEntityInsertRequest

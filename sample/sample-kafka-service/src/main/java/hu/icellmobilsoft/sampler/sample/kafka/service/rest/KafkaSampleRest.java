@@ -45,6 +45,13 @@ public class KafkaSampleRest extends BaseRestService implements ISampleRest {
     @Inject
     private KafkaSamplePostAction kafkaSamplePostAction;
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public KafkaSampleRest() {
+        super();
+    }
+
     @Override
     public SampleResponse getSample() throws BaseException {
         return wrapNoParam(kaSampleGetAction::sample, "getSample");

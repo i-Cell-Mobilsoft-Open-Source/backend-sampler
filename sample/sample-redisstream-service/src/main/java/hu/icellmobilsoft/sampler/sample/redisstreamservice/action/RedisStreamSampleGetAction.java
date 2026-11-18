@@ -43,6 +43,13 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 public class RedisStreamSampleGetAction extends BaseAction {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public RedisStreamSampleGetAction() {
+        super();
+    }
+
+    /**
      * Dummy sample response
      *
      * @return SampleResponse Sample response with random id

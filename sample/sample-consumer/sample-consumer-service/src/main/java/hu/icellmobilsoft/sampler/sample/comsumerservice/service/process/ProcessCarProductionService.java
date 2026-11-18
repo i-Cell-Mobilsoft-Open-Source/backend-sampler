@@ -49,6 +49,13 @@ public class ProcessCarProductionService extends BaseService<AbstractProcessCarP
     private EntityManager em;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public ProcessCarProductionService() {
+        super();
+    }
+
+    /**
      * Deletes the {@link AbstractProcessCarProductionEntity} by the {@link CarProduction#getId()} field.
      *
      * @param <T>

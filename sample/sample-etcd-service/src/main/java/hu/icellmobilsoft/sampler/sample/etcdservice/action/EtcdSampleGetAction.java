@@ -48,6 +48,13 @@ public class EtcdSampleGetAction extends BaseAction {
     private String columnAValue;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public EtcdSampleGetAction() {
+        super();
+    }
+
+    /**
      * Dummy sample response
      *
      * @return SampleResponse with random id

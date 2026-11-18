@@ -39,6 +39,13 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 public class RestSamplePostAction extends BaseAction {
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public RestSamplePostAction() {
+        super();
+    }
+
+    /**
      * Dummy sample query reponse
      *
      * @param sampleRequest

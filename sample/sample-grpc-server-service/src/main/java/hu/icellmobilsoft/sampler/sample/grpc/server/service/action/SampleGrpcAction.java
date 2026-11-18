@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,7 +41,7 @@ import io.grpc.stub.StreamObserver;
 
 /**
  * CDI action bean
- * 
+ *
  * @author czenczl
  * @since 2.0.0
  *
@@ -53,8 +53,15 @@ public class SampleGrpcAction {
     private Logger log;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public SampleGrpcAction() {
+        super();
+    }
+
+    /**
      * dummy call
-     * 
+     *
      * @param request
      *            {@link DummyRequest}
      * @param responseObserver
@@ -120,13 +127,13 @@ public class SampleGrpcAction {
 
     /**
      * dummy error call
-     * 
+     *
      * @param request
      *            {@link DummyRequest}
      * @param responseObserver
      *            {@link StreamObserver<DummyResponse>}
      * @throws Exception
-     *             on error 
+     *             on error
      */
     public void call(RequestForError request, StreamObserver<ResponseForError> responseObserver) throws Exception {
         throw newRequestedException(request);

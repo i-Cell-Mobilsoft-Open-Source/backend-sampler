@@ -41,7 +41,6 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.redisservice.config.RedisConfig;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.UnifiedJedis;
 
 /**
@@ -54,12 +53,20 @@ import redis.clients.jedis.UnifiedJedis;
 public class RedisSamplePostAction extends BaseAction {
 
     private static final long EXPIRE_MINUTES = Duration.ofMinutes(5).toSeconds();
+
     @Inject
     @RedisConnection(configKey = RedisConfig.REDIS_KEY)
     private RedisManager redisManager;
 
     @Inject
     private Logger log;
+
+    /**
+     * Default constructor, constructs a new object
+     */
+    public RedisSamplePostAction() {
+        super();
+    }
 
     /**
      * Dummy sample write and read data from Redis

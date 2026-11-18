@@ -49,6 +49,13 @@ public class GrpcHealthCheck {
     private String builderName;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public GrpcHealthCheck() {
+        super();
+    }
+
+    /**
      * Init the health builderName
      */
     @PostConstruct

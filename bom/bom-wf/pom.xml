@@ -15,5 +15,6 @@
         <module>bom-wf-30</module>
         <module>bom-wf-34</module>
         <module>bom-wf-38</module>
+        <module>bom-wf-41</module>
     </modules>
 </project>

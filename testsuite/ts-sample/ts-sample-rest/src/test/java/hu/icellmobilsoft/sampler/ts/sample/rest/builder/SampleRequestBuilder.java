@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.ts.common.rest.DtoHelper;
 @Model
 public class SampleRequestBuilder extends BaseBuilder<SampleRequest> {
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public SampleRequestBuilder() {
+        super();
+    }
+
     @Override
     public SampleRequest createEmpty() {
         SampleRequest request = new SampleRequest();

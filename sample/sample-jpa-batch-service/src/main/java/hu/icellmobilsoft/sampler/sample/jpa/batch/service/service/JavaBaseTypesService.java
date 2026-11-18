@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.JavaBaseTypes;
 public class JavaBaseTypesService extends BaseService<JavaBaseTypes> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaBaseTypesService() {
+        super();
+    }
+
+    /**
      * Find {@link JavaBaseTypes} by ID.
      *
      * @param id

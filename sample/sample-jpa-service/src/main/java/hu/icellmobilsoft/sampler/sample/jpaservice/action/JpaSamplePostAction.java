@@ -39,6 +39,7 @@ import hu.icellmobilsoft.coffee.dto.exception.enums.CoffeeFaultType;
 import hu.icellmobilsoft.coffee.jpa.helper.TransactionHelper;
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
 import hu.icellmobilsoft.coffee.se.api.exception.TechnicalException;
+import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.frappee.jpa.batch.IJpaBatchService;
 import hu.icellmobilsoft.frappee.jpa.batch.enums.Status;
 import hu.icellmobilsoft.sampler.common.system.jpa.jpa.EntityHelper;
@@ -80,6 +81,13 @@ public class JpaSamplePostAction extends BaseAction {
     AppLogger log;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public JpaSamplePostAction() {
+        super();
+    }
+
+    /**
      * Dummy sample write and read data from DB
      *
      * @param sampleRequest
@@ -98,24 +106,62 @@ public class JpaSamplePostAction extends BaseAction {
         } catch (BaseException e) {
             log.info("Expected exception - no transaction: [{0}]", e.getLocalizedMessage());
         }
-        // create entity
+        // create entity: INSERT INTO + SELECT
         SampleEntity created = transactionHelper.executeWithTransaction(this::createOneNeedTransaction);
 
-        // modify entity
+        // modify entity: SELECT + UPDATE + SELECT
         created.setStatus(SampleStatus.DONE);
         created = transactionHelper.executeWithTransaction(sampleEntityService::save, created);
+
+        // insert entity: INSERT INTO
+        transactionHelper.executeWithTransaction(() -> sampleEntityService.insert(initSampleEntity()));
+
+        // insert entity with refresh: INSERT INTO + SELECT
+        SampleEntity inserted = transactionHelper.executeWithTransaction(() -> sampleEntityService.insertAndRefresh(initSampleEntity()));
+        if (inserted.getVersion() != 0) {
+            throw new TechnicalException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Unexpected data integrity error, insertAndRefresh() method not working properly!");
+        }
+
+        // update entity: (optional SELECT) + UPDATE
+        // the optional SELECT is executed if the entity is detached
+        String newInputValue = RandomUtil.generateId();
+        inserted.setInputValue(newInputValue);
+        transactionHelper.executeWithTransaction(() -> sampleEntityService.update(inserted));
+        SampleEntity updated = sampleEntityService.findById(inserted.getId(), SampleEntity.class);
+        if (updated.getVersion() != 1 || !updated.getInputValue().equals(newInputValue)) {
+            throw new TechnicalException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Unexpected data integrity error, update() method not working properly!");
+        }
+
+        // update entity with refresh: (optional SELECT) + UPDATE + SELECT
+        // the optional SELECT is executed if the entity is detached
+        newInputValue = RandomUtil.generateId();
+        updated.setInputValue(newInputValue);
+        SampleEntity updatedMore = transactionHelper.executeWithTransaction(() -> sampleEntityService.updateAndRefresh(updated));
+        if (updatedMore.getVersion() != 2 || !updatedMore.getInputValue().equals(newInputValue)) {
+            throw new TechnicalException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Unexpected data integrity error, updateAndRefresh() method not working properly!");
+        }
 
         // use repository
         List<SampleEntity> samples = sampleEntityService.findAllByStatus(SampleStatus.DONE);
         if (CollectionUtils.isEmpty(samples)) {
-            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, cant find sample entity with DONE status!");
+            throw new TechnicalException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Unexpected data integrity error, cant find sample entity with DONE status!");
         }
 
         SampleEntity readed = sampleEntityService.findById(created.getId());
         if (!created.getId().equals(readed.getId()) || created.getCreationDate() == null
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
                 || !created.getCreatorUser().equals(readed.getCreatorUser()) || created.getStatus() != readed.getStatus()) {
-            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, some mandatory field is empty or not equal!");
+            throw new TechnicalException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
         // BatchService insert/update testing
@@ -142,7 +188,9 @@ public class JpaSamplePostAction extends BaseAction {
                 || !created.getCreationDate().equals(readed.getCreationDate()) || created.getCreatorUser() == null
                 || !EntityHelper.DEFAULT_SYSTEM_USER.equals(readed.getCreatorUser()) || SampleStatus.DONE != readed.getStatus()
                 || !created.getModLocalDate().equals(readed.getModLocalDate())) {
-            throw new TechnicalException(CoffeeFaultType.OPERATION_FAILED, "Unexpected data integrity error, some mandatory field is empty or not equal!");
+            throw new TechnicalException(
+                    CoffeeFaultType.OPERATION_FAILED,
+                    "Unexpected data integrity error, some mandatory field is empty or not equal!");
         }
 
         SampleResponse response = new SampleResponse();

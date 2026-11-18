@@ -30,6 +30,13 @@ import jakarta.enterprise.inject.Model;
 @Model
 public class CarOrderRest implements ICarOrderRestClient {
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public CarOrderRest() {
+        super();
+    }
+
     @Override
     public String getColor(String carOrderId) {
         return "red";

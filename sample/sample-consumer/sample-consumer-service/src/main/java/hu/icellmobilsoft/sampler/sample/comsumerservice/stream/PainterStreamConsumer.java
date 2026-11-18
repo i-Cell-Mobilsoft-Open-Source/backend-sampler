@@ -43,6 +43,13 @@ public class PainterStreamConsumer extends AbstractStreamConsumer {
     @Inject
     private PainterAction painterAction;
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public PainterStreamConsumer() {
+        super();
+    }
+
     // TODO this method should be protected
     @Override
     public void doWork(String text) throws BaseException {

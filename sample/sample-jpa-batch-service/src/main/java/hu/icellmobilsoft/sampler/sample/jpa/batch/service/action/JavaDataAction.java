@@ -66,6 +66,13 @@ public class JavaDataAction extends BaseAction {
     private JavaDataService javaDataService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaDataAction() {
+        super();
+    }
+
+    /**
      * Creates and inserts a {@link JavaData} entity with BatchService.
      *
      * @param javaDataInsertRequest

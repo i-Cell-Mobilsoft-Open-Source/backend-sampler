@@ -64,6 +64,13 @@ public class JpaAssociationAction extends BaseAction {
     private JpaAssociationService jpaAssociationService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JpaAssociationAction() {
+        super();
+    }
+
+    /**
      * Creates and inserts a {@link JpaAssociation} entity with BatchService.
      *
      * @param jpaAssociationInsertRequest

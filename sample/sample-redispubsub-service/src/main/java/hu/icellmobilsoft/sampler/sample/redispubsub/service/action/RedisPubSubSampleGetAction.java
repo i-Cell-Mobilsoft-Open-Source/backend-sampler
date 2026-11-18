@@ -25,7 +25,6 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import hu.icellmobilsoft.coffee.se.api.exception.BaseException;
-import hu.icellmobilsoft.coffee.se.logging.Logger;
 import hu.icellmobilsoft.coffee.se.util.string.RandomUtil;
 import hu.icellmobilsoft.sampler.common.rest.cdi.ApplicationContainer;
 import hu.icellmobilsoft.sampler.common.system.rest.action.BaseAction;
@@ -45,23 +44,28 @@ import hu.icellmobilsoft.sampler.sample.redispubsub.service.config.RedisPubSubCo
 public class RedisPubSubSampleGetAction extends BaseAction {
 
     @Inject
-    private Logger log;
-
-
-    @Inject
     private ApplicationContainer applicationContainer;
+
+    /**
+     * Default constructor, constructs a new object
+     */
+    public RedisPubSubSampleGetAction() {
+        super();
+    }
 
     /**
      * Dummy sample reponse
      *
      * dummy can be set with redis-cli:
+     *
      * <pre>
      * docker exec -it bs-sample-redis redis-cli
      * 127.0.0.1:6379&gt; PUBLISH sample-get test-dummy
      * </pre>
      *
      * @return SampleResponse Sample response with random id
-     * @throws BaseException if error
+     * @throws BaseException
+     *             if error
      */
     public SampleResponse sample() throws BaseException {
 

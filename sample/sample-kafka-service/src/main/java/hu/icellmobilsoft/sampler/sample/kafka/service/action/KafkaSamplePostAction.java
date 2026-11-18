@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,7 +38,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleResponse;
  * <a href=
  * "https://github.com/wildfly/quickstart/blob/27.x/microprofile-reactive-messaging-kafka/README.adoc">microprofile-reactive-messaging-kafka</a><br>
  * <a href="https://smallrye.io/smallrye-reactive-messaging/4.0.0/kafka/kafka/">smallrye.io/smallrye-reactive-messaging</a>
- * 
+ *
  * @author Imre Scheffer
  * @since 2.0.0
  */
@@ -49,8 +49,15 @@ public class KafkaSamplePostAction extends BaseAction {
     private KafkaPublisher kafkaPublisher;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public KafkaSamplePostAction() {
+        super();
+    }
+
+    /**
      * Sample action
-     * 
+     *
      * @param sampleRequest
      *            request
      * @return response
@@ -70,9 +77,11 @@ public class KafkaSamplePostAction extends BaseAction {
     }
 
     private SampleKafkaDto convertToDto(SampleRequest sampleRequest) {
-        return SampleKafkaDto.newBuilder().setColumnA(sampleRequest.getSample().getColumnA() + "-" + DateUtil.nowUTC())
+        return SampleKafkaDto.newBuilder()
+                .setColumnA(sampleRequest.getSample().getColumnA() + "-" + DateUtil.nowUTC())
                 .setColumnB(EnumUtil.convert(sampleRequest.getSample().getColumnB(), ValuesKafkaDto.class))
-                .setColumnC(sampleRequest.getContext().getTimestamp().toLocalDate()).build();
+                .setColumnC(sampleRequest.getContext().getTimestamp().toLocalDate())
+                .build();
     }
 
 }

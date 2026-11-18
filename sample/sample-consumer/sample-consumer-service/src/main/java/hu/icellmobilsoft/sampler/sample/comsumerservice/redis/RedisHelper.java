@@ -42,6 +42,13 @@ import hu.icellmobilsoft.coffee.tool.utils.validation.ParamValidatorUtil;
 public class RedisHelper {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public RedisHelper() {
+        super();
+    }
+
+    /**
      * Publish the stream message to the stream group on connection defined by the connection config key.
      *
      * @param streamMessage

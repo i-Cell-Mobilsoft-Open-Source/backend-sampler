@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,7 +30,7 @@ import hu.icellmobilsoft.coffee.rest.validation.json.JsonMessageBodyReaderBase;
 
 /**
  * MessageBodyReader for json requests
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  */
@@ -38,4 +38,12 @@ import hu.icellmobilsoft.coffee.rest.validation.json.JsonMessageBodyReaderBase;
 @Consumes({ MediaType.APPLICATION_JSON })
 @Priority(Priorities.ENTITY_CODER)
 public class JsonRequestMessageBodyReader extends JsonMessageBodyReaderBase<BaseRequestType> {
+
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public JsonRequestMessageBodyReader() {
+        super();
+    }
+
 }

@@ -45,6 +45,13 @@ public class RedisSampleRest extends BaseRestService implements ISampleRest {
     @Inject
     private RedisSamplePostAction redisSamplePostAction;
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public RedisSampleRest() {
+        super();
+    }
+
     @Override
     public SampleResponse getSample() throws BaseException {
         return wrapNoParam(redisSampleGetAction::sample, "getSample");

@@ -49,6 +49,13 @@ public class SampleEntityService extends BaseService<SampleEntity> {
     private SampleEntityRepository sampleEntityRepository;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public SampleEntityService() {
+        super();
+    }
+
+    /**
      * Elements associated with status
      *
      * @param status

@@ -45,6 +45,13 @@ public class EtcdSampleRest extends BaseRestService implements ISampleRest {
     @Inject
     private EtcdSamplePostAction etcdSamplePostAction;
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public EtcdSampleRest() {
+        super();
+    }
+
     @Override
     public SampleResponse getSample() throws BaseException {
         return wrapNoParam(etcdSampleGetAction::sample, "getSample");

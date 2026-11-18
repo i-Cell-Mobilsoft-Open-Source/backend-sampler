@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,7 +37,7 @@ import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
 
 /**
  * Kafka Message printer/logger
- * 
+ *
  * @author Imre Scheffer
  * @since 2.0.0
  */
@@ -48,8 +48,15 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
     private Logger log;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public KafkaMessageLogger() {
+        super();
+    }
+
+    /**
      * Convert Incoming MP Reactive Kafka message into human readable String.
-     * 
+     *
      * @param <T>
      *            Message Payload Type
      * @param message
@@ -75,7 +82,7 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
     /**
      * Print Incoming Reactive Kafka message to log.<br>
      * This usage is recommended in developing, debugging and testing, in production is preferred {@link IncomingLoggingInterceptor}
-     * 
+     *
      * @param <T>
      *            Message Payload Type
      * @param message
@@ -87,7 +94,7 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
 
     /**
      * Convert Outgoing MP Reactive Kafka message into human readable String
-     * 
+     *
      * @param <T>
      *            Message Payload Type
      * @param message
@@ -113,7 +120,7 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
     /**
      * Print Outgoing Reactive Kafka message to log.<br>
      * This usage is recommended in developing, debugging and testing, in production is preferred {@link OutgoingLoggingInterceptor}
-     * 
+     *
      * @param <T>
      *            Message Payload Type
      * @param message
@@ -125,7 +132,7 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
 
     /**
      * Print algorithm of message payload
-     * 
+     *
      * @param <T>
      *            Message Payload Type
      * @param rowPrefix
@@ -141,7 +148,7 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
 
     /**
      * Print algorithm of message common metadata
-     * 
+     *
      * @param <T>
      *            Message Payload Type
      * @param rowPrefix
@@ -160,7 +167,7 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
 
     /**
      * Print algorithm of message Smallrye metadata
-     * 
+     *
      * @param sb
      *            Printing buffer
      * @param metadata
@@ -179,14 +186,19 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
         sb.append(INCOMING).append(TAB).append("-- Topic").append(VALUE).append(metadata.getTopic()).append(NEWLINE);
         sb.append(INCOMING).append(TAB).append("-- Headers:").append(NEWLINE);
         for (Header header : metadata.getHeaders()) {
-            sb.append(INCOMING).append(TAB).append(TAB).append(header.key()).append(VALUE).append(new String(header.value(), StandardCharsets.UTF_8))
+            sb.append(INCOMING)
+                    .append(TAB)
+                    .append(TAB)
+                    .append(header.key())
+                    .append(VALUE)
+                    .append(new String(header.value(), StandardCharsets.UTF_8))
                     .append(NEWLINE);
         }
     }
 
     /**
      * Print algorithm of message Smallrye metadata
-     * 
+     *
      * @param sb
      *            Printing buffer
      * @param metadata
@@ -200,7 +212,12 @@ public class KafkaMessageLogger implements KafkaInterceptorConstant {
         sb.append(OUTGOING).append(TAB).append("-- Topic").append(VALUE).append(metadata.getTopic()).append(NEWLINE);
         sb.append(OUTGOING).append(TAB).append("-- Headers:").append(NEWLINE);
         for (Header header : metadata.getHeaders()) {
-            sb.append(OUTGOING).append(TAB).append(TAB).append(header.key()).append(VALUE).append(new String(header.value(), StandardCharsets.UTF_8))
+            sb.append(OUTGOING)
+                    .append(TAB)
+                    .append(TAB)
+                    .append(header.key())
+                    .append(VALUE)
+                    .append(new String(header.value(), StandardCharsets.UTF_8))
                     .append(NEWLINE);
         }
     }

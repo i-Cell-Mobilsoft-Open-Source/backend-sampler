@@ -60,7 +60,6 @@ public class RedisPubSubSamplePostAction extends BaseAction {
 
     private static final long EXPIRE_MINUTES = Duration.ofMinutes(5).toSeconds();
 
-
     @Inject
     private Logger log;
 
@@ -76,22 +75,31 @@ public class RedisPubSubSamplePostAction extends BaseAction {
     private ApplicationContainer applicationContainer;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public RedisPubSubSamplePostAction() {
+        super();
+    }
+
+    /**
      * Dummy sample write and read data from Redis PUB-SUB
      *
-     * @param sampleRequest validated http entity body
+     * @param sampleRequest
+     *            validated http entity body
      * @return Sample response with random readed data
-     * @throws BaseException if error
+     * @throws BaseException
+     *             if error
      */
     public SampleResponse sampleWriteRead(SampleRequest sampleRequest) throws BaseException {
 
         // create dummy
         SampleType dummy = createDummy(sampleRequest.getSample());
-        //publish event
+        // publish event
         emitter.send(dummy);
-        //publish and wait
+        // publish and wait
         waitForPublish(emitterWithoutSubscriber.send(PubSubMessage.of(dummy.getSampleId(), Map.of(LogConstants.LOG_SESSION_ID, "customSID"))));
 
-        //sleep 1 second, meanwhile the PostInListener must get the message and store it in application cache.
+        // sleep 1 second, meanwhile the PostInListener must get the message and store it in application cache.
         sleep();
         SampleType sampleType = readDummy();
 

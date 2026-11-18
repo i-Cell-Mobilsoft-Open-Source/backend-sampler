@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,7 +31,7 @@ import hu.icellmobilsoft.sampler.common.rest.header.ProjectHeader;
 
 /**
  * Common request scope container
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  */
@@ -52,8 +52,15 @@ public class RequestContainer {
     private BaseRequestContainer baseRequestContainer;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public RequestContainer() {
+        super();
+    }
+
+    /**
      * Get http request parsed http header object
-     * 
+     *
      * @return parsed http header object
      */
     @Produces
@@ -69,7 +76,7 @@ public class RequestContainer {
 
     /**
      * Set parsed http header object
-     * 
+     *
      * @param projectHeader
      *            parsed http header object
      */
@@ -79,7 +86,7 @@ public class RequestContainer {
 
     /**
      * Get all container object from all scope storage
-     * 
+     *
      * @return all key/value from all scope storage
      * @see BaseRequestContainer#getObjectMap()
      */
@@ -89,7 +96,7 @@ public class RequestContainer {
 
     /**
      * Getter for the field requestObject.
-     * 
+     *
      * @return Http request object.
      * @see BaseRequestContainer#getRequestObject()
      */
@@ -99,7 +106,7 @@ public class RequestContainer {
 
     /**
      * Setter for the field requestObject
-     * 
+     *
      * @param requestObject
      *            Http request object
      * @see BaseRequestContainer#setRequestObject(Object)

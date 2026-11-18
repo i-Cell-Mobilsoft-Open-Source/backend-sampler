@@ -4,6 +4,8 @@
           https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
         version="3.1">
 
+    <access>FIELD</access>
+
     <entity class="hu.icellmobilsoft.sampler.model.sample.SampleEntity" />
 
 </entity-mappings>

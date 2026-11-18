@@ -32,7 +32,6 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.redisservice.config.RedisConfig;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.UnifiedJedis;
 
 /**
@@ -47,6 +46,13 @@ public class RedisSampleGetAction extends BaseAction {
     @Inject
     @RedisConnection(configKey = RedisConfig.REDIS_KEY)
     private RedisManager redisManager;
+
+    /**
+     * Default constructor, constructs a new object
+     */
+    public RedisSampleGetAction() {
+        super();
+    }
 
     /**
      * Dummy sample reponse
