@@ -43,16 +43,22 @@ public class PostInListener {
     @Inject
     private Logger log;
 
-
     @Inject
     private ApplicationContainer applicationContainer;
 
     /**
-     * Consume message from {@value RedisPubSubConfig.SamplePost#MP_CHANNEL_IN}  micro profile channel
-     * which connects to {@code sample-post} redis channel, saves message to {@link ApplicationContainer},
-     * then forwards to {@code no-sub} redis channel.
+     * Default constructor, constructs a new object
+     */
+    public PostInListener() {
+        super();
+    }
+
+    /**
+     * Consume message from {@value RedisPubSubConfig.SamplePost#MP_CHANNEL_IN} micro profile channel which connects to {@code sample-post} redis
+     * channel, saves message to {@link ApplicationContainer}, then forwards to {@code no-sub} redis channel.
      *
-     * @param dummy the dummy message received from {@code sample-post} redis channel
+     * @param dummy
+     *            the dummy message received from {@code sample-post} redis channel
      */
     @Incoming(RedisPubSubConfig.SamplePost.MP_CHANNEL_IN)
     @Outgoing(RedisPubSubConfig.NoSub.REDIS_CHANNEL)

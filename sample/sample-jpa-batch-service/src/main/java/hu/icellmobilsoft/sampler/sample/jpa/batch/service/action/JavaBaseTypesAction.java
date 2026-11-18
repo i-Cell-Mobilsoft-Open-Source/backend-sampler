@@ -62,6 +62,13 @@ public class JavaBaseTypesAction extends BaseAction {
     private JavaBaseTypesService javaBaseTypesService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaBaseTypesAction() {
+        super();
+    }
+
+    /**
      * Creates and inserts a {@link JavaBaseTypes} entity with BatchService.
      *
      * @param javaBaseTypesInsertRequest

@@ -65,6 +65,13 @@ public class JavaEnumTypesAction extends BaseAction {
     private JavaEnumTypesService javaEnumTypesService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaEnumTypesAction() {
+        super();
+    }
+
+    /**
      * Creates and inserts a {@link JavaEnumTypes} entity with BatchService.
      *
      * @param javaEnumTypesInsertRequest

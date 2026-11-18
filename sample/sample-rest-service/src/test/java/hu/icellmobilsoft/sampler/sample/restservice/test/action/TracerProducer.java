@@ -34,6 +34,13 @@ import io.opentelemetry.api.trace.Tracer;
 @ApplicationScoped
 public class TracerProducer {
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public TracerProducer() {
+        super();
+    }
+
     @Produces
     @Default
     public Tracer producerTracer() {

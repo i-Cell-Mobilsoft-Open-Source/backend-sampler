@@ -40,14 +40,21 @@ public class GetListener {
     @Inject
     private Logger log;
 
-
     @Inject
     private ApplicationContainer applicationContainer;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public GetListener() {
+        super();
+    }
+
+    /**
      * Consume message from {@value RedisPubSubConfig.SampleGet#REDIS_CHANNEL} channel.
      *
-     * @param dummy the dummy message from {@code sample-get} redis channel
+     * @param dummy
+     *            the dummy message from {@code sample-get} redis channel
      */
     @Incoming(RedisPubSubConfig.SampleGet.REDIS_CHANNEL)
     void consume(String dummy) {

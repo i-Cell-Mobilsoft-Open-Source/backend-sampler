@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -49,7 +49,7 @@ import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
  * Sample kafka publisher <br>
  * <a href= "https://github.com/eclipse/microprofile-context-propagation">microprofile-context-propagation</a><br>
  * <a href= "https://smallrye.io/smallrye-reactive-messaging/smallrye-reactive-messaging/3.3/emitter/emitter.html">Emitter documentation</a>
- * 
+ *
  * @author Imre Scheffer
  */
 @ApplicationScoped
@@ -76,6 +76,13 @@ public class KafkaPublisher extends BaseAction {
     // private Emitter<String> emitterString;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public KafkaPublisher() {
+        super();
+    }
+
+    /**
      * send message imperative mode
      */
     @Inject
@@ -88,7 +95,7 @@ public class KafkaPublisher extends BaseAction {
 
     /**
      * Kafka Stream producer
-     * 
+     *
      * @return message payload to send
      */
     // Endless message loop
@@ -101,7 +108,7 @@ public class KafkaPublisher extends BaseAction {
 
     /**
      * Send string message to kafka
-     * 
+     *
      * @param message
      *            message payload to publish
      * @throws BaseException

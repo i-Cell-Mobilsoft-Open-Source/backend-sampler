@@ -32,7 +32,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.redisservice.config.RedisConfig;
-import redis.clients.jedis.Jedis;
+import redis.clients.jedis.UnifiedJedis;
 
 /**
  * Service for Redis read
@@ -48,6 +48,13 @@ public class RedisSampleGetAction extends BaseAction {
     private RedisManager redisManager;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public RedisSampleGetAction() {
+        super();
+    }
+
+    /**
      * Dummy sample reponse
      *
      * @return SampleResponse Sample response with random id
@@ -56,7 +63,7 @@ public class RedisSampleGetAction extends BaseAction {
      */
     public SampleResponse sample() throws BaseException {
 
-        var none = redisManager.runWithConnection(Jedis::get, "get", "aaaa");
+        var none = redisManager.runWithConnection(UnifiedJedis::get, "get", "aaaa");
 
         SampleResponse response = new SampleResponse();
         SampleType sampleType = new SampleType();

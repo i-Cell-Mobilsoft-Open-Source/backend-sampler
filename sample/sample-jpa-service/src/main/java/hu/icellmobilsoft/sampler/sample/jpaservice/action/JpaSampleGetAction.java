@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,7 +34,7 @@ import hu.icellmobilsoft.sampler.sample.jpaservice.service.SampleEntityService;
 
 /**
  * Service for JPA querying. Represents only DB operations.
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  */
@@ -45,8 +45,15 @@ public class JpaSampleGetAction extends BaseAction {
     private SampleEntityService sampleEntityService;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public JpaSampleGetAction() {
+        super();
+    }
+
+    /**
      * Dummy sample reponse
-     * 
+     *
      * @return SampleResponse Sample response with random id
      * @throws BaseException
      *             if error

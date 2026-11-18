@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,6 @@ import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 
 import com.google.protobuf.Timestamp;
-
 import hu.icellmobilsoft.coffee.cdi.logger.AppLogger;
 import hu.icellmobilsoft.coffee.cdi.logger.ThisLogger;
 import hu.icellmobilsoft.coffee.grpc.client.GrpcClient;
@@ -42,7 +41,7 @@ import hu.icellmobilsoft.sampler.grpc.api.service.sample.DummyServiceGrpc;
 
 /**
  * Sample action for testing gRPC
- * 
+ *
  * @author czenczl
  * @since 2.0.0
  */
@@ -62,8 +61,15 @@ public class RestSampleGetAction extends BaseAction {
     private ErrorServiceGrpc.ErrorServiceBlockingStub errorGrpcService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public RestSampleGetAction() {
+        super();
+    }
+
+    /**
      * Dummy sample call to call gRPC service
-     * 
+     *
      * @return SampleResponse Sample response with random id
      * @throws BaseException
      *             if error

@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -65,6 +65,13 @@ public class JaxrsExceptionMapper implements ExceptionMapper<WebApplicationExcep
 
     @Inject
     private IExceptionMessageTranslator exceptionMessageTranslator;
+
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public JaxrsExceptionMapper() {
+        super();
+    }
 
     @Override
     public Response toResponse(WebApplicationException e) {
@@ -128,8 +135,9 @@ public class JaxrsExceptionMapper implements ExceptionMapper<WebApplicationExcep
     }
 
     /**
-     * It searches for the {@code ResourceInvoker} with wildcard content type. It is used to determine whether there are any errors in the request other than an invalid content type.
-     * 
+     * It searches for the {@code ResourceInvoker} with wildcard content type. It is used to determine whether there are any errors in the request
+     * other than an invalid content type.
+     *
      *
      * @return the found ResourceInvoker data
      */

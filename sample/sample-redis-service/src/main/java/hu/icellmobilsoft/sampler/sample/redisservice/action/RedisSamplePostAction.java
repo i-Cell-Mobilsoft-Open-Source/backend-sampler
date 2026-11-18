@@ -41,7 +41,7 @@ import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleStatusEnumType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleType;
 import hu.icellmobilsoft.sampler.dto.sample.rest.post.SampleValueEnumType;
 import hu.icellmobilsoft.sampler.sample.redisservice.config.RedisConfig;
-import redis.clients.jedis.Jedis;
+import redis.clients.jedis.UnifiedJedis;
 
 /**
  * Sample redis query action
@@ -53,12 +53,20 @@ import redis.clients.jedis.Jedis;
 public class RedisSamplePostAction extends BaseAction {
 
     private static final long EXPIRE_MINUTES = Duration.ofMinutes(5).toSeconds();
+
     @Inject
     @RedisConnection(configKey = RedisConfig.REDIS_KEY)
     private RedisManager redisManager;
 
     @Inject
     private Logger log;
+
+    /**
+     * Default constructor, constructs a new object
+     */
+    public RedisSamplePostAction() {
+        super();
+    }
 
     /**
      * Dummy sample write and read data from Redis
@@ -99,8 +107,8 @@ public class RedisSamplePostAction extends BaseAction {
     private void saveDummy(String redisKey, SampleType dummy) throws BaseException {
         // It could be setex as well, but this way multiple operations are tested with the same connection.
         try (var con = redisManager.initConnection()) {
-            redisManager.run(Jedis::set, "set", redisKey, JsonUtil.toJson(dummy));
-            redisManager.run(Jedis::expire, "expire", redisKey, EXPIRE_MINUTES);
+            redisManager.run(UnifiedJedis::set, "set", redisKey, JsonUtil.toJson(dummy));
+            redisManager.run(UnifiedJedis::expire, "expire", redisKey, EXPIRE_MINUTES);
         } catch (Exception e) {
             String msg = "Exception occured while saving dummy";
             log.error(msg, e);
@@ -109,7 +117,7 @@ public class RedisSamplePostAction extends BaseAction {
     }
 
     private SampleType readDummy(String redisKey) throws BaseException {
-        String redisObject = redisManager.runWithConnection(Jedis::get, "get", redisKey)
+        String redisObject = redisManager.runWithConnection(UnifiedJedis::get, "get", redisKey)
                 .orElseThrow(() -> new BONotFoundException(MessageFormat.format("Redis object with key:[{0}] not found!", redisKey)));
         return JsonUtil.toObject(redisObject, SampleType.class);
     }

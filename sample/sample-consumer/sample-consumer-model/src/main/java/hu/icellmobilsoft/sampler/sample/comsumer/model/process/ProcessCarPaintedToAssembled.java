@@ -34,4 +34,11 @@ public class ProcessCarPaintedToAssembled extends AbstractProcessCarProductionEn
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public ProcessCarPaintedToAssembled() {
+        super();
+    }
+
 }

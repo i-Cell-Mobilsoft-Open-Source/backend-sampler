@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,12 +27,19 @@ import jakarta.json.bind.config.PropertyVisibilityStrategy;
 /**
  * The default JSON-B output mapping has all public methods, include setter and getter. This configuration avoids this. Based on
  * <a href="https://www.adam-bien.com/roller/abien/entry/private_fields_serialization_with_json">private_fields_serialization_with_json</a>
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  *
  */
 public class FieldOnlyVisibilityStrategy implements PropertyVisibilityStrategy {
+
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public FieldOnlyVisibilityStrategy() {
+        super();
+    }
 
     @Override
     public boolean isVisible(Field field) {

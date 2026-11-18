@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ import jakarta.ws.rs.ext.Provider;
 
 /**
  * Custom default JSON-B JAXRS provider. Used in {@code org.jboss.resteasy.plugins.providers.jsonb.AbstractJsonBindingProvider}
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  * @see <a href="https://javaee.github.io/jsonb-spec/users-guide.html">JSON-B spec</a>
@@ -36,6 +36,13 @@ import jakarta.ws.rs.ext.Provider;
  */
 @Provider
 public class CustomJsonb implements ContextResolver<Jsonb> {
+
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public CustomJsonb() {
+        super();
+    }
 
     @Override
     public Jsonb getContext(Class<?> type) {

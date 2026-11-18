@@ -52,6 +52,13 @@ import io.vertx.core.Vertx;
 public class KafkaMessageHandler {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public KafkaMessageHandler() {
+        super();
+    }
+
+    /**
      * Read and set MDC value from message into thread constant<br>
      * This usage is recommended in developing, debugging and testing, in production is preferred {@link IncomingHeaderInterceptor}
      * 

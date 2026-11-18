@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,7 +34,7 @@ import hu.icellmobilsoft.sampler.dto.constant.IHttpHeaderConstants;
 
 /**
  * Project header class
- * 
+ *
  * @author imre.scheffer
  * @since 0.1.0
  */
@@ -92,8 +92,15 @@ public class ProjectHeader implements IHttpHeaderConstants {
     private String forwardedForPort;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public ProjectHeader() {
+        super();
+    }
+
+    /**
      * Read http header into bean fields
-     * 
+     *
      * @param headers
      *            http header
      * @return header bean with filled fields
@@ -107,7 +114,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Read http header into bean fields
-     * 
+     *
      * @param headerMap
      *            http header values map
      * @return header bean with filled fields
@@ -137,7 +144,8 @@ public class ProjectHeader implements IHttpHeaderConstants {
         String hostPort = headerValue;
         if (StringUtils.isNotBlank(headerValue) && StringUtils.contains(headerValue, FORWARDED_FOR_TAG)) {
             String[] forwarded = StringUtils.split(headerValue, ";");
-            Optional<String> o = Arrays.stream(forwarded).filter(s -> StringUtils.startsWithIgnoreCase(StringUtils.trim(s), FORWARDED_FOR_TAG))
+            Optional<String> o = Arrays.stream(forwarded)
+                    .filter(s -> StringUtils.startsWithIgnoreCase(StringUtils.trim(s), FORWARDED_FOR_TAG))
                     .findFirst();
             if (o.isPresent()) {
                 hostPort = StringUtils.substringAfter(o.get(), FORWARDED_FOR_TAG);
@@ -155,7 +163,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Getting one value from header
-     * 
+     *
      * @param headers
      *            http header
      * @param key
@@ -173,7 +181,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Getting one value from header
-     * 
+     *
      * @param headerMap
      *            http header values map
      * @param key
@@ -209,7 +217,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get session token
-     * 
+     *
      * @return session token
      */
     public String getSessionToken() {
@@ -218,7 +226,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set session token
-     * 
+     *
      * @param sessionToken
      *            token
      */
@@ -228,7 +236,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get refresh token
-     * 
+     *
      * @return refresh token
      */
     public String getRefreshToken() {
@@ -237,7 +245,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set refresh token
-     * 
+     *
      * @param refreshToken
      *            token
      */
@@ -247,7 +255,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get host
-     * 
+     *
      * @return host
      */
     public String getHost() {
@@ -256,7 +264,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set host
-     * 
+     *
      * @param host
      *            host
      */
@@ -266,7 +274,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get source
-     * 
+     *
      * @return source
      */
     public String getSource() {
@@ -275,7 +283,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set source
-     * 
+     *
      * @param source
      *            source
      */
@@ -285,7 +293,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get language
-     * 
+     *
      * @return language
      */
     public String getLanguage() {
@@ -294,7 +302,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set language
-     * 
+     *
      * @param language
      *            language
      */
@@ -304,7 +312,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get forwarded header
-     * 
+     *
      * @return forwarded header value
      */
     public String getForwarded() {
@@ -313,7 +321,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set forwarded header value
-     * 
+     *
      * @param forwarded
      *            forwarded value
      */
@@ -323,7 +331,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get forwarded header host value
-     * 
+     *
      * @return forwarded host value
      */
     public String getForwardedForHost() {
@@ -335,7 +343,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set forwarded for host value
-     * 
+     *
      * @param forwardedForHost
      *            host value
      */
@@ -345,7 +353,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Get forwarded header port value
-     * 
+     *
      * @return forwarded port value
      */
     public String getForwardedForPort() {
@@ -357,7 +365,7 @@ public class ProjectHeader implements IHttpHeaderConstants {
 
     /**
      * Set forwarded for port value
-     * 
+     *
      * @param forwardedForPort
      *            port value
      */

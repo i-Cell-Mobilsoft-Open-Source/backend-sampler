@@ -49,6 +49,13 @@ public class AsyncRedisPublishEventObserver {
     private RedisHelper redisHelper;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public AsyncRedisPublishEventObserver() {
+        super();
+    }
+
+    /**
      * Observes the {@link AsyncRedisPublishEvent} CDI {@link Event} and publish the stream message to the redis stream.
      *
      * @param asyncRedisPublishEvent

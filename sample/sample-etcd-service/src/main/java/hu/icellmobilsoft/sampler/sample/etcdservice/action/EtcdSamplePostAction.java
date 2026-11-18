@@ -51,6 +51,13 @@ public class EtcdSamplePostAction extends BaseAction {
     private ConfigEtcdHandler configEtcdHandler;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public EtcdSamplePostAction() {
+        super();
+    }
+
+    /**
      * Dummy sample write and read data to/from Etcd
      *
      * @param sampleRequest

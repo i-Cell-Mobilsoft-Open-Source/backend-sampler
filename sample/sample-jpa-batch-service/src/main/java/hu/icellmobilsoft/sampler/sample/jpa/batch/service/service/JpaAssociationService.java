@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.JpaAssociation;
 public class JpaAssociationService extends BaseService<JpaAssociation> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JpaAssociationService() {
+        super();
+    }
+
+    /**
      * Find {@link JpaAssociation} by ID.
      *
      * @param id

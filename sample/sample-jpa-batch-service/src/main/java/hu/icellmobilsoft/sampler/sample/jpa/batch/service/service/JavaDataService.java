@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.JavaData;
 public class JavaDataService extends BaseService<JavaData> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaDataService() {
+        super();
+    }
+
+    /**
      * Find {@link JavaData} by ID.
      *
      * @param id

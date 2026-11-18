@@ -45,6 +45,13 @@ public abstract class AbstractProcessCarProductionEntity extends AbstractProcess
     private CarProduction carProduction;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public AbstractProcessCarProductionEntity() {
+        super();
+    }
+
+    /**
      * Returns the {@link #carProduction} field.
      *
      * @return the {@link #carProduction} field

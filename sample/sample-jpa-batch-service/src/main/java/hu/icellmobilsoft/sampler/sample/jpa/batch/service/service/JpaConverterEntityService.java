@@ -37,6 +37,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.JpaConverterEntity;
 public class JpaConverterEntityService extends BaseService<JpaConverterEntity> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JpaConverterEntityService() {
+        super();
+    }
+
+    /**
      * Find {@link JpaConverterEntity} by ID.
      *
      * @param id

@@ -68,6 +68,13 @@ public class JavaDateAndTimeAction extends BaseAction {
     private JavaDateAndTimeService javaDateAndTimeService;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public JavaDateAndTimeAction() {
+        super();
+    }
+
+    /**
      * Creates and inserts a {@link JavaDateAndTime} entity with BatchService.
      *
      * @param javaDateAndTimeInsertRequest

@@ -38,4 +38,11 @@ public class CarProductionService extends BaseService<CarProduction> {
     @Inject
     private CarProductionRepository carProductionRepository;
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public CarProductionService() {
+        super();
+    }
+
 }

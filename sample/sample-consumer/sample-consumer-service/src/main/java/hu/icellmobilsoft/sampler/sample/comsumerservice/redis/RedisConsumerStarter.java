@@ -35,6 +35,13 @@ import hu.icellmobilsoft.coffee.module.redisstream.bootstrap.BaseRedisConsumerSt
 public class RedisConsumerStarter extends BaseRedisConsumerStarter {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public RedisConsumerStarter() {
+        super();
+    }
+
+    /**
      * CDI event observer to start all of the redis stream consumers.
      *
      * @param init

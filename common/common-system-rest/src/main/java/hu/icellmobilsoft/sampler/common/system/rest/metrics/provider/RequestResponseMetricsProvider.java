@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ContainerRequestContext;
@@ -43,7 +42,7 @@ import io.micrometer.core.instrument.Timer;
 
 /**
  * JAXRS provider for handling request/response metrics
- * 
+ *
  * @author mark.petrenyi
  * @since 0.1.0
  */
@@ -59,15 +58,23 @@ public class RequestResponseMetricsProvider implements ContainerRequestFilter, W
     private MeterRegistry meterRegistry;
 
     @Context
-    private HttpServletResponse httpServletResponse;
-
-    @Context
     private UriInfo uriInfo;
+
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public RequestResponseMetricsProvider() {
+        super();
+    }
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String url = uriInfo.getAbsolutePath().toASCIIString();
-        boolean standardHttp = StringUtils.containsAny(requestContext.getMethod(), HttpMethod.GET, HttpMethod.POST, HttpMethod.PUT,
+        boolean standardHttp = StringUtils.containsAny(
+                requestContext.getMethod(),
+                HttpMethod.GET,
+                HttpMethod.POST,
+                HttpMethod.PUT,
                 HttpMethod.DELETE);
         if (standardHttp && StringUtils.contains(url, SamplePath.PREFIX_REST)) {
             metricsContainer.setStartTime(LocalDateTime.now());
@@ -98,7 +105,9 @@ public class RequestResponseMetricsProvider implements ContainerRequestFilter, W
 
         // Timer timer = metricRegistry.timer(metadata, responseCodeTag);
         // timer.update(Duration.between(metricsContainer.getStartTime(), LocalDateTime.now()));
-        Timer timer = Timer.builder("sample_http_response_time").description("Input HTTP sample request count and response times.").tag("url", url)
+        Timer timer = Timer.builder("sample_http_response_time")
+                .description("Input HTTP sample request count and response times.")
+                .tag("url", url)
                 .register(meterRegistry);
         timer.record(Duration.between(metricsContainer.getStartTime(), LocalDateTime.now()));
     }

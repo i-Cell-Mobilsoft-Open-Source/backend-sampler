@@ -49,6 +49,13 @@ public class AsyncRedisPublishEventDispatcher {
     private Event<AsyncRedisPublishEvent> event;
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public AsyncRedisPublishEventDispatcher() {
+        super();
+    }
+
+    /**
      * Fires an asynchronous CDI {@link Event} to publish a message to a redis stream.
      *
      * @param streamMessage

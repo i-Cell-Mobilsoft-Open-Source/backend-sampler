@@ -2,6 +2,8 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
     version="2.2">
 
+    <access>FIELD</access>
+
     <entity class="hu.icellmobilsoft.sampler.sample.comsumer.model.CarProduction" />
 
     <entity class="hu.icellmobilsoft.sampler.sample.comsumer.model.process.ProcessCarWeldedToPainted" />

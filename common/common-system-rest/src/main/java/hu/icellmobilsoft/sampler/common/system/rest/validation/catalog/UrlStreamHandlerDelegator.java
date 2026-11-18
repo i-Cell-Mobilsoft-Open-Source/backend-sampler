@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,6 +38,13 @@ public class UrlStreamHandlerDelegator implements URLStreamHandlerFactory {
     private List<URLStreamHandlerFactory> urlStreamHandlerFactories = new ArrayList<>();
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public UrlStreamHandlerDelegator() {
+        super();
+    }
+
+    /**
      * Creates a new {@code URLStreamHandler} instance with the specified protocol.
      *
      * @param protocol
@@ -59,7 +66,7 @@ public class UrlStreamHandlerDelegator implements URLStreamHandlerFactory {
 
     /**
      * Get own url factory list
-     * 
+     *
      * @return list of url factory
      */
     public List<URLStreamHandlerFactory> getUrlStreamHandlerFactories() {
@@ -68,7 +75,7 @@ public class UrlStreamHandlerDelegator implements URLStreamHandlerFactory {
 
     /**
      * Add new url factory to URL
-     * 
+     *
      * @param urlStreamHandlerFactory
      *            added url factory
      */

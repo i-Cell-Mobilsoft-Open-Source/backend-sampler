@@ -35,6 +35,13 @@ import hu.icellmobilsoft.sampler.model.sample.batch.EmptyEntity;
 public class EmptyEntityService extends BaseService<EmptyEntity> {
 
     /**
+     * Default constructor, constructs a new object
+     */
+    public EmptyEntityService() {
+        super();
+    }
+
+    /**
      * Find {@link EmptyEntity} by ID.
      * 
      * @param id

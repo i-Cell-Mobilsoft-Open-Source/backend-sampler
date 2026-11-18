@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,7 +36,7 @@ import io.vertx.core.Vertx;
 /**
  * Listener for Outgoing kafka message - header handling<br>
  * Usage with congiration:
- * 
+ *
  * <pre>
  *mp:
  *  messaging:
@@ -46,13 +46,20 @@ import io.vertx.core.Vertx;
  *          classes:
  *            - hu.icellmobilsoft.sampler.sample.kafka.service.kafka.interceptor.OutgoingHeaderInterceptor
  * </pre>
- * 
+ *
  * @param <K>
  *            Message Key Type (default String)
  * @param <V>
  *            Message Payload Type
  */
 public class OutgoingHeaderInterceptor<K, V> implements ProducerInterceptor<K, V>, KafkaInterceptorConstant {
+
+    /**
+     * Default constructor, constructs a new object
+     */
+    public OutgoingHeaderInterceptor() {
+        super();
+    }
 
     @Override
     public void configure(Map<String, ?> configs) {

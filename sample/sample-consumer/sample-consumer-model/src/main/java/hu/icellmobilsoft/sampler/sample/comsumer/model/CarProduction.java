@@ -65,6 +65,13 @@ public class CarProduction extends AbstractIdentifiedEntity {
     private String color;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public CarProduction() {
+        super();
+    }
+
+    /**
      * Return the {@link #productionStatus} field.
      *
      * @return the {@link #productionStatus} field

@@ -34,4 +34,11 @@ public class ProcessCarWeldedToPainted extends AbstractProcessCarProductionEntit
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Default constructor, constructs a new object.
+     */
+    public ProcessCarWeldedToPainted() {
+        super();
+    }
+
 }

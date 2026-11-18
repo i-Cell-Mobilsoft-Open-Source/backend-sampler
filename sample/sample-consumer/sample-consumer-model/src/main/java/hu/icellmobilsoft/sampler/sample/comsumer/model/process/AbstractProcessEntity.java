@@ -42,6 +42,13 @@ public class AbstractProcessEntity extends AbstractIdentifiedEntity {
     private String streamMessage;
 
     /**
+     * Default constructor, constructs a new object.
+     */
+    public AbstractProcessEntity() {
+        super();
+    }
+
+    /**
      * Return the {@link #streamMessage} field.
      *
      * @return the {@link #streamMessage} field

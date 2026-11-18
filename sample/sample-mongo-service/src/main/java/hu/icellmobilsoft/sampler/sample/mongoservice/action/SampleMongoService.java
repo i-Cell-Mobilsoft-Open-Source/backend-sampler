@@ -33,4 +33,11 @@ import hu.icellmobilsoft.coffee.module.mongodb.service.MongoService;
 @Dependent
 public class SampleMongoService extends MongoService<String> {
 
+    /**
+     * Default constructor, constructs a new object
+     */
+    public SampleMongoService() {
+        super();
+    }
+
 }
